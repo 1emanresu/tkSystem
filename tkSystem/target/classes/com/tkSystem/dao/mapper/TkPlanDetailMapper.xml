@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPlanDetailMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tkSystem.dao.entity.TkPlanDetail">
+		<result column="tk_plan_detail_id" jdbcType="VARCHAR"
+			property="tkPlanDetailId" />
+		<result column="tk_plan_detail_title" jdbcType="VARCHAR"
+			property="tkPlanDetailTitle" />
+		<result column="tk_plan_detail_remark" jdbcType="VARCHAR"
+			property="tkPlanDetailRemark" />
+		<result column="tk_plan_detail_start" jdbcType="VARCHAR"
+			property="tkPlanDetailStart" />
+		<result column="tk_plan_detail_end" jdbcType="VARCHAR"
+			property="tkPlanDetailEnd" />
+		<result column="tk_plan_detail_target" jdbcType="VARCHAR"
+			property="tkPlanDetailTarget" />
+		<result column="tk_plan_detail_contacts_name"
+			jdbcType="VARCHAR" property="tkPlanDetailContactsName" />
+		<result column="tk_plan_detail_contacts_sex" jdbcType="VARCHAR"
+			property="tkPlanDetailContactsSex" />
+		<result column="tk_plan_detail_location" jdbcType="VARCHAR"
+			property="tkPlanDetailLocation" />
+		<result column="tk_plan_detail_location_detail"
+			jdbcType="VARCHAR" property="tkPlanDetailLocationDetail" />
+		<result column="tk_plan_detail_good_name" jdbcType="VARCHAR"
+			property="tkPlanDetailGoodName" />
+		<result column="tk_plan_detail_good_amount" jdbcType="VARCHAR"
+			property="tkPlanDetailGoodAmount" />
+		<result column="tk_plan_detail_photo" jdbcType="VARCHAR"
+			property="tkPlanDetailPhoto" />
+		<result column="tk_plan_detail_user_id" jdbcType="VARCHAR"
+			property="tkPlanDetailUserId" />
+		<result column="tk_plan_detail_tkuser_id" jdbcType="VARCHAR"
+			property="tkPlanDetailTkuserId" />
+	</resultMap>
+	<resultMap id="BaseResultWyMap"
+		type="com.tkSystem.tools.WyMap">
+	</resultMap>
+	<insert id="insert" parameterType="com.tkSystem.tools.WyMap">
+		insert into tk_plan_detail
+		(tk_plan_detail_id, tk_plan_detail_title,
+		tk_plan_detail_remark,
+		tk_plan_detail_start,
+		tk_plan_detail_end, tk_plan_detail_target,
+		tk_plan_detail_contacts_name,
+		tk_plan_detail_contacts_sex,
+		tk_plan_detail_location,
+		tk_plan_detail_location_detail,
+		tk_plan_detail_good_name,
+		tk_plan_detail_good_amount,
+		tk_plan_detail_photo,
+		tk_plan_detail_user_id, tk_plan_detail_tkuser_id
+		)
+		values (#{tkPlanDetailId,jdbcType=VARCHAR},
+		#{tkPlanDetailTitle,jdbcType=VARCHAR},
+		#{tkPlanDetailRemark,jdbcType=VARCHAR},
+		#{tkPlanDetailStart,jdbcType=VARCHAR},
+		#{tkPlanDetailEnd,jdbcType=VARCHAR},
+		#{tkPlanDetailTarget,jdbcType=VARCHAR},
+		#{tkPlanDetailContactsName,jdbcType=VARCHAR},
+		#{tkPlanDetailContactsSex,jdbcType=VARCHAR},
+		#{tkPlanDetailLocation,jdbcType=VARCHAR},
+		#{tkPlanDetailLocationDetail,jdbcType=VARCHAR},
+		#{tkPlanDetailGoodName,jdbcType=VARCHAR},
+		#{tkPlanDetailGoodAmount,jdbcType=VARCHAR},
+		#{tkPlanDetailPhoto,jdbcType=VARCHAR},
+		#{tkPlanDetailUserId,jdbcType=VARCHAR},
+		#{tkPlanDetailTkuserId,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tkSystem.tools.WyMap">
+		insert into tk_plan_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tkPlanDetailId != null">
+				tk_plan_detail_id,
+			</if>
+			<if test="tkPlanDetailTitle != null">
+				tk_plan_detail_title,
+			</if>
+			<if test="tkPlanDetailRemark != null">
+				tk_plan_detail_remark,
+			</if>
+			<if test="tkPlanDetailStart != null">
+				tk_plan_detail_start,
+			</if>
+			<if test="tkPlanDetailEnd != null">
+				tk_plan_detail_end,
+			</if>
+			<if test="tkPlanDetailTarget != null">
+				tk_plan_detail_target,
+			</if>
+			<if test="tkPlanDetailContactsName != null">
+				tk_plan_detail_contacts_name,
+			</if>
+			<if test="tkPlanDetailContactsSex != null">
+				tk_plan_detail_contacts_sex,
+			</if>
+			<if test="tkPlanDetailLocation != null">
+				tk_plan_detail_location,
+			</if>
+			<if test="tkPlanDetailLocationDetail != null">
+				tk_plan_detail_location_detail,
+			</if>
+			<if test="tkPlanDetailGoodName != null">
+				tk_plan_detail_good_name,
+			</if>
+			<if test="tkPlanDetailGoodAmount != null">
+				tk_plan_detail_good_amount,
+			</if>
+			<if test="tkPlanDetailPhoto != null">
+				tk_plan_detail_photo,
+			</if>
+			<if test="tkChannelId != null">
+				tk_channel_id,
+			</if>
+			<if test="tkPlanContactsPhone != null">
+				tk_plan_contacts_phone,
+			</if>
+			<if test="tkPlanDetailUserId != null">
+				tk_plan_detail_user_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tkPlanDetailId != null">
+				#{tkPlanDetailId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailTitle != null">
+				#{tkPlanDetailTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailRemark != null">
+				#{tkPlanDetailRemark,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailStart != null">
+				#{tkPlanDetailStart,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailEnd != null">
+				#{tkPlanDetailEnd,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailTarget != null">
+				#{tkPlanDetailTarget,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailContactsName != null">
+				#{tkPlanDetailContactsName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailContactsSex != null">
+				#{tkPlanDetailContactsSex,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailLocation != null">
+				#{tkPlanDetailLocation,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailLocationDetail != null">
+				#{tkPlanDetailLocationDetail,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailGoodName != null">
+				#{tkPlanDetailGoodName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailGoodAmount != null">
+				#{tkPlanDetailGoodAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailPhoto != null">
+				#{tkPlanDetailPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="tkChannelId != null">
+				#{tkChannelId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanContactsPhone != null">
+				#{tkPlanContactsPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanDetailUserId != null">
+				#{tkPlanDetailUserId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="getTodayTask" resultType="com.tkSystem.tools.WyMap"
+		parameterType="com.tkSystem.tools.WyMap">
+		select * from tk_plan_detail where
+		tk_plan_detail_tkuser_id=#{tkUserId} and
+		to_days(now())-to_days(tk_plan_detail_end)&lt;=0 and
+		to_days(now())-to_days(tk_plan_detail_start)&gt;=0
+	</select>
+	<select id="getTaskToClock"
+		resultType="com.tkSystem.tools.WyMap"
+		parameterType="com.tkSystem.tools.WyMap">
+		select * from tk_plan_detail where
+		tk_plan_detail.tk_plan_detail_id in
+		(SELECT tk_plan_execute.tk_plan_id
+		from tk_plan_execute where
+		tk_plan_execute.tk_plan_user_id= #{tkUserId}
+		);
+	</select>
+	<select id="getTargetAchieve"
+		resultType="com.tkSystem.tools.WyMap"
+		parameterType="com.tkSystem.tools.WyMap">
+		SELECT tk_plan_detail_target_achieve FROM
+		`tk_plan_detail` where
+		tk_plan_detail_id=#{tk_plan_detail_id};
+	</select>
+	<select id="getIdByUserId" resultType="com.tkSystem.tools.WyMap"
+		parameterType="com.tkSystem.tools.WyMap">
+		select tk_plan_detail_id from tk_plan_detail where 1
+		and
+		tk_plan_detail_user_id =#{tkUserId}
+	</select>
+	<update id="updateTkPlanState"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_plan_detail set tk_plan_state =#{tkPlanState}
+		where
+		tk_plan_detail.tk_plan_detail_id=#{tkPlanId};
+	</update>
+	<update id="updateTkUserId"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_plan_detail set tk_plan_detail_tkuser_id
+		=#{tk_plan_detail_tkuser_id} where
+		tk_plan_detail.tk_plan_detail_id=#{tkPlanId};
+	</update>
+	<update id="updateTargetAchieve"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_plan_detail set tk_plan_detail_target_achieve
+		=#{tk_plan_detail_target_achieve} where
+		tk_plan_detail.tk_plan_detail_id=#{tkPlanId};
+	</update>
+	<select id="getPlanDetailByPlanId"
+		parameterType="com.tkSystem.tools.WyMap"
+		resultType="com.tkSystem.tools.WyMap">
+		SELECT * FROM `tk_plan_detail` WHERE 1 and
+		tk_plan_detail_id=#{tk_plan_detail_id};
+	</select>
+	<select id="getPlanByTkUserId"
+		parameterType="com.tkSystem.tools.WyMap"
+		resultType="com.tkSystem.tools.WyMap">
+		SELECT * FROM `tk_plan_detail` WHERE 1 and
+		tk_plan_detail_tkuser_id=#{tk_plan_detail_tkuser_id};
+	</select>
+	<select id="getPlanNameByPlanId"
+		parameterType="com.tkSystem.tools.WyMap"
+		resultType="com.tkSystem.tools.WyMap">
+		SELECT tk_plan_detail_id,tk_plan_detail_title FROM `tk_plan_detail`
+		WHERE 1
+		<if test="tk_plan_detail_id!=null">
+			and
+			tk_plan_detail_id=#{tk_plan_detail_id};
+		</if>
+		;
+	</select>
+	<update id="updateStartDate"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_plan_detail set tk_plan_detail_start
+		=#{tk_plan_detail_start} where
+		tk_plan_detail.tk_plan_detail_id=#{tk_plan_detail_id};
+	</update>
+</mapper>

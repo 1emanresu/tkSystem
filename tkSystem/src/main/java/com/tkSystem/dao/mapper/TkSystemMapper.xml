@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkSystemMapper">
+	<resultMap id="BaseResultWyMap"
+		type="com.tkSystem.tools.WyMap">
+	</resultMap>
+
+	<select id="selectByUserId"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT
+		`tk_client_info`.tk_client_id,
+		`tk_client_info`.tk_client_name,
+		`tk_client_info`.tk_client_phone,
+		`tk_client_info`.tk_client_location
+		FROM `tk_client_info` where tk_client_user_id=
+		#{tkUserId,jdbcType=VARCHAR} ORDER BY tk_client_joindate desc limit 0,4;
+	</select>
+	<select id="selectFreshdate"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT
+		`tk_client_info`.tk_client_id,
+		`tk_client_info`.tk_client_name,
+		`tk_client_info`.tk_client_phone,
+		`tk_client_info`.tk_client_location,
+		`tk_client_info`.tk_client_fresh_date
+		FROM `tk_client_info` where 1
+
+		<if test="tk_client_type_id!=null">
+			and
+			tk_client_type_id=#{tk_client_type_id,jdbcType=VARCHAR}
+		</if>
+		ORDER BY tk_client_joindate desc;
+	</select>
+	<insert id="insert" parameterType="com.tkSystem.tools.WyMap">
+		insert into tk_client_info
+		(`tk_client_info`.tk_client_id,
+		`tk_client_info`.tk_client_name,
+		`tk_client_info`.tk_client_phone,
+		`tk_client_info`.tk_client_location,
+		tk_client_joindate,
+		tk_client_user_id)
+		values
+		(#{tkClientId,jdbcType=VARCHAR},
+		#{tkClientName,jdbcType=VARCHAR},
+		#{tkClientPhone,jdbcType=VARCHAR},
+		#{tkClientLocation,jdbcType=VARCHAR},
+		#{tkClientJoindate,jdbcType=VARCHAR},
+		#{tkClientUserId,jdbcType=VARCHAR} )
+	</insert>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_plan
+		set tk_plan_user_id =
+		#{tkPlanUserId,jdbcType=VARCHAR},
+		tk_plan_user_name =
+		#{tkPlanUserName,jdbcType=VARCHAR},
+
+		where tk_plan_id =
+		#{tkPlanId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateClienType"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_client_info
+		set tk_client_type_id =
+		#{tk_client_type_id,jdbcType=VARCHAR}
+		where tk_client_id =
+		#{tk_client_id ,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="com.tkSystem.tools.WyMap">
+		delete from tk_client_info
+		where tk_client_id =
+		#{tkPlanId,jdbcType=VARCHAR}
+	</delete>
+	<select id="getCompanyIndex"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT
+		tk_user_id,tk_client_amount,tk_user_name,tk_user_head from tk_user
+		GROUP BY tk_user_id ORDER BY tk_client_amount desc
+	</select>
+
+	<select id="getWorkNumber"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT * from
+		tk_plan_detail WHERE tk_plan_detail_tkuser_id =
+		#{tkUserId,jdbcType=VARCHAR} and DATE_FORMAT( tk_plan_detail_start,
+		'%Y-%m' ) = DATE_FORMAT( CURDATE( ) ,'%Y-%m' );
+	</select>
+	<select id="getTeamIndex"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT
+		tk_user_id,tk_client_amount,tk_user_name,tk_user_head from tk_user
+		WHERE tk_user_id in(SELECT tk_user_grade_id FROM `tk_user_grade` where
+		tk_user_grade_pid = (SELECT tk_user_grade_pid FROM `tk_user_grade`
+		where tk_user_grade_id = #{tkUserId,jdbcType=VARCHAR})) ORDER BY
+		tk_client_amount desc
+
+
+	</select>
+	<select id="getClientInfoByPlanId"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT * FROM
+		`tk_client_info` where tk_client_info.tk_plan_id=#{tkPlanId} 
+	</select>
+	<select id="getTkUserByPlanId"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		select * from
+		tk_user where tk_user_id in(SELECT tk_client_user_id FROM
+		`tk_client_info` where tk_client_info.tk_plan_id=#{tkPlanId})
+	</select>
+	<select id="getTkChannel"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		select * from
+		tk_channel
+	</select>
+	<insert id="postClientInfo">
+		insert into tk_client_info
+		(`tk_client_info`.tk_client_id,
+		`tk_client_info`.tk_client_name,
+		`tk_client_info`.tk_client_phone,
+		`tk_client_info`.tk_client_location,
+		tk_client_location_detail,
+		tk_client_joindate,
+		tk_client_fresh_date,
+		tk_client_user_id,
+		tk_client_type_id,
+		tk_channel_id,
+		tk_plan_id,
+		tk_client_photo,
+		tk_client_sex)
+		values
+		(#{tk_client_id,jdbcType=VARCHAR},
+		#{tk_client_name,jdbcType=VARCHAR},
+		#{tk_client_phone,jdbcType=VARCHAR},
+		#{tk_client_location,jdbcType=VARCHAR},
+		#{tk_client_location_detail,jdbcType=VARCHAR},
+		#{tk_client_joindate,jdbcType=VARCHAR},
+		#{tk_client_fresh_date,jdbcType=VARCHAR},
+		#{tkUserId,jdbcType=VARCHAR},
+		#{tk_client_type_id,jdbcType=VARCHAR},
+		#{tk_channel_id,jdbcType=VARCHAR},
+		#{tk_plan_id,jdbcType=VARCHAR},
+		#{tk_client_photo,jdbcType=VARCHAR},
+		#{tk_client_sex,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="postClientGoodsInfo">
+		INSERT INTO `tk_client_goods` (`tk_client_goods_id`,
+		`tk_client_id`,
+		`tk_client_goods_name`, `tk_client_goods_amount`)
+		VALUES (#{tk_client_goods_id},
+		#{tk_client_id},
+		#{tk_client_goods_name},
+		#{tk_client_goods_amount}
+		);
+
+	</insert>
+	<select id="getNumGroupChannelByUserId"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT * from (SELECT count(*) as num ,tk_channel_id FROM (SELECT *
+		from `tk_client_info`
+		WHERE
+		tk_client_user_id= #{tkUserId}
+		<if test="startTime != null">
+			and tk_client_joindate &gt; date(#{startTime})
+		</if>
+		<if test="endTime != null">
+			and tk_client_joindate &lt; date(#{endTime})
+		</if>
+		) as temp where 1 GROUP BY tk_channel_id) as a,tk_channel as b where
+		a.tk_channel_id=b.tk_channel_id
+	</select>
+	<update id="putClientInfo"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_client_info set tk_client_fresh_date=#{tk_client_fresh_date}
+		,tk_client_type_id=#{tk_client_fresh_date}
+		<if test="tk_client_user_id">
+		,tk_client_user_id=#{tk_client_user_id}
+		</if>
+		where 1
+		<if test="tk_client_id!=null">
+			and tk_client_id=#{tk_client_id}
+		</if>
+		;
+	</update>
+</mapper>

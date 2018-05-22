@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkUserGradeMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tkSystem.dao.entity.TkUserGrade">
+		<id column="tk_user_grade_id" jdbcType="VARCHAR"
+			property="tkUserGradeId" />
+		<result column="tk_user_grade_name" jdbcType="VARCHAR"
+			property="tkUserGradeName" />
+		<result column="tk_user_grade_time" jdbcType="VARCHAR"
+			property="tkUserGradeTime" />
+		<result column="tk_user_grade_pid" jdbcType="VARCHAR"
+			property="tkUserGradePid" />
+		<result column="tk_user_grade_gnid" jdbcType="VARCHAR"
+			property="tkUserGradeGnid" />
+	</resultMap>
+		<resultMap id="BaseResultWyMap" type="com.tkSystem.tools.WyMap"></resultMap>
+	<parameterMap type="com.tkSystem.tools.WyMap" id="parameterWyMap"></parameterMap>
+<sql id="Base_Column_List">
+		tk_user_grade_id, tk_user_grade_name, tk_user_grade_time,
+		tk_user_grade_pid,
+		tk_user_grade_gnid
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tk_user_grade
+		where tk_user_grade_id =
+		#{tkUserGradeId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tk_user_grade
+		where 1= 1
+	</select>
+	<select id="selectBySelective" resultMap="BaseResultWyMap" parameterMap="parameterWyMap">
+		select * 
+		from tk_user_grade
+		where 1= 1
+		<if test="tkUserId!=null">
+		and tk_user_grade_pid=#{tkUserId}
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		tk_user_grade
+		where tk_user_grade_id =
+		#{tkUserGradeId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert"
+		parameterType="com.tkSystem.dao.entity.TkUserGrade">
+		insert into tk_user_grade (tk_user_grade_id,
+		tk_user_grade_name,
+		tk_user_grade_time,
+		tk_user_grade_pid,
+		tk_user_grade_gnid)
+		values (#{tkUserGradeId,jdbcType=VARCHAR},
+		#{tkUserGradeName,jdbcType=VARCHAR},
+		#{tkUserGradeTime,jdbcType=VARCHAR},
+		#{tkUserGradePid,jdbcType=VARCHAR},
+		#{tkUserGradeGnid,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tkSystem.dao.entity.TkUserGrade">
+		insert into tk_user_grade
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tkUserGradeId != null">
+				tk_user_grade_id,
+			</if>
+			<if test="tkUserGradeName != null">
+				tk_user_grade_name,
+			</if>
+			<if test="tkUserGradeTime != null">
+				tk_user_grade_time,
+			</if>
+			<if test="tkUserGradePid != null">
+				tk_user_grade_pid,
+			</if>
+			<if test="tkUserGradeGnid != null">
+				tk_user_grade_gnid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tkUserGradeId != null">
+				#{tkUserGradeId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradeName != null">
+				#{tkUserGradeName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradeTime != null">
+				#{tkUserGradeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradePid != null">
+				#{tkUserGradePid,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradeGnid != null">
+				#{tkUserGradeGnid,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tkSystem.dao.entity.TkUserGrade">
+		update tk_user_grade
+		<set>
+			<if test="tkUserGradeName != null">
+				tk_user_grade_name = #{tkUserGradeName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradeTime != null">
+				tk_user_grade_time = #{tkUserGradeTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradePid != null">
+				tk_user_grade_pid = #{tkUserGradePid,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserGradeGnid != null">
+				tk_user_grade_gnid = #{tkUserGradeGnid,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserState != null">
+				tk_user_state = #{tkUserState,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tk_user_grade_id = #{tkUserGradeId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="updateByPrimaryKey"
+		parameterType="com.tkSystem.dao.entity.TkUserGrade">
+		update tk_user_grade
+		set tk_user_grade_name =
+		#{tkUserGradeName,jdbcType=VARCHAR},
+		tk_user_grade_time =
+		#{tkUserGradeTime,jdbcType=VARCHAR},
+		tk_user_grade_pid =
+		#{tkUserGradePid,jdbcType=VARCHAR},
+		tk_user_grade_gnid =
+		#{tkUserGradeGnid,jdbcType=VARCHAR}
+		where tk_user_grade_id =
+		#{tkUserGradeId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateState"
+		parameterType="com.tkSystem.dao.entity.TkUserGrade">
+		update tk_user_grade
+		set tk_user_state =
+		#{tkUserState,jdbcType=VARCHAR}
+		where tk_user_grade_id &gt;=
+		#{tkUserGradeId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateGradePid"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_user_grade set tk_user_grade_pid = '-1' WHERE
+		tk_user_grade_id=#{userId,jdbcType=VARCHAR} and
+		tk_user_grade_pid=#{tkUserId,jdbcType=VARCHAR}
+	</update>
+</mapper>

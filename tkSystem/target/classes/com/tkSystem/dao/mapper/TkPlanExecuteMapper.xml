@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPlanExecuteMapper">
+	<resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPlanExecute">
+		<id column="tk_plan_execute_id" jdbcType="VARCHAR" property="tkPlanExecuteId" />
+		<result column="tk_plan_execute_name" jdbcType="VARCHAR"
+			property="tkPlanExecuteName" />
+		<result column="tk_plan_execute_content" jdbcType="VARCHAR"
+			property="tkPlanExecuteContent" />
+		<result column="tk_plan_id" jdbcType="VARCHAR" property="tkPlanId" />
+		<result column="tk_plan_execute_start_time" jdbcType="VARCHAR"
+			property="tkPlanExecuteStartTime" />
+		<result column="tk_plan_execute_end_time" jdbcType="VARCHAR"
+			property="tkPlanExecuteEndTime" />
+		<result column="tk_plan_execute_cutorm_id" jdbcType="VARCHAR"
+			property="tkPlanExecuteCutormId" />
+		<result column="tk_user_id" jdbcType="VARCHAR" property="tkUserId" />
+		<result column="tk_plan_execute_state" jdbcType="VARCHAR"
+			property="tkPlanExecuteState" />
+		<result column="tk_plan_execute_remark" jdbcType="VARCHAR"
+			property="tkPlanExecuteRemark" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		tk_plan_execute_id, tk_plan_execute_name,
+		tk_plan_execute_content, tk_plan_id,
+		tk_plan_execute_start_time,
+		tk_plan_execute_end_time, tk_plan_execute_cutorm_id, tk_user_id,
+		tk_plan_execute_state,
+		tk_plan_execute_remark
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tk_plan_execute
+		where tk_plan_execute_id =
+		#{tkPlanExecuteId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="com.tkSystem.tools.WyMap">
+		delete from
+		tk_plan_execute
+		where tk_plan_execute_id =
+		#{tkPlanExecuteId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.tkSystem.tools.WyMap">
+		insert into tk_plan_execute
+		(tk_plan_execute_id, tk_plan_execute_name,
+		tk_plan_execute_content,
+		tk_plan_id, tk_plan_execute_start_time,
+		tk_plan_execute_end_time,
+		tk_plan_execute_cutorm_id,
+		tk_user_id, tk_plan_execute_state,
+		tk_plan_execute_remark
+		)
+		values (#{tkPlanExecuteId,jdbcType=VARCHAR},
+		#{tkPlanExecuteName,jdbcType=VARCHAR},
+		#{tkPlanExecuteContent,jdbcType=VARCHAR},
+		#{tkPlanId,jdbcType=VARCHAR},
+		#{tkPlanExecuteStartTime,jdbcType=VARCHAR},
+		#{tkPlanExecuteEndTime,jdbcType=VARCHAR},
+		#{tkPlanExecuteCutormId,jdbcType=VARCHAR},
+		#{tkUserId,jdbcType=VARCHAR}, #{tkPlanExecuteState,jdbcType=VARCHAR},
+		#{tkPlanExecuteRemark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkPlanExecute">
+		insert into tk_plan_execute
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tkPlanExecuteId != null">
+				tk_plan_execute_id,
+			</if>
+			<if test="tkPlanExecuteName != null">
+				tk_plan_execute_name,
+			</if>
+			<if test="tkPlanExecuteContent != null">
+				tk_plan_execute_content,
+			</if>
+			<if test="tkPlanId != null">
+				tk_plan_id,
+			</if>
+			<if test="tkPlanExecuteStartTime != null">
+				tk_plan_execute_start_time,
+			</if>
+			<if test="tkPlanExecuteEndTime != null">
+				tk_plan_execute_end_time,
+			</if>
+			<if test="tkPlanExecuteCutormId != null">
+				tk_plan_execute_cutorm_id,
+			</if>
+			<if test="tkUserId != null">
+				tk_user_id,
+			</if>
+			<if test="tkPlanExecuteState != null">
+				tk_plan_execute_state,
+			</if>
+			<if test="tkPlanExecuteRemark != null">
+				tk_plan_execute_remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tkPlanExecuteId != null">
+				#{tkPlanExecuteId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteName != null">
+				#{tkPlanExecuteName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteContent != null">
+				#{tkPlanExecuteContent,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanId != null">
+				#{tkPlanId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteStartTime != null">
+				#{tkPlanExecuteStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteEndTime != null">
+				#{tkPlanExecuteEndTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteCutormId != null">
+				#{tkPlanExecuteCutormId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserId != null">
+				#{tkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteState != null">
+				#{tkPlanExecuteState,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteRemark != null">
+				#{tkPlanExecuteRemark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.tools.WyMap">
+		update tk_plan_execute
+		<set>
+			<if test="tkPlanExecuteName != null">
+				tk_plan_execute_name =
+				#{tkPlanExecuteName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteContent != null">
+				tk_plan_execute_content =
+				#{tkPlanExecuteContent,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanId != null">
+				tk_plan_id = #{tkPlanId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteStartTime != null">
+				tk_plan_execute_start_time =
+				#{tkPlanExecuteStartTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteEndTime != null">
+				tk_plan_execute_end_time =
+				#{tkPlanExecuteEndTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteCutormId != null">
+				tk_plan_execute_cutorm_id =
+				#{tkPlanExecuteCutormId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserId != null">
+				tk_user_id = #{tkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteState != null">
+				tk_plan_execute_state =
+				#{tkPlanExecuteState,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanExecuteRemark != null">
+				tk_plan_execute_remark =
+				#{tkPlanExecuteRemark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tk_plan_execute_id = #{tkPlanExecuteId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tkSystem.tools.WyMap">
+		update
+		tk_plan_execute
+		set tk_plan_execute_name =
+		#{tkPlanExecuteName,jdbcType=VARCHAR},
+		tk_plan_execute_content =
+		#{tkPlanExecuteContent,jdbcType=VARCHAR},
+		tk_plan_id =
+		#{tkPlanId,jdbcType=VARCHAR},
+		tk_plan_execute_start_time =
+		#{tkPlanExecuteStartTime,jdbcType=VARCHAR},
+		tk_plan_execute_end_time =
+		#{tkPlanExecuteEndTime,jdbcType=VARCHAR},
+		tk_plan_execute_cutorm_id =
+		#{tkPlanExecuteCutormId,jdbcType=VARCHAR},
+		tk_user_id =
+		#{tkUserId,jdbcType=VARCHAR},
+		tk_plan_execute_state =
+		#{tkPlanExecuteState,jdbcType=VARCHAR},
+		tk_plan_execute_remark =
+		#{tkPlanExecuteRemark,jdbcType=VARCHAR}
+		where tk_plan_execute_id =
+		#{tkPlanExecuteId,jdbcType=VARCHAR}
+	</update>
+</mapper>

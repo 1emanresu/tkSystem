@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkClientPhotoMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkClientPhoto">
+    <id column="tk_client_photo_id" jdbcType="VARCHAR" property="tkClientPhotoId" />
+    <result column="tk_client_photo_url" jdbcType="VARCHAR" property="tkClientPhotoUrl" />
+    <result column="tk_client_id" jdbcType="VARCHAR" property="tkClientId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_client_photo_id, tk_client_photo_url, tk_client_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_client_photo
+    where tk_client_photo_id = #{tkClientPhotoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_client_photo
+    where tk_client_photo_id = #{tkClientPhotoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkClientPhoto">
+    insert into tk_client_photo (tk_client_photo_id, tk_client_photo_url, 
+      tk_client_id)
+    values (#{tkClientPhotoId,jdbcType=VARCHAR}, #{tkClientPhotoUrl,jdbcType=VARCHAR}, 
+      #{tkClientId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkClientPhoto">
+    insert into tk_client_photo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkClientPhotoId != null">
+        tk_client_photo_id,
+      </if>
+      <if test="tkClientPhotoUrl != null">
+        tk_client_photo_url,
+      </if>
+      <if test="tkClientId != null">
+        tk_client_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkClientPhotoId != null">
+        #{tkClientPhotoId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkClientPhotoUrl != null">
+        #{tkClientPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkClientId != null">
+        #{tkClientId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkClientPhoto">
+    update tk_client_photo
+    <set>
+      <if test="tkClientPhotoUrl != null">
+        tk_client_photo_url = #{tkClientPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkClientId != null">
+        tk_client_id = #{tkClientId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_client_photo_id = #{tkClientPhotoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkClientPhoto">
+    update tk_client_photo
+    set tk_client_photo_url = #{tkClientPhotoUrl,jdbcType=VARCHAR},
+      tk_client_id = #{tkClientId,jdbcType=VARCHAR}
+    where tk_client_photo_id = #{tkClientPhotoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

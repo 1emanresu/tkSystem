@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkGoodMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkGood">
+    <id column="tk_good_id" jdbcType="VARCHAR" property="tkGoodId" />
+    <result column="tk_good_name" jdbcType="VARCHAR" property="tkGoodName" />
+    <result column="tk_good_type" jdbcType="VARCHAR" property="tkGoodType" />
+    <result column="tk_good_price" jdbcType="VARCHAR" property="tkGoodPrice" />
+    <result column="tk_good_insert_time" jdbcType="VARCHAR" property="tkGoodInsertTime" />
+    <result column="tk_good_amount" jdbcType="VARCHAR" property="tkGoodAmount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_good_id, tk_good_name, tk_good_type, tk_good_price, tk_good_insert_time, tk_good_amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_good
+    where tk_good_id = #{tkGoodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_good
+    where tk_good_id = #{tkGoodId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.tools.WyMap">
+    insert into tk_good (tk_good_id, tk_good_name, tk_good_type, 
+      tk_good_price, tk_good_insert_time, tk_good_amount
+      )
+    values (#{tkGoodId,jdbcType=VARCHAR}, #{tkGoodName,jdbcType=VARCHAR}, #{tkGoodType,jdbcType=VARCHAR}, 
+      #{tkGoodPrice,jdbcType=VARCHAR}, #{tkGoodInsertTime,jdbcType=VARCHAR}, #{tkGoodAmount,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.tools.WyMap">
+    insert into tk_good
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkGoodId != null">
+        tk_good_id,
+      </if>
+      <if test="tkGoodName != null">
+        tk_good_name,
+      </if>
+      <if test="tkGoodType != null">
+        tk_good_type,
+      </if>
+      <if test="tkGoodPrice != null">
+        tk_good_price,
+      </if>
+      <if test="tkGoodInsertTime != null">
+        tk_good_insert_time,
+      </if>
+      <if test="tkGoodAmount != null">
+        tk_good_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkGoodId != null">
+        #{tkGoodId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodName != null">
+        #{tkGoodName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodType != null">
+        #{tkGoodType,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodPrice != null">
+        #{tkGoodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodInsertTime != null">
+        #{tkGoodInsertTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodAmount != null">
+        #{tkGoodAmount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.tools.WyMap">
+    update tk_good
+    <set>
+      <if test="tkGoodName != null">
+        tk_good_name = #{tkGoodName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodType != null">
+        tk_good_type = #{tkGoodType,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodPrice != null">
+        tk_good_price = #{tkGoodPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodInsertTime != null">
+        tk_good_insert_time = #{tkGoodInsertTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodAmount != null">
+        tk_good_amount = #{tkGoodAmount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_good_id = #{tkGoodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.tools.WyMap">
+    update tk_good
+    set tk_good_name = #{tkGoodName,jdbcType=VARCHAR},
+      tk_good_type = #{tkGoodType,jdbcType=VARCHAR},
+      tk_good_price = #{tkGoodPrice,jdbcType=VARCHAR},
+      tk_good_insert_time = #{tkGoodInsertTime,jdbcType=VARCHAR},
+      tk_good_amount = #{tkGoodAmount,jdbcType=VARCHAR}
+    where tk_good_id = #{tkGoodId,jdbcType=VARCHAR}
+  </update>
+</mapper>

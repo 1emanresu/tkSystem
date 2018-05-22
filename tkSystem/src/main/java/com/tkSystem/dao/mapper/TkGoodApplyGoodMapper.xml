@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkGoodApplyGoodMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tkSystem.dao.entity.TkGoodApplyGood">
+		<id column="tk_good_apply_id" jdbcType="VARCHAR"
+			property="tkGoodApplyId" />
+		<result column="tk_good_apply_name" jdbcType="VARCHAR"
+			property="tkGoodApplyName" />
+		<result column="tk_good_apply_user_id" jdbcType="VARCHAR"
+			property="tkGoodApplyUserId" />
+		<result column="tk_good_apply_good_id" jdbcType="VARCHAR"
+			property="tkGoodApplyGoodId" />
+		<result column="tk_good_apply_good_amount" jdbcType="VARCHAR"
+			property="tkGoodApplyGoodAmount" />
+		<result column="tk_good_apply_good_time" jdbcType="VARCHAR"
+			property="tkGoodApplyGoodTime" />
+		<result column="tk_good_apply_state" jdbcType="VARCHAR"
+			property="tkGoodApplyState" />
+		<result column="tk_good_apply_feedback_time" jdbcType="VARCHAR"
+			property="tkGoodApplyFeedbackTime" />
+	</resultMap>
+	<resultMap id="BaseResultWyMap"
+		type="com.tkSystem.tools.WyMap"></resultMap>
+	<parameterMap type="com.tkSystem.tools.WyMap"
+		id="parameterWyMap"></parameterMap>
+	<sql id="Base_Column_List">
+		tk_good_apply_id, tk_good_apply_name,
+		tk_good_apply_user_id, tk_good_apply_good_id,
+		tk_good_apply_good_amount, tk_good_apply_good_time,
+		tk_good_apply_state, tk_good_apply_feedback_time
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tk_good_apply_good
+		where tk_good_apply_id =
+		#{tkGoodApplyId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultWyMap">
+		SELECT tk_good_apply_id
+		,tk_good_apply_name,tk_good_apply_user_id,tk_good_apply_remark FROM
+		`tk_good_apply_good` ORDER BY
+		`tk_good_apply_good`.`tk_good_apply_good_time` DESC
+	</select>
+	<select id="selectAllByTkUserId" parameterMap="parameterWyMap"
+		resultMap="BaseResultWyMap">
+		SELECT tk_good_apply_id
+		,tk_good_apply_name,tk_good_apply_user_id,tk_good_apply_remark,tk_good_apply_good_time,tk_good_apply_plan_id
+		FROM
+		`tk_good_apply_good` where tk_good_apply_user_id=#{tkUserId} ORDER
+		BY
+		`tk_good_apply_good`.`tk_good_apply_good_time` DESC
+	</select>
+	<select id="selectBySelective" parameterMap="parameterWyMap"
+		resultMap="BaseResultWyMap">
+		SELECT tk_good_apply_id
+		,tk_good_apply_name,tk_good_apply_user_id,tk_good_apply_remark,tk_good_apply_good_time,tk_good_apply_plan_id
+		FROM
+		`tk_good_apply_good` where 1
+		<if test="listTkUser!=null">
+			and tk_good_apply_user_id
+			in
+			<foreach collection="listTkUser" item="item" index="index"
+				open="(" separator="," close=")">
+				#{item.tk_user_id}
+			</foreach>
+		</if>
+		<if test="listTkPlan!=null">
+			and tk_good_apply_plan_id
+			in
+			<foreach collection="listTkPlan" item="item" index="index"
+				open="(" separator="," close=")">
+				#{item.tk_plan_detail_id}
+			</foreach>
+		</if>
+
+		ORDER BY
+		`tk_good_apply_good`.`tk_good_apply_good_time` DESC
+	</select>
+	<select id="selectGoodApplyId" parameterMap="parameterWyMap"
+		resultMap="BaseResultWyMap">
+		select tk_good_apply_id
+		,tk_good_apply_name
+		,tk_good_apply_good_amount
+		,
+		tk_good_apply_remark
+		, tk_good_apply_plan_id
+		from tk_good_apply_good
+		where 1
+		<if test="tk_good_apply_id!=null">
+			and tk_good_apply_id=#{tk_good_apply_id}
+		</if>
+		;
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		tk_good_apply_good
+		where tk_good_apply_id =
+		#{tkGoodApplyId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="postApplicationMaterials"
+		parameterType="com.tkSystem.tools.WyMap">
+
+		insert into tk_good_apply_good (tk_good_apply_id,
+		tk_good_apply_name,
+		tk_good_apply_user_id,
+		tk_good_apply_good_amount,tk_good_apply_plan_id,
+		tk_good_apply_remark,
+		tk_good_apply_good_time, tk_good_apply_state
+		)
+		values
+		(#{tkGoodApplyId,jdbcType=VARCHAR},
+		#{tkGoodName,jdbcType=VARCHAR},
+		#{tkUserId,jdbcType=VARCHAR},
+		#{tkGoodApplyGoodAmount,jdbcType=VARCHAR},
+		#{tkPlanId,jdbcType=VARCHAR},
+		#{ remark,jdbcType=VARCHAR} ,
+		#{tk_good_apply_good_time,jdbcType=VARCHAR},
+		#{
+		tk_good_apply_state,jdbcType=VARCHAR} )
+	</insert>
+	<insert id="insert"
+		parameterType="com.tkSystem.dao.entity.TkGoodApplyGood">
+		insert into tk_good_apply_good (tk_good_apply_id,
+		tk_good_apply_name,
+		tk_good_apply_user_id,
+		tk_good_apply_good_id,
+		tk_good_apply_good_amount,
+		tk_good_apply_good_time,
+		tk_good_apply_state,
+		tk_good_apply_feedback_time)
+		values
+		(#{tkGoodApplyId,jdbcType=VARCHAR},
+		#{tkGoodApplyName,jdbcType=VARCHAR},
+		#{tkGoodApplyUserId,jdbcType=VARCHAR},
+		#{tkGoodApplyGoodId,jdbcType=VARCHAR},
+		#{tkGoodApplyGoodAmount,jdbcType=VARCHAR},
+		#{tkGoodApplyGoodTime,jdbcType=VARCHAR},
+		#{tkGoodApplyState,jdbcType=VARCHAR},
+		#{tkGoodApplyFeedbackTime,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tkSystem.dao.entity.TkGoodApplyGood">
+		insert into tk_good_apply_good
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tkGoodApplyId != null">
+				tk_good_apply_id,
+			</if>
+			<if test="tkGoodApplyName != null">
+				tk_good_apply_name,
+			</if>
+			<if test="tkGoodApplyUserId != null">
+				tk_good_apply_user_id,
+			</if>
+			<if test="tkGoodApplyGoodId != null">
+				tk_good_apply_good_id,
+			</if>
+			<if test="tkGoodApplyGoodAmount != null">
+				tk_good_apply_good_amount,
+			</if>
+			<if test="tkGoodApplyGoodTime != null">
+				tk_good_apply_good_time,
+			</if>
+			<if test="tkGoodApplyState != null">
+				tk_good_apply_state,
+			</if>
+			<if test="tkGoodApplyFeedbackTime != null">
+				tk_good_apply_feedback_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tkGoodApplyId != null">
+				#{tkGoodApplyId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyName != null">
+				#{tkGoodApplyName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyUserId != null">
+				#{tkGoodApplyUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodId != null">
+				#{tkGoodApplyGoodId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodAmount != null">
+				#{tkGoodApplyGoodAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodTime != null">
+				#{tkGoodApplyGoodTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyState != null">
+				#{tkGoodApplyState,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyFeedbackTime != null">
+				#{tkGoodApplyFeedbackTime,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tkSystem.dao.entity.TkGoodApplyGood">
+		update tk_good_apply_good
+		<set>
+			<if test="tkGoodApplyName != null">
+				tk_good_apply_name = #{tkGoodApplyName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyUserId != null">
+				tk_good_apply_user_id =
+				#{tkGoodApplyUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodId != null">
+				tk_good_apply_good_id =
+				#{tkGoodApplyGoodId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodAmount != null">
+				tk_good_apply_good_amount =
+				#{tkGoodApplyGoodAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodTime != null">
+				tk_good_apply_good_time =
+				#{tkGoodApplyGoodTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyState != null">
+				tk_good_apply_state =
+				#{tkGoodApplyState,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyFeedbackTime != null">
+				tk_good_apply_feedback_time =
+				#{tkGoodApplyFeedbackTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tk_good_apply_id = #{tkGoodApplyId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateBySelective" parameterMap="parameterWyMap">
+		update tk_good_apply_good
+		<set>
+			<if test="tkGoodApplyName != null">
+				tk_good_apply_name = #{tkGoodApplyName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyUserId != null">
+				tk_good_apply_user_id =
+				#{tkGoodApplyUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodId != null">
+				tk_good_apply_good_id =
+				#{tkGoodApplyGoodId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodAmount != null">
+				tk_good_apply_good_amount =
+				#{tkGoodApplyGoodAmount,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyGoodTime != null">
+				tk_good_apply_good_time =
+				#{tkGoodApplyGoodTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyState != null">
+				tk_good_apply_state =
+				#{tkGoodApplyState,jdbcType=VARCHAR},
+			</if>
+			<if test="tkGoodApplyFeedbackTime != null">
+				tk_good_apply_feedback_time =
+				#{tkGoodApplyFeedbackTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tk_good_apply_id = #{tkGoodApplyId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tkSystem.dao.entity.TkGoodApplyGood">
+		update tk_good_apply_good
+		set tk_good_apply_name =
+		#{tkGoodApplyName,jdbcType=VARCHAR},
+		tk_good_apply_user_id =
+		#{tkGoodApplyUserId,jdbcType=VARCHAR},
+		tk_good_apply_good_id =
+		#{tkGoodApplyGoodId,jdbcType=VARCHAR},
+		tk_good_apply_good_amount =
+		#{tkGoodApplyGoodAmount,jdbcType=VARCHAR},
+		tk_good_apply_good_time =
+		#{tkGoodApplyGoodTime,jdbcType=VARCHAR},
+		tk_good_apply_state =
+		#{tkGoodApplyState,jdbcType=VARCHAR},
+		tk_good_apply_feedback_time =
+		#{tkGoodApplyFeedbackTime,jdbcType=VARCHAR}
+		where tk_good_apply_id =
+		#{tkGoodApplyId,jdbcType=VARCHAR}
+	</update>
+</mapper>

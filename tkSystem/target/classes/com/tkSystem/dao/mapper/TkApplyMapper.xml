@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkApplyMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkApply">
+    <id column="tk_apply_id" jdbcType="VARCHAR" property="tkApplyId" />
+    <result column="tk_apply_user_id" jdbcType="VARCHAR" property="tkApplyUserId" />
+    <result column="tk_apply_good_id" jdbcType="VARCHAR" property="tkApplyGoodId" />
+    <result column="tk_apply_good_amount" jdbcType="VARCHAR" property="tkApplyGoodAmount" />
+    <result column="tk_apply_good_time" jdbcType="VARCHAR" property="tkApplyGoodTime" />
+    <result column="tk_apply_good_state" jdbcType="VARCHAR" property="tkApplyGoodState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_apply_id, tk_apply_user_id, tk_apply_good_id, tk_apply_good_amount, tk_apply_good_time, 
+    tk_apply_good_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_apply
+    where tk_apply_id = #{tkApplyId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_apply
+    where tk_apply_id = #{tkApplyId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkApply">
+    insert into tk_apply (tk_apply_id, tk_apply_user_id, tk_apply_good_id, 
+      tk_apply_good_amount, tk_apply_good_time, tk_apply_good_state
+      )
+    values (#{tkApplyId,jdbcType=VARCHAR}, #{tkApplyUserId,jdbcType=VARCHAR}, #{tkApplyGoodId,jdbcType=VARCHAR}, 
+      #{tkApplyGoodAmount,jdbcType=VARCHAR}, #{tkApplyGoodTime,jdbcType=VARCHAR}, #{tkApplyGoodState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkApply">
+    insert into tk_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkApplyId != null">
+        tk_apply_id,
+      </if>
+      <if test="tkApplyUserId != null">
+        tk_apply_user_id,
+      </if>
+      <if test="tkApplyGoodId != null">
+        tk_apply_good_id,
+      </if>
+      <if test="tkApplyGoodAmount != null">
+        tk_apply_good_amount,
+      </if>
+      <if test="tkApplyGoodTime != null">
+        tk_apply_good_time,
+      </if>
+      <if test="tkApplyGoodState != null">
+        tk_apply_good_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkApplyId != null">
+        #{tkApplyId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyUserId != null">
+        #{tkApplyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodId != null">
+        #{tkApplyGoodId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodAmount != null">
+        #{tkApplyGoodAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodTime != null">
+        #{tkApplyGoodTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodState != null">
+        #{tkApplyGoodState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkApply">
+    update tk_apply
+    <set>
+      <if test="tkApplyUserId != null">
+        tk_apply_user_id = #{tkApplyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodId != null">
+        tk_apply_good_id = #{tkApplyGoodId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodAmount != null">
+        tk_apply_good_amount = #{tkApplyGoodAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodTime != null">
+        tk_apply_good_time = #{tkApplyGoodTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkApplyGoodState != null">
+        tk_apply_good_state = #{tkApplyGoodState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_apply_id = #{tkApplyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkApply">
+    update tk_apply
+    set tk_apply_user_id = #{tkApplyUserId,jdbcType=VARCHAR},
+      tk_apply_good_id = #{tkApplyGoodId,jdbcType=VARCHAR},
+      tk_apply_good_amount = #{tkApplyGoodAmount,jdbcType=VARCHAR},
+      tk_apply_good_time = #{tkApplyGoodTime,jdbcType=VARCHAR},
+      tk_apply_good_state = #{tkApplyGoodState,jdbcType=VARCHAR}
+    where tk_apply_id = #{tkApplyId,jdbcType=VARCHAR}
+  </update>
+</mapper>

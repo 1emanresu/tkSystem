@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPlanExecuteClientMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPlanExecuteClient">
+    <id column="tk_plan_execute_client_id" jdbcType="VARCHAR" property="tkPlanExecuteClientId" />
+    <result column="tk_plan_execute_client_name" jdbcType="VARCHAR" property="tkPlanExecuteClientName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_plan_execute_client_id, tk_plan_execute_client_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_plan_execute_client
+    where tk_plan_execute_client_id = #{tkPlanExecuteClientId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.tkSystem.tools.WyMap">
+    delete from tk_plan_execute_client
+    where tk_plan_execute_client_id = #{tkPlanExecuteClientId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.tools.WyMap">
+    insert into tk_plan_execute_client (tk_plan_execute_client_id, tk_plan_execute_client_name
+      )
+    values (#{tkPlanExecuteClientId,jdbcType=VARCHAR}, #{tkPlanExecuteClientName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.tools.WyMap">
+    insert into tk_plan_execute_client
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkPlanExecuteClientId != null">
+        tk_plan_execute_client_id,
+      </if>
+      <if test="tkPlanExecuteClientName != null">
+        tk_plan_execute_client_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkPlanExecuteClientId != null">
+        #{tkPlanExecuteClientId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPlanExecuteClientName != null">
+        #{tkPlanExecuteClientName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.tools.WyMap">
+    update tk_plan_execute_client
+    <set>
+      <if test="tkPlanExecuteClientName != null">
+        tk_plan_execute_client_name = #{tkPlanExecuteClientName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_plan_execute_client_id = #{tkPlanExecuteClientId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.tools.WyMap">
+    update tk_plan_execute_client
+    set tk_plan_execute_client_name = #{tkPlanExecuteClientName,jdbcType=VARCHAR}
+    where tk_plan_execute_client_id = #{tkPlanExecuteClientId,jdbcType=VARCHAR}
+  </update>
+</mapper>

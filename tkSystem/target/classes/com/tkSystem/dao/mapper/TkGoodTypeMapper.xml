@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkGoodTypeMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkGoodType">
+    <id column="tk_good_type_id" jdbcType="VARCHAR" property="tkGoodTypeId" />
+    <result column="tk_good_type_name" jdbcType="VARCHAR" property="tkGoodTypeName" />
+    <result column="tk_good_type_time" jdbcType="VARCHAR" property="tkGoodTypeTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_good_type_id, tk_good_type_name, tk_good_type_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_good_type
+    where tk_good_type_id = #{tkGoodTypeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_good_type
+    where tk_good_type_id = #{tkGoodTypeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkGoodType">
+    insert into tk_good_type (tk_good_type_id, tk_good_type_name, tk_good_type_time
+      )
+    values (#{tkGoodTypeId,jdbcType=VARCHAR}, #{tkGoodTypeName,jdbcType=VARCHAR}, #{tkGoodTypeTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkGoodType">
+    insert into tk_good_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkGoodTypeId != null">
+        tk_good_type_id,
+      </if>
+      <if test="tkGoodTypeName != null">
+        tk_good_type_name,
+      </if>
+      <if test="tkGoodTypeTime != null">
+        tk_good_type_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkGoodTypeId != null">
+        #{tkGoodTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodTypeName != null">
+        #{tkGoodTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodTypeTime != null">
+        #{tkGoodTypeTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkGoodType">
+    update tk_good_type
+    <set>
+      <if test="tkGoodTypeName != null">
+        tk_good_type_name = #{tkGoodTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkGoodTypeTime != null">
+        tk_good_type_time = #{tkGoodTypeTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_good_type_id = #{tkGoodTypeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkGoodType">
+    update tk_good_type
+    set tk_good_type_name = #{tkGoodTypeName,jdbcType=VARCHAR},
+      tk_good_type_time = #{tkGoodTypeTime,jdbcType=VARCHAR}
+    where tk_good_type_id = #{tkGoodTypeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

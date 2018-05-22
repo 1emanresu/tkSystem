@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkClientTypeMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkClientType">
+    <id column="tk_type_id" jdbcType="VARCHAR" property="tkTypeId" />
+    <result column="tk_type_name" jdbcType="VARCHAR" property="tkTypeName" />
+    <result column="tk_type_time" jdbcType="VARCHAR" property="tkTypeTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_type_id, tk_type_name, tk_type_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_client_type
+    where tk_type_id = #{tkTypeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_client_type
+    where tk_type_id = #{tkTypeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkClientType">
+    insert into tk_client_type (tk_type_id, tk_type_name, tk_type_time
+      )
+    values (#{tkTypeId,jdbcType=VARCHAR}, #{tkTypeName,jdbcType=VARCHAR}, #{tkTypeTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkClientType">
+    insert into tk_client_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkTypeId != null">
+        tk_type_id,
+      </if>
+      <if test="tkTypeName != null">
+        tk_type_name,
+      </if>
+      <if test="tkTypeTime != null">
+        tk_type_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkTypeId != null">
+        #{tkTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkTypeName != null">
+        #{tkTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkTypeTime != null">
+        #{tkTypeTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkClientType">
+    update tk_client_type
+    <set>
+      <if test="tkTypeName != null">
+        tk_type_name = #{tkTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkTypeTime != null">
+        tk_type_time = #{tkTypeTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_type_id = #{tkTypeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkClientType">
+    update tk_client_type
+    set tk_type_name = #{tkTypeName,jdbcType=VARCHAR},
+      tk_type_time = #{tkTypeTime,jdbcType=VARCHAR}
+    where tk_type_id = #{tkTypeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

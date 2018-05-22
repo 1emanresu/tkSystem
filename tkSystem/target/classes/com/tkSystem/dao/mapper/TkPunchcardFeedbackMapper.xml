@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPunchcardFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPunchcardFeedback">
+    <id column="tk_punchcard_feedback_id" jdbcType="VARCHAR" property="tkPunchcardFeedbackId" />
+    <result column="tk_punchcard_feedback_user_id" jdbcType="VARCHAR" property="tkPunchcardFeedbackUserId" />
+    <result column="tk_punchcard_feedback_time" jdbcType="VARCHAR" property="tkPunchcardFeedbackTime" />
+    <result column="tk_punchcard_feedback_lateTime" jdbcType="VARCHAR" property="tkPunchcardFeedbackLatetime" />
+    <result column="tk_punchcard_feedback_managerId" jdbcType="VARCHAR" property="tkPunchcardFeedbackManagerid" />
+    <result column="tk_punchcard_feedback_plan_id" jdbcType="VARCHAR" property="tkPunchcardFeedbackPlanId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_punchcard_feedback_id, tk_punchcard_feedback_user_id, tk_punchcard_feedback_time, 
+    tk_punchcard_feedback_lateTime, tk_punchcard_feedback_managerId, tk_punchcard_feedback_plan_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_punchcard_feedback
+    where tk_punchcard_feedback_id = #{tkPunchcardFeedbackId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_punchcard_feedback
+    where tk_punchcard_feedback_id = #{tkPunchcardFeedbackId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkPunchcardFeedback">
+    insert into tk_punchcard_feedback (tk_punchcard_feedback_id, tk_punchcard_feedback_user_id, 
+      tk_punchcard_feedback_time, tk_punchcard_feedback_lateTime, 
+      tk_punchcard_feedback_managerId, tk_punchcard_feedback_plan_id
+      )
+    values (#{tkPunchcardFeedbackId,jdbcType=VARCHAR}, #{tkPunchcardFeedbackUserId,jdbcType=VARCHAR}, 
+      #{tkPunchcardFeedbackTime,jdbcType=VARCHAR}, #{tkPunchcardFeedbackLatetime,jdbcType=VARCHAR}, 
+      #{tkPunchcardFeedbackManagerid,jdbcType=VARCHAR}, #{tkPunchcardFeedbackPlanId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkPunchcardFeedback">
+    insert into tk_punchcard_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkPunchcardFeedbackId != null">
+        tk_punchcard_feedback_id,
+      </if>
+      <if test="tkPunchcardFeedbackUserId != null">
+        tk_punchcard_feedback_user_id,
+      </if>
+      <if test="tkPunchcardFeedbackTime != null">
+        tk_punchcard_feedback_time,
+      </if>
+      <if test="tkPunchcardFeedbackLatetime != null">
+        tk_punchcard_feedback_lateTime,
+      </if>
+      <if test="tkPunchcardFeedbackManagerid != null">
+        tk_punchcard_feedback_managerId,
+      </if>
+      <if test="tkPunchcardFeedbackPlanId != null">
+        tk_punchcard_feedback_plan_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkPunchcardFeedbackId != null">
+        #{tkPunchcardFeedbackId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackUserId != null">
+        #{tkPunchcardFeedbackUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackTime != null">
+        #{tkPunchcardFeedbackTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackLatetime != null">
+        #{tkPunchcardFeedbackLatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackManagerid != null">
+        #{tkPunchcardFeedbackManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackPlanId != null">
+        #{tkPunchcardFeedbackPlanId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkPunchcardFeedback">
+    update tk_punchcard_feedback
+    <set>
+      <if test="tkPunchcardFeedbackUserId != null">
+        tk_punchcard_feedback_user_id = #{tkPunchcardFeedbackUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackTime != null">
+        tk_punchcard_feedback_time = #{tkPunchcardFeedbackTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackLatetime != null">
+        tk_punchcard_feedback_lateTime = #{tkPunchcardFeedbackLatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackManagerid != null">
+        tk_punchcard_feedback_managerId = #{tkPunchcardFeedbackManagerid,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardFeedbackPlanId != null">
+        tk_punchcard_feedback_plan_id = #{tkPunchcardFeedbackPlanId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_punchcard_feedback_id = #{tkPunchcardFeedbackId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkPunchcardFeedback">
+    update tk_punchcard_feedback
+    set tk_punchcard_feedback_user_id = #{tkPunchcardFeedbackUserId,jdbcType=VARCHAR},
+      tk_punchcard_feedback_time = #{tkPunchcardFeedbackTime,jdbcType=VARCHAR},
+      tk_punchcard_feedback_lateTime = #{tkPunchcardFeedbackLatetime,jdbcType=VARCHAR},
+      tk_punchcard_feedback_managerId = #{tkPunchcardFeedbackManagerid,jdbcType=VARCHAR},
+      tk_punchcard_feedback_plan_id = #{tkPunchcardFeedbackPlanId,jdbcType=VARCHAR}
+    where tk_punchcard_feedback_id = #{tkPunchcardFeedbackId,jdbcType=VARCHAR}
+  </update>
+</mapper>

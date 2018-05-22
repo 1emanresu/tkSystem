@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPowerMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPower">
+    <id column=" tk_power_id" jdbcType="VARCHAR" property="tkPowerId" />
+    <result column="tk_user_id" jdbcType="VARCHAR" property="tkUserId" />
+    <result column="tk_function_id" jdbcType="VARCHAR" property="tkFunctionId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    " tk_power_id", tk_user_id, tk_function_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_power
+    where " tk_power_id" = #{tkPowerId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_power
+    where " tk_power_id" = #{tkPowerId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkPower">
+    insert into tk_power (" tk_power_id", tk_user_id, tk_function_id
+      )
+    values (#{tkPowerId,jdbcType=VARCHAR}, #{tkUserId,jdbcType=VARCHAR}, #{tkFunctionId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkPower">
+    insert into tk_power
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkPowerId != null">
+        " tk_power_id",
+      </if>
+      <if test="tkUserId != null">
+        tk_user_id,
+      </if>
+      <if test="tkFunctionId != null">
+        tk_function_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkPowerId != null">
+        #{tkPowerId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkUserId != null">
+        #{tkUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkFunctionId != null">
+        #{tkFunctionId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkPower">
+    update tk_power
+    <set>
+      <if test="tkUserId != null">
+        tk_user_id = #{tkUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkFunctionId != null">
+        tk_function_id = #{tkFunctionId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where " tk_power_id" = #{tkPowerId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkPower">
+    update tk_power
+    set tk_user_id = #{tkUserId,jdbcType=VARCHAR},
+      tk_function_id = #{tkFunctionId,jdbcType=VARCHAR}
+    where " tk_power_id" = #{tkPowerId,jdbcType=VARCHAR}
+  </update>
+</mapper>

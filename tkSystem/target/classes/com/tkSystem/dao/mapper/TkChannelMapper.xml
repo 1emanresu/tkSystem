@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkChannelMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkChannel">
+    <id column="tk_channel_id" jdbcType="VARCHAR" property="tkChannelId" />
+    <result column="tk_channel_name" jdbcType="VARCHAR" property="tkChannelName" />
+    <result column="tk_user_id" jdbcType="VARCHAR" property="tkUserId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_channel_id, tk_channel_name, tk_user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_channel
+    where tk_channel_id = #{tkChannelId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_channel
+    where tk_channel_id = #{tkChannelId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkChannel">
+    insert into tk_channel (tk_channel_id, tk_channel_name, tk_user_id
+      )
+    values (#{tkChannelId,jdbcType=VARCHAR}, #{tkChannelName,jdbcType=VARCHAR}, #{tkUserId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkChannel">
+    insert into tk_channel
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkChannelId != null">
+        tk_channel_id,
+      </if>
+      <if test="tkChannelName != null">
+        tk_channel_name,
+      </if>
+      <if test="tkUserId != null">
+        tk_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkChannelId != null">
+        #{tkChannelId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkChannelName != null">
+        #{tkChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkUserId != null">
+        #{tkUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkChannel">
+    update tk_channel
+    <set>
+      <if test="tkChannelName != null">
+        tk_channel_name = #{tkChannelName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkUserId != null">
+        tk_user_id = #{tkUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_channel_id = #{tkChannelId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkChannel">
+    update tk_channel
+    set tk_channel_name = #{tkChannelName,jdbcType=VARCHAR},
+      tk_user_id = #{tkUserId,jdbcType=VARCHAR}
+    where tk_channel_id = #{tkChannelId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPunchcardMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPunchcard">
+    <id column="tk_punchCard_id" jdbcType="VARCHAR" property="tkPunchcardId" />
+    <result column="tk_punchCard_time" jdbcType="VARCHAR" property="tkPunchcardTime" />
+    <result column="tk_punchCard_person" jdbcType="VARCHAR" property="tkPunchcardPerson" />
+    <result column="tk_punchCard_loc" jdbcType="VARCHAR" property="tkPunchcardLoc" />
+    <result column="tk_plan_id" jdbcType="VARCHAR" property="tkPlanId" />
+  </resultMap>
+   <resultMap id="BaseResultWyMap" type="com.tkSystem.tools.WyMap">
+  </resultMap>
+
+   
+  <sql id="Base_Column_List">
+    tk_punchCard_id, tk_punchCard_time, tk_punchCard_person, tk_punchCard_loc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_punchcard
+    where tk_punchCard_id = #{tkPunchcardId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_punchcard
+    where tk_punchCard_id = #{tkPunchcardId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkPunchcard">
+    insert into tk_punchcard (tk_punchCard_id, tk_punchCard_time, tk_punchCard_person, 
+      tk_punchCard_loc)
+    values (#{tkPunchcardId,jdbcType=VARCHAR}, #{tkPunchcardTime,jdbcType=VARCHAR}, #{tkPunchcardPerson,jdbcType=VARCHAR}, 
+      #{tkPunchcardLoc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkPunchcard">
+    insert into tk_punchcard
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkPunchcardId != null">
+        tk_punchCard_id,
+      </if>
+      <if test="tkPunchcardTime != null">
+        tk_punchCard_time,
+      </if>
+      <if test="tkPunchcardPerson != null">
+        tk_punchCard_person,
+      </if>
+      <if test="tkPunchcardLoc != null">
+        tk_punchCard_loc,
+      </if>
+      <if test="tkPunchCardPhoto != null">
+        tk_punchCard_photo,
+      </if>
+      <if test="tkPlanId != null">
+        tk_plan_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkPunchcardId != null">
+        #{tkPunchcardId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardTime != null">
+        #{tkPunchcardTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardPerson != null">
+        #{tkPunchcardPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardLoc != null">
+        #{tkPunchcardLoc,jdbcType=VARCHAR},
+      </if>
+     <if test="tkPunchCardPhoto != null">
+        #{tkPunchCardPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPlanId != null">
+        #{tkPlanId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+     
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkPunchcard">
+    update tk_punchcard
+    <set>
+      <if test="tkPunchcardTime != null">
+        tk_punchCard_time = #{tkPunchcardTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardPerson != null">
+        tk_punchCard_person = #{tkPunchcardPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardLoc != null">
+        tk_punchCard_loc = #{tkPunchcardLoc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_punchCard_id = #{tkPunchcardId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkPunchcard">
+    update tk_punchcard
+    set tk_punchCard_time = #{tkPunchcardTime,jdbcType=VARCHAR},
+      tk_punchCard_person = #{tkPunchcardPerson,jdbcType=VARCHAR},
+      tk_punchCard_loc = #{tkPunchcardLoc,jdbcType=VARCHAR}
+    where tk_punchCard_id = #{tkPunchcardId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 获取打卡记录 -->
+  
+  <select id="getClockInRecord" parameterType="com.tkSystem.tools.WyMap"  resultMap="BaseResultWyMap">
+select 
+tk_punchCard_id as tkPunchCardId,
+tk_punchCard_time as tkPunchCardTime,
+tk_plan_id as tkPlanId 
+from tk_punchcard 
+where tk_punchCard_id in (select tk_punchcard_feedback_id from tk_punchcard_feedback where tk_punchcard_feedback_user_id=#{tkUserId}) ORDER BY tk_punchCard_time desc LIMIT 0,9
+  </select>
+</mapper>

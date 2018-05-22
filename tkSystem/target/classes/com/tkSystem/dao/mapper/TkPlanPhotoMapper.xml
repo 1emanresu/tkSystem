@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPlanPhotoMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPlanPhoto">
+    <id column="tk_plan_photo_id" jdbcType="VARCHAR" property="tkPlanPhotoId" />
+    <result column="tk_plan_photo_url" jdbcType="VARCHAR" property="tkPlanPhotoUrl" />
+    <result column="tk_plan_id" jdbcType="VARCHAR" property="tkPlanId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_plan_photo_id, tk_plan_photo_url, tk_plan_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_plan_photo
+    where tk_plan_photo_id = #{tkPlanPhotoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_plan_photo
+    where tk_plan_photo_id = #{tkPlanPhotoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkPlanPhoto">
+    insert into tk_plan_photo (tk_plan_photo_id, tk_plan_photo_url, tk_plan_id
+      )
+    values (#{tkPlanPhotoId,jdbcType=VARCHAR}, #{tkPlanPhotoUrl,jdbcType=VARCHAR}, #{tkPlanId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkPlanPhoto">
+    insert into tk_plan_photo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkPlanPhotoId != null">
+        tk_plan_photo_id,
+      </if>
+      <if test="tkPlanPhotoUrl != null">
+        tk_plan_photo_url,
+      </if>
+      <if test="tkPlanId != null">
+        tk_plan_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkPlanPhotoId != null">
+        #{tkPlanPhotoId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPlanPhotoUrl != null">
+        #{tkPlanPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPlanId != null">
+        #{tkPlanId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkPlanPhoto">
+    update tk_plan_photo
+    <set>
+      <if test="tkPlanPhotoUrl != null">
+        tk_plan_photo_url = #{tkPlanPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPlanId != null">
+        tk_plan_id = #{tkPlanId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_plan_photo_id = #{tkPlanPhotoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkPlanPhoto">
+    update tk_plan_photo
+    set tk_plan_photo_url = #{tkPlanPhotoUrl,jdbcType=VARCHAR},
+      tk_plan_id = #{tkPlanId,jdbcType=VARCHAR}
+    where tk_plan_photo_id = #{tkPlanPhotoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

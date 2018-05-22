@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkPunchcardPhotoMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkPunchcardPhoto">
+    <id column="tk_punchcard_photo_id" jdbcType="VARCHAR" property="tkPunchcardPhotoId" />
+    <result column="tk_punchcard_photo_url" jdbcType="VARCHAR" property="tkPunchcardPhotoUrl" />
+    <result column="tk_punchcard_id" jdbcType="VARCHAR" property="tkPunchcardId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_punchcard_photo_id, tk_punchcard_photo_url, tk_punchcard_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_punchcard_photo
+    where tk_punchcard_photo_id = #{tkPunchcardPhotoId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_punchcard_photo
+    where tk_punchcard_photo_id = #{tkPunchcardPhotoId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkPunchcardPhoto">
+    insert into tk_punchcard_photo (tk_punchcard_photo_id, tk_punchcard_photo_url, 
+      tk_punchcard_id)
+    values (#{tkPunchcardPhotoId,jdbcType=VARCHAR}, #{tkPunchcardPhotoUrl,jdbcType=VARCHAR}, 
+      #{tkPunchcardId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkPunchcardPhoto">
+    insert into tk_punchcard_photo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkPunchcardPhotoId != null">
+        tk_punchcard_photo_id,
+      </if>
+      <if test="tkPunchcardPhotoUrl != null">
+        tk_punchcard_photo_url,
+      </if>
+      <if test="tkPunchcardId != null">
+        tk_punchcard_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkPunchcardPhotoId != null">
+        #{tkPunchcardPhotoId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardPhotoUrl != null">
+        #{tkPunchcardPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardId != null">
+        #{tkPunchcardId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkPunchcardPhoto">
+    update tk_punchcard_photo
+    <set>
+      <if test="tkPunchcardPhotoUrl != null">
+        tk_punchcard_photo_url = #{tkPunchcardPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="tkPunchcardId != null">
+        tk_punchcard_id = #{tkPunchcardId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_punchcard_photo_id = #{tkPunchcardPhotoId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkPunchcardPhoto">
+    update tk_punchcard_photo
+    set tk_punchcard_photo_url = #{tkPunchcardPhotoUrl,jdbcType=VARCHAR},
+      tk_punchcard_id = #{tkPunchcardId,jdbcType=VARCHAR}
+    where tk_punchcard_photo_id = #{tkPunchcardPhotoId,jdbcType=VARCHAR}
+  </update>
+</mapper>

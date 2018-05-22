@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkTargetReportMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tkSystem.dao.entity.TkTargetReport">
+		<id column="tk_target_report_id" jdbcType="VARCHAR"
+			property="tkTargetReportId" />
+		<result column="tk_target_report_name" jdbcType="VARCHAR"
+			property="tkTargetReportName" />
+		<result column="tk_target_report_time" jdbcType="VARCHAR"
+			property="tkTargetReportTime" />
+		<result column="tk_user_id" jdbcType="VARCHAR"
+			property="tkUserId" />
+		<result column="tk_target_reuser_id" jdbcType="VARCHAR"
+			property="tkTargetReuserId" />
+	</resultMap>
+	<resultMap id="BaseResultWyMap"
+		type="com.tkSystem.tools.WyMap">
+	</resultMap>
+	<parameterMap type="com.tkSystem.tools.WyMap"
+		id="parameterWyMap"></parameterMap>
+	<sql id="Base_Column_List">
+		tk_target_report_id, tk_target_report_name,
+		tk_target_report_time,
+		tk_user_id,tk_target_reuser_id
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tk_target_report
+		where tk_target_report_id =
+		#{tkTargetReportId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByUserId"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		select
+		tk_target_report_remark as tkTargetReportRemark,tk_target_report_id
+		as
+		tkTargetReportId,tk_target_report_name as
+		tkTargetReportName,tk_user_id as tkUserId,tk_plan_id from
+		tk_target_report where
+		tk_user_id =
+		#{tkUserId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByReUserId"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		select
+		tk_target_report_remark as tkTargetReportRemark,tk_target_report_id
+		as
+		tkTargetReportId,tk_target_report_name as
+		tkTargetReportName,tk_user_id as tkUserId,tk_plan_id from
+		tk_target_report where
+		tk_target_reuser_id =
+		#{tk_target_reuser_id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey"
+		parameterType="com.tkSystem.tools.WyMap">
+		delete from tk_target_report
+		where tk_target_report_id =
+		#{tkTargetReportId,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.tkSystem.tools.WyMap">
+		insert into tk_target_report
+		(tk_target_report_id, tk_target_report_name,
+		tk_target_report_time,
+		tk_user_id)
+		values (#{tkTargetReportId,jdbcType=VARCHAR},
+		#{tkTargetReportName,jdbcType=VARCHAR},
+		#{tkTargetReportTime,jdbcType=VARCHAR}, #{tkUserId,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.tkSystem.tools.WyMap">
+		insert into tk_target_report
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tkTargetReportId != null">
+				tk_target_report_id,
+			</if>
+			<if test="tkTargetReportName != null">
+				tk_target_report_name,
+			</if>
+			<if test="tkTargetReportTime != null">
+				tk_target_report_time,
+			</if>
+			<if test="tkUserId != null">
+				tk_user_id,
+			</if>
+			<if test="tkPlanId != null">
+				tk_plan_id,
+			</if>
+			<if test="tk_target_report_remark != null">
+				tk_target_report_remark,
+			</if>
+			<if test="tk_target_reuser_id != null">
+				tk_target_reuser_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tkTargetReportId != null">
+				#{tkTargetReportId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkTargetReportName != null">
+				#{tkTargetReportName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkTargetReportTime != null">
+				#{tkTargetReportTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserId != null">
+				#{tkUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tkPlanId != null">
+				#{tk_plan_id,jdbcType=VARCHAR},
+			</if>
+			<if test="tk_target_report_remark != null">
+				#{tk_target_report_remark,jdbcType=VARCHAR},
+			</if>
+			<if test="tk_target_reuser_id != null">
+				#{tk_target_reuser_id,jdbcType=VARCHAR},
+			</if>
+
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_target_report
+		<set>
+			<if test="tkTargetReportName != null">
+				tk_target_report_name =
+				#{tkTargetReportName,jdbcType=VARCHAR},
+			</if>
+			<if test="tkTargetReportTime != null">
+				tk_target_report_time =
+				#{tkTargetReportTime,jdbcType=VARCHAR},
+			</if>
+			<if test="tkUserId != null">
+				tk_user_id = #{tkUserId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tk_target_report_id = #{tkTargetReportId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_target_report
+		set tk_target_report_name =
+		#{tkTargetReportName,jdbcType=VARCHAR},
+		tk_target_report_time =
+		#{tkTargetReportTime,jdbcType=VARCHAR},
+		tk_user_id =
+		#{tkUserId,jdbcType=VARCHAR}
+		where tk_target_report_id =
+		#{tkTargetReportId,jdbcType=VARCHAR}
+	</update>
+
+	<update id="putReportByManage"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_target_report
+		set tk_report_state =#{tk_report_state}
+		where 1
+		<if test="tk_target_report_id!=null">
+			and tk_target_report_id=#{tk_target_report_id}
+		</if>
+		;
+	</update>
+	<select id="getReportByManageDetail"
+	parameterMap="parameterWyMap" resultMap="BaseResultWyMap">
+	select * from tk_target_report where 1
+		<if test="tkTargetReportId!=null">
+			and tk_target_report_id=#{tkTargetReportId}
+		</if>
+		;
+	</select>
+</mapper>

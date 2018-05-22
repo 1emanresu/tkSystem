@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkFunctionMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkFunction">
+    <id column="tk_function_id" jdbcType="VARCHAR" property="tkFunctionId" />
+    <result column="tk_function_name" jdbcType="VARCHAR" property="tkFunctionName" />
+    <result column="tk_function_pid" jdbcType="VARCHAR" property="tkFunctionPid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_function_id, tk_function_name, tk_function_pid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_function
+    where tk_function_id = #{tkFunctionId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_function
+    where tk_function_id = #{tkFunctionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkFunction">
+    insert into tk_function (tk_function_id, tk_function_name, tk_function_pid
+      )
+    values (#{tkFunctionId,jdbcType=VARCHAR}, #{tkFunctionName,jdbcType=VARCHAR}, #{tkFunctionPid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkFunction">
+    insert into tk_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkFunctionId != null">
+        tk_function_id,
+      </if>
+      <if test="tkFunctionName != null">
+        tk_function_name,
+      </if>
+      <if test="tkFunctionPid != null">
+        tk_function_pid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkFunctionId != null">
+        #{tkFunctionId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkFunctionName != null">
+        #{tkFunctionName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkFunctionPid != null">
+        #{tkFunctionPid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkFunction">
+    update tk_function
+    <set>
+      <if test="tkFunctionName != null">
+        tk_function_name = #{tkFunctionName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkFunctionPid != null">
+        tk_function_pid = #{tkFunctionPid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_function_id = #{tkFunctionId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkFunction">
+    update tk_function
+    set tk_function_name = #{tkFunctionName,jdbcType=VARCHAR},
+      tk_function_pid = #{tkFunctionPid,jdbcType=VARCHAR}
+    where tk_function_id = #{tkFunctionId,jdbcType=VARCHAR}
+  </update>
+</mapper>

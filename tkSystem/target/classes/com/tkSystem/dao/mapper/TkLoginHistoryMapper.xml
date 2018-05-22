@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkLoginHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkLoginHistory">
+    <id column="tk_login_history_id" jdbcType="VARCHAR" property="tkLoginHistoryId" />
+    <result column="tk_login_history_name" jdbcType="VARCHAR" property="tkLoginHistoryName" />
+    <result column="tk_login_history_time" jdbcType="VARCHAR" property="tkLoginHistoryTime" />
+    <result column="tk_login_history_date" jdbcType="VARCHAR" property="tkLoginHistoryDate" />
+    <result column="tk_user_id" jdbcType="VARCHAR" property="tkUserId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_login_history_id, tk_login_history_name, tk_login_history_time, tk_login_history_date, 
+    tk_user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_login_history
+    where tk_login_history_id = #{tkLoginHistoryId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_login_history
+    where tk_login_history_id = #{tkLoginHistoryId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkLoginHistory">
+    insert into tk_login_history (tk_login_history_id, tk_login_history_name, 
+      tk_login_history_time, tk_login_history_date, 
+      tk_user_id)
+    values (#{tkLoginHistoryId,jdbcType=VARCHAR}, #{tkLoginHistoryName,jdbcType=VARCHAR}, 
+      #{tkLoginHistoryTime,jdbcType=VARCHAR}, #{tkLoginHistoryDate,jdbcType=VARCHAR}, 
+      #{tkUserId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkLoginHistory">
+    insert into tk_login_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkLoginHistoryId != null">
+        tk_login_history_id,
+      </if>
+      <if test="tkLoginHistoryName != null">
+        tk_login_history_name,
+      </if>
+      <if test="tkLoginHistoryTime != null">
+        tk_login_history_time,
+      </if>
+      <if test="tkLoginHistoryDate != null">
+        tk_login_history_date,
+      </if>
+      <if test="tkUserId != null">
+        tk_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkLoginHistoryId != null">
+        #{tkLoginHistoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLoginHistoryName != null">
+        #{tkLoginHistoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLoginHistoryTime != null">
+        #{tkLoginHistoryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLoginHistoryDate != null">
+        #{tkLoginHistoryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tkUserId != null">
+        #{tkUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkLoginHistory">
+    update tk_login_history
+    <set>
+      <if test="tkLoginHistoryName != null">
+        tk_login_history_name = #{tkLoginHistoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLoginHistoryTime != null">
+        tk_login_history_time = #{tkLoginHistoryTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLoginHistoryDate != null">
+        tk_login_history_date = #{tkLoginHistoryDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tkUserId != null">
+        tk_user_id = #{tkUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_login_history_id = #{tkLoginHistoryId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkLoginHistory">
+    update tk_login_history
+    set tk_login_history_name = #{tkLoginHistoryName,jdbcType=VARCHAR},
+      tk_login_history_time = #{tkLoginHistoryTime,jdbcType=VARCHAR},
+      tk_login_history_date = #{tkLoginHistoryDate,jdbcType=VARCHAR},
+      tk_user_id = #{tkUserId,jdbcType=VARCHAR}
+    where tk_login_history_id = #{tkLoginHistoryId,jdbcType=VARCHAR}
+  </update>
+</mapper>

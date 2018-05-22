@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tkSystem.dao.mapper.TkLocMapper">
+  <resultMap id="BaseResultMap" type="com.tkSystem.dao.entity.TkLoc">
+    <id column="tk_loc_id" jdbcType="VARCHAR" property="tkLocId" />
+    <result column="tk_loc_pid" jdbcType="VARCHAR" property="tkLocPid" />
+    <result column="tk_loc_latitude" jdbcType="VARCHAR" property="tkLocLatitude" />
+    <result column="tk_loc_longitude" jdbcType="VARCHAR" property="tkLocLongitude" />
+    <result column="tk_loc_name" jdbcType="VARCHAR" property="tkLocName" />
+    <result column="tk_loc_time" jdbcType="VARCHAR" property="tkLocTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    tk_loc_id, tk_loc_pid, tk_loc_latitude, tk_loc_longitude, tk_loc_name, tk_loc_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_loc
+    where tk_loc_id = #{tkLocId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tk_loc
+    where tk_loc_id = #{tkLocId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.tkSystem.dao.entity.TkLoc">
+    insert into tk_loc (tk_loc_id, tk_loc_pid, tk_loc_latitude, 
+      tk_loc_longitude, tk_loc_name, tk_loc_time
+      )
+    values (#{tkLocId,jdbcType=VARCHAR}, #{tkLocPid,jdbcType=VARCHAR}, #{tkLocLatitude,jdbcType=VARCHAR}, 
+      #{tkLocLongitude,jdbcType=VARCHAR}, #{tkLocName,jdbcType=VARCHAR}, #{tkLocTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tkSystem.dao.entity.TkLoc">
+    insert into tk_loc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tkLocId != null">
+        tk_loc_id,
+      </if>
+      <if test="tkLocPid != null">
+        tk_loc_pid,
+      </if>
+      <if test="tkLocLatitude != null">
+        tk_loc_latitude,
+      </if>
+      <if test="tkLocLongitude != null">
+        tk_loc_longitude,
+      </if>
+      <if test="tkLocName != null">
+        tk_loc_name,
+      </if>
+      <if test="tkLocTime != null">
+        tk_loc_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tkLocId != null">
+        #{tkLocId,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocPid != null">
+        #{tkLocPid,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocLatitude != null">
+        #{tkLocLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocLongitude != null">
+        #{tkLocLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocName != null">
+        #{tkLocName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocTime != null">
+        #{tkLocTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tkSystem.dao.entity.TkLoc">
+    update tk_loc
+    <set>
+      <if test="tkLocPid != null">
+        tk_loc_pid = #{tkLocPid,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocLatitude != null">
+        tk_loc_latitude = #{tkLocLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocLongitude != null">
+        tk_loc_longitude = #{tkLocLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocName != null">
+        tk_loc_name = #{tkLocName,jdbcType=VARCHAR},
+      </if>
+      <if test="tkLocTime != null">
+        tk_loc_time = #{tkLocTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tk_loc_id = #{tkLocId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tkSystem.dao.entity.TkLoc">
+    update tk_loc
+    set tk_loc_pid = #{tkLocPid,jdbcType=VARCHAR},
+      tk_loc_latitude = #{tkLocLatitude,jdbcType=VARCHAR},
+      tk_loc_longitude = #{tkLocLongitude,jdbcType=VARCHAR},
+      tk_loc_name = #{tkLocName,jdbcType=VARCHAR},
+      tk_loc_time = #{tkLocTime,jdbcType=VARCHAR}
+    where tk_loc_id = #{tkLocId,jdbcType=VARCHAR}
+  </update>
+</mapper>
