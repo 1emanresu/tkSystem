@@ -1,0 +1,14 @@
+<!--pages/home/audit/apply/apply.wxml-->
+ <view class='applyInfo'>
+      <image src='../../../../image/home/reject.png'></image>
+      <view>拒绝申请</view>
+ </view>
+<view class='infocontaner'>
+  <view class='info'>备注信息</view>
+  <view class='content'>
+      <textarea placeholder='拒绝该申请，已超过申请时间'></textarea>
+  </view>
+</view>
+<view class='band-con' bindtap='seav'>
+  <button class='band'>完成</button>
+</view>

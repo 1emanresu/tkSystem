@@ -1,0 +1,44 @@
+/* pages/home/applyreport/applyreport.wxss */
+.conposi{
+  height: auto;
+}
+ .posi-title{
+   color:#7C7C7C; 
+   margin: 16rpx;
+  padding-left: 17rpx;
+}
+.posi-text{
+  margin-top:13rpx;
+  text-indent: 2em;
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+} 
+.posi-text image{
+  width:26rpx;
+  height: 37rpx;
+  margin-bottom: -7rpx;
+  margin-right:10rpx;
+}
+.posi-text textarea{
+  padding: 19rpx;
+}
+/**按钮样式*/
+.band-con{
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+.band{
+  width: 80%;
+  background: #2196F3;
+  color: white;
+  border: none;
+  height:86rpx;
+ line-height:86rpx; 
+}
+button[class="band"]::after {
+  border: 0;
+} 

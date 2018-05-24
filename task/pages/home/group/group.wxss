@@ -1,0 +1,2 @@
+/* pages/home/group/group.wxss */
+@import '../team/team.wxss'

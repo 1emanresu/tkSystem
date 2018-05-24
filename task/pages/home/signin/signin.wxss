@@ -1,0 +1,238 @@
+/* pages/home/audit/audit.wxss */
+@import "../../common/lib/weui.wxss";
+
+/*选项卡  */
+
+.scrollContent {
+  position: relative;
+  border: 1px solid white;
+}
+
+.tab-h {
+  height: 80rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 80rpx;
+  background: white;
+  font-size: 16px;
+  white-space: nowrap;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  z-index: 99;
+}
+
+.tab-item {
+  width: 49%;
+  text-align: center;
+  display: inline-block;
+  color: #949494;
+  font-size: 14px;
+}
+
+.tab-item.active {
+  color: #000;
+  position: relative;
+}
+
+.tab-h:after {
+  content: "";
+  display: block;
+  height: 49rpx;
+  width: 2rpx;
+  background: #7c7c7c;
+  position: absolute;
+  top: 21rpx;
+  right: 50%;
+  border-radius: 16rpx;
+}
+
+/*在字体的下面加入一个下滑线*/
+
+.tab-item.active:after {
+  content: "";
+  display: block;
+  height: 8rpx;
+  width: 85rpx;
+  background: #2196f3;
+  position: absolute;
+  bottom: 0;
+  left: 38%;
+  border-radius: 16rpx;
+}
+
+.bl-cor {
+  background: white;
+}
+
+.item-ans {
+  display: flex;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-top: 12px;
+  position: relative;
+  padding-bottom: 15rpx;
+  border-top: 8px solid #f2f2f2;
+}
+
+.tab-content {
+  margin-top: 80rpx;
+}
+
+.scoll-h {
+  height: 100%;
+}
+
+.addressColor {
+  font-size: 12px;
+  color: #b0b0b0;
+  margin-top: 7rpx;
+}
+
+/*end选项卡  */
+
+/* 签到信息 */
+
+.img-date {
+  height: 376rpx;
+}
+
+.img-date image {
+  width: 100%;
+  height: 100%;
+}
+
+.conposi {
+  height: auto;
+}
+
+.conposit {
+  height: 698rpx;
+}
+
+.posi-title {
+  color: #7c7c7c;
+  margin: 5rpx;
+  padding-left: 17rpx;
+}
+
+.posi-title2 {
+  color: #7c7c7c;
+  margin: -15rpx;
+  padding-top: 38rpx;
+  padding-left: 41rpx;
+}
+
+.posi-text {
+  margin-top: 13rpx;
+  text-indent: 2em;
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+}
+
+.posi-text image {
+  width: 26rpx;
+  height: 37rpx;
+  margin-bottom: -7rpx;
+  margin-right: 10rpx;
+}
+
+.posi-text2 {
+  margin-top: 13rpx;
+  text-indent: 2em;
+  background: white;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 16px;
+}
+
+/**按钮样式*/
+
+.band-con {
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+
+.band {
+  width: 80%;
+  background: #2196f3;
+  color: white;
+  border: none;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+
+button[class="band"]::after {
+  border: 0;
+}
+
+/*签到成功*/
+
+.secCon {
+  padding-top: 8px;
+}
+
+.item-an {
+  display: flex;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-top: 12px;
+  position: relative;
+  padding-bottom: 20rpx;
+  border-bottom: 8px solid #f2f2f2;
+  background: white;
+}
+
+.address_info {
+  position: absolute;
+  bottom: 12rpx;
+  left: 15px;
+}
+
+.address_info {
+  clear: both;
+}
+
+.expertInfot {
+  font-size: 12px;
+  flex-grow: 2;
+  color: #b0b0b0;
+  line-height: 1.5em;
+}
+
+.expertInfot .name {
+  font-size: 14px;
+  color: #000;
+  margin-top: 26rpx;
+  margin-bottom: 21rpx;
+}
+
+.expertInfot .tag {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 15rpx;
+}
+
+.expertInfot view text {
+  color: #8e8e8e;
+}
+
+.ranking {
+  padding-top: 45rpx;
+}
+
+.ranking image {
+  width: 30rpx;
+  height: 39rpx;
+}
+
+/**按钮样式*/
+
+.tag {
+  display: flex;
+}

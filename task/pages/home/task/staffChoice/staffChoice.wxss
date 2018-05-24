@@ -1,0 +1,113 @@
+/* pages/home/task/staffChoice/staffChoice.wxss */
+.topSearch {
+  height: 68rpx;
+  padding: 21rpx 11rpx 11rpx 11rpx;
+  border-bottom: 8px solid #f2f2f2;
+  background: white;
+}
+
+.top_left {
+  width: 82%;
+  float: left;
+}
+
+.top_left input {
+  width: 100%;
+  height: 55rpx;
+  border-radius: 5px;
+  border: 1px solid #f2f2f2;
+  background: #f2f2f2;
+  padding-left: 19rpx;
+}
+
+.top_rigth {
+  float: right;
+  width: 20px;
+  height: 24px;
+  margin-right: 38rpx;
+}
+
+.top_rigth image {
+  width: 100%;
+  height: 100%;
+}
+
+/*显示团队排行样式*/
+.item-ans {
+  display: flex;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-top: 12px;
+  position: relative;
+  padding-bottom: 20rpx;
+  border-bottom: 8px solid #f2f2f2;
+  background: white;
+}
+ 
+.address_info {
+  position: absolute;
+  bottom: 12rpx;
+  left: 15px;
+}
+ 
+
+.address_info {
+  clear: both;
+}
+ 
+/*排第四名样式*/
+
+.avatart {
+  width: 85rpx;
+  height: 85rpx;
+  position: relative;
+  padding-right: 30rpx;
+  border-radius: 90px;
+  overflow: hidden;
+}
+
+.avatart .img {
+  width: 100%;
+  height: 100%;
+}
+
+.expertInfot {
+  font-size: 12px;
+  flex-grow: 2;
+  line-height: 3.5em;
+}
+
+.expertInfot text {
+  color: #b0b0b0;
+}
+
+.ranking {
+  padding-top: 25rpx;
+}
+
+.ranking image {
+    width:49rpx;
+    height:49rpx;
+}
+
+
+
+/**按钮样式*/
+.band-con{
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+.band{
+  width: 80%;
+  background: #2196F3;
+  color: white;
+  border: none;
+  height:86rpx;
+ line-height:86rpx; 
+}
+button[class="band"]::after {
+  border: 0;
+} 
+

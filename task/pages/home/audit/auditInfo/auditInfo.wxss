@@ -1,0 +1,132 @@
+/* pages/home/audit/auditInfo/auditInfo.wxss */
+.conposi {
+  height: auto;
+}
+
+.posi-title {
+  color: #7c7c7c;
+  margin: 16rpx;
+  padding-left: 17rpx;
+}
+
+.positask {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  text-indent: 2em;
+}
+
+.posi-text {
+  background: white;
+  padding-bottom: 25rpx;
+  height: auto;
+}
+
+.cause {
+  padding: 25rpx;
+  text-indent: 1em;
+  background: white;
+  font-size: 14px;
+  padding-bottom: 25rpx;
+}
+
+.goodscontent {
+  font-size: 14px;
+  overflow: hidden;
+  padding-bottom: 15rpx;
+  display: flex;
+}
+.goods{
+  padding:15rpx 0rpx 15rpx 35rpx ;
+  width: 22%;
+}
+.goodsName {
+  width: 65%;
+  text-align: right;
+  padding:15rpx 19rpx 15rpx 35rpx ;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+ 
+
+.scontent {
+  overflow: hidden;
+  height: 105rpx;
+  line-height: 100rpx;
+}
+
+.numcontent {
+  float: left;
+  padding-left: 46rpx;
+}
+
+.numchoise {
+  margin: 15rpx 39rpx 15rpx 15rpx;
+  float: right;
+}
+
+.vimgn {
+  float: left;
+}
+
+.vimgn image {
+  width: 45rpx;
+  height: 45rpx;
+}
+
+.vinput {
+  margin: 15rpx 20rpx 0rpx 20rpx;
+  float: left;
+}
+
+.vinput input {
+  width: 49rpx;
+  height: 45rpx;
+  background: #f2f2f2;
+  text-align: center;
+  margin: 0rpx;
+  border-radius: 90px;
+}
+
+.normal {
+  color: black;
+}
+
+.disabled {
+  color: #ccc;
+}
+
+/**按钮样式*/
+
+.band-con {
+  margin: 55rpx 0rpx 25rpx 0rpx;
+  width: 100%;
+  text-align: center;
+}
+
+.band {
+  width: 80%;
+  background: #2196f3;
+  color: white;
+  border: none;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+.band-con2 {
+  margin: 25rpx 0rpx 25rpx 0rpx;
+  width: 100%;
+  text-align: center;
+}
+
+.band2 {
+  width: 80%;
+  background: #F2F2F2;
+  border: none;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+button[class="band"]::after {
+  border: 0;
+}

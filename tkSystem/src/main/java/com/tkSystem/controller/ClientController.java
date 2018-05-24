@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tkSystem.service.ClientService;
-import com.tkSystem.service.smallProgram.EmployService;
-import com.tkSystem.service.smallProgram.PlanService;
-import com.tkSystem.service.smallProgram.TkPlanExecuteClientService;
-import com.tkSystem.service.smallProgram.TkPlanExecuteService;
+import com.tkSystem.service.ClientServiceInterface;
+import com.tkSystem.service.smallProgram.impl.EmployService;
+import com.tkSystem.service.smallProgram.impl.PlanService;
+import com.tkSystem.service.smallProgram.impl.TkPlanExecuteClientService;
+import com.tkSystem.service.smallProgram.impl.TkPlanExecuteService;
 import com.tkSystem.tools.ResponseUtil;
 import com.tkSystem.tools.RetCode;
 import com.tkSystem.tools.ToolsUtil;
@@ -24,7 +24,7 @@ public class ClientController {
 	 * 服务注册
 	 */
 	@Autowired(required = true)
-	 ClientService clientService;
+	 ClientServiceInterface clientService;
 	/**
 	 * 客户信息 已录入查询
 	 * 

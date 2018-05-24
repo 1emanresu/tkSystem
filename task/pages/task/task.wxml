@@ -1,0 +1,43 @@
+<!--pages/task/task.wxml-->
+<view>
+  <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+    <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">全部分类</view>
+    <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">距离最近</view>
+    <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">剩余时间</view>
+    <view class="tab-item {{currentTab==3?'active':''}}" data-current="3" bindtap="swichNav">筛选</view>
+  </scroll-view>
+  <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
+    <swiper-item wx:for="{{[0,1,2,3]}}">
+      <scroll-view scroll-y="true" class="scoll-h">
+        <block wx:for="{{alltaskList}}" wx:key="*this">
+          <navigator open-type="navigate" url="taskdetails?tk_plan_detail_id={{item.tk_plan_detail_id}}">
+          <view class='goodsContent'>
+            <view class='title_info'>
+              <view class='floatCon'>
+                <view class='leftfunction'>{{item.tk_plan_detail_title}}</view>
+                <view class='rightfunction'>
+                  <image src='../../image/nextH.png'></image>
+                </view>
+              </view>
+              <view class='linebor'></view>
+            </view>
+            <view class="item-ans">
+              <view class="avatar">
+                <image class="img"  src="{{item.tk_plan_detail_photo}}"></image>
+              </view>
+              <view class="expertInfo">
+                <view class="name">{{item.tk_plan_detail_target_achieve}}/{{item.tk_plan_detail_target}}</view>
+                <view class="tag">{{item.tk_plan_detail_start}}至{{item.tk_plan_detail_end}}</view>
+                <view class="answerHistory">任务结束剩余: {{item.AmongDate}} </view>
+              </view>
+              <view class="rightfunctiont">
+                 <image src='../../image/nextH.png'></image>
+              </view>
+            </view>
+          </view>
+           </navigator>
+        </block>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+</view>

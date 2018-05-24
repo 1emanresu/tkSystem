@@ -1,0 +1,34 @@
+<!--pages/myinfo/taskschedule/taskschedule.wxml-->
+<view class='conposi'>
+  <view class='posi-title'>选择时间</view>
+  <view class='positask'>
+    <view>
+      <picker mode="date" value="{{date}}" start="2018-05-05" end="2055-1-23" bindchange="bindDateChange">
+        <view class="picker">
+          开始日期: {{dates}}
+        </view>
+      </picker>
+    </view>
+    <view>
+      <picker mode="date" value="{{date}}" start="2018-05-05" end="2055-1-23" bindchange="bindDateChanget">
+        <view class="picker">
+          结束日期: {{datest}}
+        </view>
+      </picker>
+    </view>
+  </view>
+</view>
+<view class='conposi'>
+  <view class='posi-title'>进度状态</view>
+</view>
+
+<view class='phoneConten'>
+  <view class='containerShow' wx:for="{{scheduleList}}">
+    <view class='floatCon'>
+      <view class='leftfunction'>{{item.tk_channel_name}}</view>
+      <view class='rightfunction'>{{item.num}}</view>
+    </view>
+    <view class='linebor'></view>
+    
+  </view>
+</view>

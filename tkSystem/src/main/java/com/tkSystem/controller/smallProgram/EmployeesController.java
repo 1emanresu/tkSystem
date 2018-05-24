@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tkSystem.service.smallProgram.EmployeesService;
-import com.tkSystem.service.smallProgram.PlanService;
+import com.tkSystem.service.smallProgram.EmployeesServiceInterface;
+import com.tkSystem.service.smallProgram.PlanServiceInterface;
 import com.tkSystem.tools.CLID;
 import com.tkSystem.tools.ImageUpload;
 import com.tkSystem.tools.ResponseUtil;
@@ -23,9 +23,9 @@ public class EmployeesController {
 	WyMap wyMap = new WyMap();
 
 	@Autowired
-	EmployeesService employeesService;
+	EmployeesServiceInterface employeesService;
 	@Autowired
-	PlanService planService;
+	PlanServiceInterface planService;
 	/**
 	 * 获取正在拓客的任务信息
 	 * @param request

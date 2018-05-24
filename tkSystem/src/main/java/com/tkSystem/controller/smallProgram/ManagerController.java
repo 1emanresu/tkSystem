@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tkSystem.service.GoodsService;
-import com.tkSystem.service.smallProgram.EmployService;
-import com.tkSystem.service.smallProgram.PlanService;
-import com.tkSystem.service.smallProgram.TkPlanExecuteClientService;
-import com.tkSystem.service.smallProgram.TkPlanExecuteService;
+import com.tkSystem.service.GoodsServiceInterface;
+import com.tkSystem.service.smallProgram.PlanServiceInterface;
+import com.tkSystem.service.smallProgram.TkPlanExecuteClientServiceInterface;
+import com.tkSystem.service.smallProgram.TkPlanExecuteServiceInterface;
+import com.tkSystem.service.smallProgram.employServiceInterface;
 import com.tkSystem.tools.ImageUpload;
 import com.tkSystem.tools.ResponseUtil;
 import com.tkSystem.tools.RetCode;
@@ -28,15 +28,15 @@ public class ManagerController {
 	 * 服务注册
 	 */
 	@Autowired(required = true)
-	PlanService planService;
+	PlanServiceInterface planService;
 	@Autowired(required = true)
-	EmployService employService;
+	employServiceInterface employService;
 	@Autowired(required = true)
-	TkPlanExecuteClientService tkPlanExecuteClientService;
+	TkPlanExecuteClientServiceInterface tkPlanExecuteClientService;
 	@Autowired(required = true)
-	TkPlanExecuteService tkPlanExecuteService;
+	TkPlanExecuteServiceInterface tkPlanExecuteService;
 	@Autowired(required = true)
-	GoodsService goodsService;
+	GoodsServiceInterface goodsService;
 	
 	WyMap wyMap = new WyMap();
 
@@ -69,6 +69,9 @@ public class ManagerController {
 					,"tkPlanDetailGoodAmount#任务礼品数量不能为空"
 					,"tkPlanContactsPhone#联系人电话不能为空"
 					,"tkChannelId#渠道编号不能为空"
+					,"latitude#纬度，浮点数，范围为-90~90，负数表示南纬不能为空"
+					,"longitude#经度，浮点数，范围为-180~180，负数表示西经不能为空"
+					,"address#详细地址"
 					};
 				ToolsUtil.requestIsNull(request, str);
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -156,7 +159,7 @@ public class ManagerController {
 	public void getPlanByUserIdJ(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			ResponseUtil.write(response, planService.getPlanByUserId(request ));
+			ResponseUtil.write(response, planService.getPlanByUserIdJ(request, response ));
 		} catch (Exception e) {
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage()));
 		}
@@ -176,7 +179,7 @@ public class ManagerController {
 	@RequestMapping("getPlanByUserIdZ")
 	public void getPlanByUserIdZ(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			ResponseUtil.write(response, planService.getPlanByUserId(request ));
+			ResponseUtil.write(response, planService.getPlanByUserIdZ(request, response ));
 		} catch (Exception e) {
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage()));
 		}
@@ -193,11 +196,7 @@ public class ManagerController {
 	@RequestMapping("getPlan")
 	public void getPlan(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			if (request.getParameter("tkPlanId") == null || request.getParameter("tkPlanId").trim().equals("")) {
-				throw new Exception("tkPlanId格式有误");
-			}
-
-			ResponseUtil.write(response, planService.postPlan(request ));
+			ResponseUtil.write(response, planService.getPlan(request, response ));
 		} catch (Exception e) {
 			String msg = "=> tkPlanId不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));

@@ -1,0 +1,19 @@
+<!--pages/home/myclient/myclient.wxml-->
+ <!--客户信息 -->
+<view wx:for="{{centliList}}" wx:key="id" class='secCon'>
+  <block>
+    <view class="item-ans">
+      <view class="expertInfo">
+        <view class="name"> {{item.tk_client_name}} {{item.tk_client_phone}}</view>
+        <view class="tag">
+          <text>{{item.tk_client_location}}</text></view>
+      </view>
+      <view class='ranking'>
+           <image  src='/image/next.png'></image>
+      </view>
+    </view> 
+  </block>
+</view>
+<view class='band-con' bindtap="sweep"> 
+  <button class='band'> 录入客户信息</button>
+</view>

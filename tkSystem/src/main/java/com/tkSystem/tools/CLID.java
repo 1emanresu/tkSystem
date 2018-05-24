@@ -5,7 +5,7 @@ public class  CLID {
 	/**
 	 * 自动生成ID
 	 */
-	public static String getID() {
+	public static synchronized String getID() {
 		long date = System.currentTimeMillis();
 		String hlw = String.valueOf((int) (Math.random() * 90 + 10));
 		String sjid = String.valueOf(date) + hlw;

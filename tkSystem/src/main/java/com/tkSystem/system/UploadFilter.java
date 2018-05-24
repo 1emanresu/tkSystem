@@ -87,12 +87,12 @@ public class UploadFilter implements Filter {
 					  new File(imgFilePath).mkdirs();
 					 
 					//imgFilePath = "C:\\xampp\\htdocs\\img";
-					String imgName = imgFilePath + "/" + clid + ".PNG";
+					String imgName = imgFilePath + "/" + clid   ;
 					OutputStream out = new FileOutputStream(imgName);
 					out.write(bytes);
 					out.flush();
 					out.close();
-					url = request.getScheme() + "://" + request.getServerName()+ ":" +request.getServerPort()+ request.getContextPath()+ "/" + "static/img/photo" + "/" + clid + ".PNG";
+					url = request.getScheme() + "://" + request.getServerName()+ ":" +request.getServerPort()+ request.getContextPath()+ "/" + "static/img/photo" + "/" + clid  ;
 					//url = request.getScheme() + "://" + request.getServerName() + "/" + "img" + "/" + clid + ".PNG";
 					retCode = RetCode.getSuccessCode("上传成功");
 					retCode.put("url", url);

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tkSystem.service.GoodsService;
+import com.tkSystem.service.GoodsServiceInterface;
 import com.tkSystem.tools.CLID;
 import com.tkSystem.tools.ResponseUtil;
 import com.tkSystem.tools.RetCode;
@@ -25,7 +25,7 @@ import sun.org.mozilla.javascript.internal.Undefined;
 @RequestMapping("goods")
 public class GoodsController{
 	@Autowired(required=true)
-	GoodsService goodsService;
+	GoodsServiceInterface goodsService;
 	
 	WyMap wyMap=new WyMap();
 	/**

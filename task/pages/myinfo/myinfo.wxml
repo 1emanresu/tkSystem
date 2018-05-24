@@ -1,0 +1,132 @@
+<!--pages/myinfo/myinfo.wxml-->
+<view class='homeContent'>
+  <view class="topContent">
+    <view class="img_vivw">
+      <image src="../../image/home/triangle.png"></image>
+    </view>
+    <view class="userInfo">
+      <view class="infotext">
+        <!-- bindtap="setPhotoInfo" -->
+        <image wx:if="{{imgUrl!=null}}" class="userinfo-avatar" src="{{imgUrl}}"></image>
+        <!-- <view class='mt'>编辑</view> -->
+      </view>
+      <view class='Username'>
+        <view class='{{userinfo}}'>
+          <view>{{username}}</view>
+          <view class='phones'>手机:{{userphone}}</view>
+        </view>
+        <view class='{{userLog}}'>
+          <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+          <view wx:else>请升级微信版本</view>
+        </view>
+      </view>
+      <view class='ewm' bindtap="modalTap">
+        <image src='../../image/home/ewm.png'></image>
+      </view>
+      <navigator wx:for="{{cardList}}" url='{{item.url}}'>
+        <view class='{{item.titleClass}}'>
+          <view>{{item.numIndex}}</view>
+          <text>{{item.title}}</text>
+        </view>
+      </navigator>
+    </view>
+  </view>
+  <!--申请记录  -->
+  <view class='middleContentTow'>
+    <view class='floatCon'>
+      <view class='leftfunction'>申请记录</view>
+      <view class='rightfunction'>
+        <image src='../../image/next.png'></image>
+      </view>
+    </view>
+    <view class='linebor'></view>
+    <view class='functionSec'>
+      <view wx:for="{{MyList}}" wx:key="id" class='secConTow'>
+        <navigator open-type="navigate" url="{{item.skipUrl}}">
+          <view>
+            <image src="{{item.pic_url}}"></image>
+          </view>
+          <view>{{item.technicalSupportTittle}}</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <!--客户跟进  -->
+  <view class='middleContentTow'>
+    <navigator url='../../pages/home/myclient/myclient'>
+      <view class='floatCon'>
+        <view class='leftfunction'>客户信息</view>
+        <view class='rightfunction'>
+          <image src='../../image/next.png'></image>
+        </view>
+      </view>
+    </navigator>
+    <view class='linebor'></view>
+    <!--消息查看  -->
+    <block wx:for="{{getClientInfoList}}">
+      <view class='clientinfo'>
+        <view class='clientshow'>
+          <text>{{item.tk_client_name}}</text>
+          <text>{{item.tk_client_phone}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!--排行榜 -->
+  <view class='currenttask'>
+    <!--begin  -->
+    <view class='middleContentTow'>
+      <view class='floatCon'>
+        <view class='leftfunction'>排行榜</view>
+        <view class='rightfunction'>
+          <image src='../../image/next.png'></image>
+        </view>
+      </view>
+      <view class='linebor'></view>
+      <!--功能选择列表  -->
+      <view class='functionth'>
+        <view wx:for="{{ranList}}" class='secConth'>
+          <view>
+            <image src="{{item.tk_user_head}}"></image>
+          </view>
+          <view>NO.{{item.No}} {{item.tk_user_name}}</view>
+          <view>拓客数量： {{item.tk_client_amount}}</view>
+        </view>
+      </view>
+    </view>
+    <!--拓客进度  -->
+    <navigator url='/pages/myinfo/taskschedule/taskschedule'>
+      <view class='contents'>
+        <view class='lefts'>拓客进度</view>
+        <view class='rights'>
+          <image src='../../image/next.png'></image>
+        </view>
+      </view>
+    </navigator>
+    <view class='contents'>
+      <view class='lefts'>联系我们</view>
+      <view class='rights'>
+        <image src='../../image/next.png'></image>
+      </view>
+    </view>
+    <!--end  -->
+  </view>
+
+</view>
+
+<modal class="modal" hidden="{{modalFlag}}" bindcancel="hidd" no-cancel bindconfirm="modalChange2">
+  <view class='modelCode'>
+    <view>
+      <image src='{{towCode}}'></image>
+    </view>
+    <view class="item-ansT">
+      <view class="avatarT">
+        <image class="img" src="{{imgUrl}}"></image>
+      </view>
+      <view class="expertInfoT">
+        <view class='nameI'>姓名：{{username}}</view>
+        <view class='phoneI'>手机号：{{userphone}}</view>
+      </view>
+    </view>
+  </view>
+</modal>

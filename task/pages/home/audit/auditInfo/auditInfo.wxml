@@ -1,0 +1,45 @@
+<!--pages/home/audit/auditInfo/auditInfo.wxml-->
+ <view class='conposi'>
+  <view class='posi-title'> 申请任务</view>
+  <view class='positask'>
+    {{tk_plan_detail_title}}
+  </view>
+</view>
+<view class='conposi'>
+  <view class='posi-title'> 拓客礼物</view>
+  <view class='posi-text'>
+
+    <view class='goodscontent'>
+      <view class='goods'>物品：</view>
+      <view class='goodsName'>
+         {{tk_good_apply_name}}
+      </view>
+    </view>
+
+    <view class='goodscontent'>
+      <view class='goods'>数量：</view>
+      <view class='goodsName'>
+        {{tk_good_apply_good_amount}}个
+      </view>
+    </view>
+
+  </view>
+</view>
+<view class='conposi'>
+  <view class='posi-title'> 备注理由</view>
+  <view class='cause'>
+      {{tk_good_apply_remark}}
+  </view>
+</view>
+
+
+<navigator url="../apply/succeedApply?tk_good_apply_id={{tk_good_apply_id}}&audit=1">
+<view class='band-con'>
+  <button class='band'>申请</button>
+</view>
+</navigator>
+<navigator url="../apply/apply?tk_good_apply_id={{tk_good_apply_id}}&audit=1">
+<view class='band-con2'>
+  <button class='band2'>拒绝</button>
+</view>
+</navigator>

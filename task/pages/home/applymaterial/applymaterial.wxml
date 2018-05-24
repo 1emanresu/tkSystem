@@ -1,0 +1,47 @@
+<!--pages/home/applymaterial/applymaterial.wxml -->
+<view class='conposi'>
+  <view class='posi-title'> 选择任务</view>
+  <view class='positask'>
+                  <picker mode="selector" range="{{array}}" value="{{arrvaule}}" bindchange="listenerPickerSelected">
+       <text>{{array[index]}}</text>
+</picker>
+  </view>
+</view>
+<form bindsubmit="formSubmit" bindreset="formReset">
+<view class='conposi'>
+  <view class='posi-title'> 拓客礼物</view>
+  <view class='posi-text'>
+
+    <view class='stepper'>
+      <view class='nickn'>物品：</view>
+      <view class='nickt'>
+        <input name="tkGoodName" placeholder='例：电动风扇'></input>
+      </view>
+    </view>
+
+    <view class='scontent'>
+      <view class='numcontent'>数量：</view>
+      <view class='numchoise'>
+        <view class='vimgn' bindtap="bindMinus"> <image src='../../../image/home/minus.png'></image> </view>
+        <view class='vinput'>
+          <input type="number" bindchange="bindManual" value="{{num}}" />
+        </view>
+        <view class='vimgn'  bindtap="bindPlus"> <image src='../../../image/home/add.png'></image> </view>
+      
+      </view>
+    </view>
+
+  </view>
+</view>
+<view class='conposi'>
+  <view class='posi-title'> 备注理由</view>
+  <view class='posi-text'>
+    <textarea name="remark" placeholder='请填写物料原因'></textarea>
+  </view>
+</view>
+
+ 
+<view class='band-con'>
+  <button   formType="submit" class='band'>申请</button>
+</view>
+</form>

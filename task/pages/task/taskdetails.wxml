@@ -1,0 +1,76 @@
+<!--pages/task/taskdetails.wxml-->
+<view class='top-task'>
+  <image class='taskimg' src='../../image/task/taskdateils.png'></image>
+  <view class='taskcontainer'>
+    <view class='leftshow'>
+      <view class='titletask'>{{tk_plan_detail_title}}</view>
+      <view class='color-curr'>当前拓客进度</view>
+      <view class='numtask'>{{tk_plan_detail_target_achieve}}/{{tk_plan_detail_target}}</view>
+      <view class='distance'>距离结束剩余
+        <text>{{amongDate}}</text>
+      </view>
+    </view>
+    <view class='currightfunction'>
+      <view>
+        <image src='../../image/home/positiontow.png'></image>
+      </view>
+      <view class='addressColor'>
+        {{tk_plan_detail_location}}
+      </view>
+    </view>
+  </view>
+</view>
+<!--发转单  -->
+<view class='middleContentTow'>
+  <view class='floatCon'>
+    <view class='leftfunction lcolor'>发传单，那拿佣金</view>
+  </view>
+  <view class='linebor'></view>
+  <view class='distask'>距离完成任务还差{{residuenum}}个</view>
+
+</view>
+
+<!--客户跟进  -->
+<view class='middleContentTow'>
+  <navigator url='../home/myclient/myclient'>
+    <view class='floatCon'>
+      <view class='leftfunction'>客户跟进</view>
+      <view class='rightfunction'>
+        <image src='../../image/next.png'></image>
+      </view>
+    </view>
+  </navigator>
+  <view class='linebor'></view>
+  <!--消息查看  -->
+  <block wx:for="{{getClientInfoList}}">
+    <view class='clientinfo'>
+      <view class='clientshow'>
+        <text>{{item.tk_client_name}}</text>
+        <text>{{item.tk_client_phone}}</text>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!--申请报备  -->
+<view class='contents'>
+  <view class='lefts'>拓客进度</view>
+  <view class='lefts lcolo1'>申请报备</view>
+  <navigator url='../home/applyreport/applyreport'>
+    <view class='rights'>
+      <image src='../../image/next.png'></image>
+    </view>
+    <view class='rights'>申请</view>
+  </navigator>
+</view>
+<!--物料申请  -->
+<view class='contents'>
+  <view class='lefts'>物料申请</view>
+  <view class='lefts lcolo2'>物料申请</view>
+  <navigator url='../home/applymaterial/applymaterial'>
+    <view class='rights'>
+      <image src='../../image/next.png'></image>
+    </view>
+    <view class='rights'>申请</view>
+  </navigator>
+</view>

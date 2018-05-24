@@ -1,0 +1,30 @@
+<!--pages/home/thismonthbus/thismonthbus.wxml -->
+
+<block wx:for="{{thismussList}}" wx:key="*this">
+    <navigator open-type="navigate" url="../../../pages/task/taskdetails?tk_plan_detail_id={{item.tk_plan_detail_id}}">
+  <view class='goodsContent'>
+    <view class='title_info'>
+      <view class='floatCon'>
+        <view class='leftfunction'>{{item.tk_plan_detail_title}}</view>
+        <view class='rightfunction'>
+          <image src='../../../image/nextH.png'></image>
+        </view>
+      </view>
+      <view class='linebor'></view>
+    </view>
+    <view class="item-ans">
+      <view class="avatar">
+        <image class="img" src="{{item.tk_plan_detail_photo}}"></image>
+      </view>
+      <view class="expertInfo">
+        <view class="name">{{item.tk_plan_detail_target_achieve}}/{{item.tk_plan_detail_target}}</view>
+        <view class="tag">{{item.tk_plan_detail_start}}至{{item.tk_plan_detail_end}}</view>
+        <view class="answerHistory">任务结束剩余: {{item.amongDate}} </view>
+      </view>
+      <view class="rightfunctiont">
+        <image src='../../image/nextH.png'></image>
+      </view>
+    </view>
+  </view>
+  </navigator>
+</block>

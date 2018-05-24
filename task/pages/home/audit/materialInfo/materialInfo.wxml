@@ -1,0 +1,48 @@
+<!--pages/home/audit/materialInfo/materialInfo.wxml-->
+ <view class='conposi'>
+  <view class='posi-title'> 申请任务</view>
+  <view class='positask'>
+    {{tk_plan_detail_title}}
+  </view>
+</view>
+<view class='conposi'>
+  <view class='posi-title'>修改时间</view>
+  <view class='posi-text'>
+
+    <view class='goodscontent'>
+      <view class='goods'>原定时间：</view>
+      <view class='goodsName'>
+         {{tk_plan_detail_start}}
+      </view>
+    </view>
+
+    <view class='goodscontent'>
+      <view class='goods'>修改为：</view>
+      <view class='goodsName'>
+       <picker mode="multiSelector" value="{{dateTime}}"  bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+          <view class="picker">
+             {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}:{{dateTimeArray[5][dateTime[5]]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+  </view>
+</view>
+<view class='conposi'>
+  <view class='posi-title'> 备注理由</view>
+  <view class='cause'>
+       {{tk_target_report_remark}} {{tk_target_report_id}}
+  </view>
+</view>
+
+<navigator url="../apply/succeedApply?tk_target_report_id={{tk_target_report_id}}&audit=2&starTime={{starTime}}">
+<view class='band-con'>
+  <button class='band'>同意</button>
+</view>
+</navigator>
+<navigator url="../apply/apply?tk_target_report_id={{tk_target_report_id}}&audit=2&starTime={{starTime}}">
+<view class='band-con2'>
+  <button class='band2'>拒绝</button>
+</view>
+</navigator>

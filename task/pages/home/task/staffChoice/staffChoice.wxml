@@ -1,0 +1,30 @@
+<!--pages/home/task/staffChoice/staffChoice.wxml-->
+<view class='topSearch'>
+  <view class='top_left'>
+    <input name="userName"   bindinput ="userNameInput" ></input>
+  </view>
+  <view class='top_rigth' bindtap="selectStaff">
+    <image src='/image/team/search.png'></image>
+  </view>
+</view>
+<!--人员选择 -->
+<view wx:for="{{staffList}}" wx:key="id" class='secCon'>
+  <block>
+    <view class="item-ans"> 
+      <view class="avatart">
+        <image class="img" src="{{item.tk_user_head}}"></image>
+      </view>
+      <view class="expertInfot">
+        <view class="tag">{{item.tk_user_name}}：
+          <text>拓客数量：</text> {{item.tk_client_amount}}人</view>
+      </view>
+      <view class='ranking'> 
+            <image class="item-select" bindtap="switchSelect" data-index="{{index}}" data-id="{{index}}" src="{{item.isSelect?'/image/cart/comment_select.png':'/image/cart/comment_normal.png'}}" />         
+      </view>
+    </view>
+    <!--end  -->
+  </block> 
+</view>
+<view class='band-con' bindtap="changeAllocation"> 
+  <button class='band'> 分配任务</button>
+</view>

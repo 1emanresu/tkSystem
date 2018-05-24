@@ -1,0 +1,31 @@
+<!--pages/home/binding/binding.wxml-->
+<view class='topSearch'>
+  <view class='top_left'>
+    <input  bindinput ="userNameInput"></input>
+  </view>
+  <view class='top_rigth'  bindtap="selectStaff">
+    <image src='/image/team/search.png'></image>
+  </view>
+</view>
+<!--人员选择 -->
+<view wx:for="{{infoList}}" wx:key="id" class='secCon'>
+  <block>
+    <view class="item-ans">
+      <view class="avatart">
+        <image class="img" src="{{item.tk_user_head}}"></image>
+      </view>
+      <view class="expertInfot">
+        <view class="tag">{{item.tk_user_name}}： 
+          <text> 手机号：</text> <view  bindtap="callPhone">{{item.tk_user_phone}}</view></view>
+      </view>
+      <view class='ranking'  bindtap="unbundle"  data-deleteid="{{item.tk_user_id}}"> 
+            <view>解绑</view>
+      </view>
+    </view>
+    <!--end  -->
+  </block>
+</view>
+<view class='band-con' bindtap="sweep"> 
+  <button class='band'> 绑定人员</button>
+</view>
+

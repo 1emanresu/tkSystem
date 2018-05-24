@@ -1,0 +1,2 @@
+/* pages/home/audit/materialInfo/materialInfo.wxss */
+@import '../auditInfo/auditInfo.wxss';

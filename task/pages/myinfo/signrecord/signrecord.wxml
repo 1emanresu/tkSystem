@@ -1,0 +1,17 @@
+<!--pages/myinfo/signrecord/signrecord.wxml-->
+<view class='secCon'>
+  <block wx:for="{{signinList}}" wx:key="id">
+    <view class="item-an">
+      <view class="expertInfot">
+        <view class="name">
+          <text>任务：</text>{{item.tk_plan_name}}</view>
+        <view class="tag">
+          <text>签到时间：</text>{{item.tkPunchCardTime}}</view>
+      </view>
+      <view class='ranking'>
+        <text wx:if="{{item.clockState}}">成功</text>
+        <text wx:if="{{!item.clockState}}">失败</text>
+      </view>
+    </view>
+  </block>
+</view>

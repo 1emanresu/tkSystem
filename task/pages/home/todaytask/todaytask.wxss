@@ -1,0 +1,106 @@
+/* pages/home/todaytask/todaytask.wxss */
+
+.goodsContent {
+  background: white;
+  border-top: 8px solid #eaeaea;
+}
+.rightfunctiont {
+  width: 7px;
+  height: 14px;
+  padding-right: 25rpx;
+  padding-top: 2rpx;
+}
+
+.rightfunctiont image {
+  width: 100%;
+  height: 100%;
+}
+.title_info {
+  padding: 9rpx 29rpx 0rpx 29rpx;
+}
+.floatCon {
+  padding: 0px 7px 0px 7px;
+  overflow: hidden;
+}
+
+.leftfunction {
+  float: left;
+}
+
+.rightfunction {
+  width: 7px;
+  height: 14px;
+  float: left;
+  padding-left: 25rpx;
+  padding-top: 2rpx;
+}
+
+.rightfunction image {
+  width: 100%;
+  height: 100%;
+}
+
+.linebor {
+  overflow: hidden;
+  margin: 10px auto;
+  width: 90%;
+  border-bottom: 1px solid #e9e9e9;
+}
+.item-ans {
+  width: 100%;
+  height: auto;
+  padding: 0rpx 35rpx 35rpx 35rpx;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.avatar {
+  width: 187rpx;
+  height: 134rpx;
+  position: relative;
+  padding-right: 30rpx;
+}
+
+.avatar .img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar .doyen {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  bottom: -2px;
+  right: 20rpx;
+}
+
+.expertInfo {
+  font-size: 12px;
+  flex-grow: 2;
+  color: #b0b0b0;
+  line-height: 1.5em;
+}
+
+.expertInfo .name {
+  font-size: 16px;
+  color: #FF0101;
+  margin-bottom: 6px;
+}
+
+.askBtn {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 60rpx;
+  border: 1px solid #4675f9;
+  color: #4675f9;
+}
+
+.tab-content {
+  margin-top: 80rpx;
+}

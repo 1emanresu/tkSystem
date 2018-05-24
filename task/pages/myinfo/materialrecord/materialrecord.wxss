@@ -1,0 +1,2 @@
+/* pages/myinfo/materialrecord/materialrecord.wxss */
+@import "../../home/audit/audit.wxss"

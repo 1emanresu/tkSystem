@@ -16,7 +16,7 @@ import com.tkSystem.tools.ShortMessageService;
 import com.tkSystem.tools.ToolsUtil;
 
 public class test {
-
+    
 	public static void test(int i) throws ParseException {
 		new Runnable() {
 			int k = 0;
@@ -88,6 +88,15 @@ public class test {
 			}
 		}.run();
 		;
+	}
+	@Test
+	public void test3() throws ParseException {
+		try {
+
+			 String s="sdfs";
+			 System.out.println(s.split(",")[0]);
+		} catch (Exception e) {
+e.printStackTrace();		}
 	}
 	class YourThreadTest extends Thread {  
 	  

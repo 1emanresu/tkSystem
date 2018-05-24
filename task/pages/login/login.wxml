@@ -1,0 +1,20 @@
+<!--pages/login/login.wxml-->
+  <view class='phoneConten'>
+    <view class='phonenum'><view>手机号</view></view>
+    <view class='phonenum'><input name="tkUserPhone"   bindinput ="banduserPhone"></input></view>
+    <view class='verification' wx:if="{{!isShow}}" bindtap='getCode'>获取验证码</view>
+    <view class='verification' wx:if="{{isShow}}">{{sec}}秒后重新发送</view>
+    
+      <view class='line'><view></view></view> 
+       <view class='phonenum'><view>验证码</view></view>
+      <view class='phonenum'><input name="" bindinput ="banduservail"></input></view>
+       <view class='line'><view></view></view> 
+        <view class='phonenum'><view>姓名</view></view>
+      <view class='phonenum'><input name="" bindinput ="banduseruserName"></input></view>
+ </view> 
+<view class='title'>如果该手机没有注册，将会直接注册</view>
+
+  <view class='band-con' bindtap='bindinfo'>
+    <button  formType="submit" class='band'>绑定</button>
+  </view>
+ 

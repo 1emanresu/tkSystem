@@ -1,0 +1,2 @@
+/* pages/myinfo/signrecord/signrecord.wxss */
+@import "../../home/signin/signin.wxss"

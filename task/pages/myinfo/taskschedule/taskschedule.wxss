@@ -1,0 +1,61 @@
+/* pages/myinfo/taskschedule/taskschedule.wxss */
+@import "../../common/lib/weui.wxss";
+.conposi {
+  height: auto;
+}
+.posi-title {
+  color: #7c7c7c;
+  margin: 16rpx;
+  padding-left: 17rpx;
+}
+
+.positask {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  overflow: hidden;
+  padding: 9rpx 25rpx 9rpx 59rpx;
+}
+
+.tasknum {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  padding-left: 59rpx;
+  overflow: hidden;
+}
+.phoneConten{
+  background:white;
+  height:auto;
+  padding-top:18px;
+  margin-top:9px;
+  overflow:hidden;
+
+}
+.floatCon {
+  padding: 0px 7px 0px 7px;
+  overflow: hidden;
+}
+
+.leftfunction {
+  float: left;
+  padding-left: 25rpx;
+}
+
+.rightfunction {
+  width: 19px;
+  height: 19px;
+  float: right;
+  color: #349DF4;
+  padding-right: 25rpx;
+}
+.linebor {
+  overflow: hidden;
+  margin: 10px auto;
+  width: 85%;
+  border-bottom: 1px solid #BDBDBD;
+}

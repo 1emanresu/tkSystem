@@ -121,6 +121,9 @@
 			<if test="tkPlanDetailUserId != null">
 				tk_plan_detail_user_id,
 			</if>
+			<if test="tk_location_id != null">
+				tk_location_id,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="tkPlanDetailId != null">
@@ -170,6 +173,9 @@
 			</if>
 			<if test="tkPlanDetailUserId != null">
 				#{tkPlanDetailUserId,jdbcType=VARCHAR},
+			</if>
+			<if test="tk_location_id != null">
+				#{tk_location_id,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>

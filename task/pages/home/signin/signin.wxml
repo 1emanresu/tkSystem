@@ -1,0 +1,85 @@
+<!--pages/home/audit/audit.wxml -->
+<!--当前任务-->
+<view class='currenttask'>
+  <!--begin  -->
+  <view class='scrollContent'>
+    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+      <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">签到信息</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">历史签到</view>
+    </scroll-view>
+
+    <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <view class='img-date'>
+            <image src='/image/home/signin.png'></image>
+          </view>
+          <view class='conposi'>
+            <view class='posi-title'>当前位置</view>
+            <view class='posi-text'>
+              <image src='/image/home/position.png'></image>
+              <block >
+                <text class="page-body-text">{{locationAddress}}</text>
+              </block>
+            </view>
+          </view>
+           <view class='conposi'>
+            <view class='posi-title'>任务签到</view>
+            <view class='posi-text'>
+              <picker mode="selector" range="{{array}}" value="{{arrvaule}}" bindchange="listenerPickerSelected">
+       <text>{{array[index]}}</text>
+</picker>
+            </view>
+          </view>
+          <view class='conposit'>
+            <view class='posi-title2'> 工作照片</view>
+            <view class="weui-cells">
+              <view class="weui-cell">
+                <view class="weui-cell__bd">
+                  <view class="weui-uploader">
+                     
+                    <view class="weui-uploader__bd">
+                      <view class="weui-uploader__files">
+                        <block wx:for="{{imageList}}" wx:for-item="image">
+                          <view class="weui-uploader__file">
+                            <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                          </view>
+                        </block>
+                      </view>
+                      <view class="weui-uploader__input-box">
+                        <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class='band-con'>
+            <button class='band' bindtap='seavSignin'>保存</button>
+          </view>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <view class='secCon'>
+            <block wx:for="{{signinList}}" wx:key="id">
+              <view class="item-an">
+                <view class="expertInfot">
+                  <view class="name"><text>任务：</text>{{item.tk_plan_name}}</view>
+                  <view class="tag">
+                    <text>签到时间：</text>{{item.tkPunchCardTime}}</view>
+                </view>
+                <view class='ranking'>    
+                    <text wx:if="{{item.clockState}}">成功</text>
+                    <text wx:if="{{!item.clockState}}">失败</text>
+                </view>
+              </view> 
+            </block>
+          </view>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!--end  -->
+</view>

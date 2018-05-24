@@ -1,0 +1,60 @@
+<!--pages/home/audit/audit.wxml-->
+<!--当前任务-->
+<view class='currenttask'>
+  <!--begin  -->
+  <view class='scrollContent'>
+    <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+      <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">报备申请</view>
+      <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">物料申请</view>
+    </scroll-view>
+
+    <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <block wx:for="{{reportList}}" wx:key="*this">
+            <navigator open-type="navigate" url="../audit/materialInfo/materialInfo?tkTargetReportId={{item.tkTargetReportId}}"> 
+              <view class="bl-cor">
+                <view class="item-ans">
+                  <view class="avatar">
+                    <image class="img" src="{{item.TkUserHead}}"></image>
+                  </view>
+                  <view class="expertInfo">
+                    <view class="name">
+                      <text>任务：</text> {{item.tkTargetReportName }}</view>
+                    <view class="tag">
+                      <text>备注：</text> {{item.tkTargetReportRemark}}</view>
+                  </view>
+                </view>
+                <view class='staffnick'>{{item.TkUserName}}</view>
+              </view>
+            </navigator>
+          </block>
+
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y="true" class="scoll-h">
+          <block wx:for="{{suppliesList}}" wx:key="*this">
+          <navigator open-type="navigate" url="../audit/auditInfo/auditInfo?tk_good_apply_id={{item.tk_good_apply_id}}">
+            <view class="bl-cor">
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="{{item.tkUserhead}}"></image>
+                </view>
+                <view class="expertInfo">
+                  <view class="name">
+                    <text>任务：</text>{{item.tk_good_apply_name}}</view>
+                  <view class="tag">
+                    <text>备注：</text> {{item.tk_good_apply_remark}}</view>
+                </view>
+              </view>
+              <view class='staffnick'>{{item.tkuserName}}</view>
+            </view>
+             </navigator>
+          </block>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <!--end  -->
+</view>

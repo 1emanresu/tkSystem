@@ -1,0 +1,78 @@
+/* pages/home/myclient/myclient.wxss */ 
+
+/*显示团队排行样式*/
+
+.item-ans {
+  display: flex;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  padding-top: 12px;
+  position: relative;
+  padding-bottom: 20rpx;
+  border-bottom: 8px solid #f2f2f2;
+  background: white;
+}
+
+.address_info {
+  position: absolute;
+  bottom: 12rpx;
+  left: 15px;
+}
+
+.address_info {
+  clear: both;
+}
+
+.expertInfo {
+  font-size: 12px;
+  flex-grow: 2;
+  color: #b0b0b0;
+  line-height: 1.5em;
+}
+
+.expertInfo .name {
+  font-size: 14px;
+  color: #000;
+  margin-top: 26rpx;
+  margin-bottom: 21rpx;
+}
+
+.expertInfo .tag {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 15rpx;
+}
+
+.expertInfo view text {
+  color: #8e8e8e;
+}
+.ranking {
+  padding-top: 45rpx;
+}
+
+.ranking image {
+  width:30rpx;
+  height:39rpx;
+}
+
+/**按钮样式*/
+.band-con{
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+.band{
+  width: 80%;
+  background: #2196F3;
+  color: white;
+  border: none;
+  height:86rpx;
+ line-height:86rpx; 
+}
+button[class="band"]::after {
+  border: 0;
+} 
+.tag{
+  display: flex;
+}

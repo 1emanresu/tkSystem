@@ -1,0 +1,14 @@
+<!--pages/home/audit/apply/succeedApply.wxml-->
+ <view class='applyInfo'>
+      <image src='../../../../image/home/consent.png'></image>
+      <view>同意申请</view>
+ </view>
+<view class='infocontaner'>
+  <view class='info'>备注信息</view>
+  <view class='content'>
+      <textarea placeholder='同意该申请，允许申请内容'></textarea>
+  </view>
+</view>
+<view class='band-con' bindtap='seav'>
+  <button class='band'>完成</button>
+</view>

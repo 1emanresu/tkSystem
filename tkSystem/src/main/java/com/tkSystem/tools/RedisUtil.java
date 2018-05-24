@@ -5,7 +5,6 @@ import java.util.List;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import sun.org.mozilla.javascript.internal.ImporterTopLevel;
 
 public class RedisUtil {
 	// jedis连接池
@@ -16,14 +15,24 @@ public class RedisUtil {
 	static List tokenList;
 	// jedis连接池 实例初始化
 	static {
-
-		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-		// jedis连接池连接最大个数
-		jedisPoolConfig.setMaxTotal(8);
 		// jedis连接地址信息 地址 112.74.179.74 端口 6379
-		pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
+		pool = getInstance();
 		jedis = initJedis();
 		// setTokenList();
+	}
+
+	public static synchronized JedisPool getInstance() {
+		if (pool == null) {
+			synchronized (JedisPool.class) {
+				if (pool == null) {
+					JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+					// jedis连接池连接最大个数
+					jedisPoolConfig.setMaxTotal(8);
+					pool = new JedisPool(jedisPoolConfig, "127.0.0.1", 6379);
+				}
+			}
+		}
+		return pool;
 	}
 
 	// jedis连接池创建
@@ -88,7 +97,7 @@ public class RedisUtil {
 	}
 
 	// Jedis valiToken
-	public synchronized static  boolean valiToken(String tkUserToken, String tkUserId) {
+	public synchronized static boolean valiToken(String tkUserToken, String tkUserId) {
 		try {
 			return jedis.get(tkUserId).equals(tkUserToken);
 		} catch (Exception e) {

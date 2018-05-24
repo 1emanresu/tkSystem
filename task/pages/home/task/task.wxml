@@ -1,0 +1,33 @@
+<!--pages/home/task/task.wxml -->
+<view class='taskItem'>
+  <view class='dates'>今日</view>
+  <block wx:for="{{taskList}}">
+    <navigator open-type="navigate" url="staffChoice/staffChoice?tkPlanId={{item.tkPlanId}}">
+      <view class='taskDateil'>
+        <view class='taskName'>
+          <text>任务:</text>{{item.tkPlanName}}</view>
+        <view class='taskDate'>
+          <text>创建时间:</text>{{tkPlanTime}}</view>
+      </view>
+    </navigator>
+  </block>
+</view>
+
+<view class='taskItem'>
+  <view class='dates'>昨日</view>
+  <block wx:for="{{yesList}}">
+    <navigator open-type="navigate" url="staffChoice/staffChoice?tkPlanId={{item.tkPlanId}}">
+      <view class='taskDateil'>
+        <view class='taskName'>
+          <text>任务:</text>{{item.tkPlanName}}</view>
+        <view class='taskDate'>
+          <text>创建时间:</text>{{tkyesTIme}}</view>
+      </view>
+    </navigator>
+  </block>
+</view>
+<navigator url='../../../pages/home/clientinfo/clientinfo'>
+  <view class='band-con'>
+    <button class='band'>新建任务</button>
+  </view>
+</navigator>

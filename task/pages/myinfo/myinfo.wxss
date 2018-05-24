@@ -1,0 +1,462 @@
+/* pages/myinfo/myinfo.wxss */
+
+.homeContent {
+  width: 100%;
+  height: 100%;
+  background: #e7e7e7;
+  padding-bottom: 75rpx;
+}
+
+.topContent {
+  height: 342rpx;
+  width: 100%;
+  background: #ebebeb;
+  position: relative;
+  overflow: hidden;
+}
+
+.img_vivw image {
+  width: 100%;
+  height: 359rpx;
+}
+
+.userInfo {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 92%;
+  height: 287rpx;
+  border-radius: 5px;
+  background: #fafafa;
+  z-index: 2;
+  box-shadow: 0px 1px 1px #fafafa;
+}
+
+.infotext {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: -10%;
+  left: 5%;
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.mt {
+  text-align: center;
+  width: 100%;
+  height: 30%;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  color: #d7cfd0;
+  position: absolute;
+  bottom: 0%;
+}
+
+.infotext .userinfo-avatar {
+  width: 100%;
+  height: 100%;
+}
+
+.Username {
+  margin-top: 3%;
+  font-size: 16px;
+  padding-left: 30%;
+  width: 300rpx;
+  height: 90rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.phones {
+  color: #7c7c7c;
+}
+
+
+.noeLog{
+  display: none;
+}
+.yeaLog{
+  display: block;
+}
+.ewm {
+  position: absolute;
+  right: 1%;
+  top: 7%;
+  width: 110rpx;
+  height: 110rpx;
+}
+
+.ewm image {
+  display: block;
+  width: 80%;
+  height: 80%;
+}
+
+.mach {
+  margin-top: 8%;
+  padding: 0 0;
+  text-align: center;
+  width: 25%;
+  height: 120rpx;
+  float: left;
+}
+
+.machVivw view {
+  border-right: 1px #cbb99d solid;
+  width: 98%;
+}
+
+.mach text {
+  font-size: 15px;
+}
+
+/* 中间样式*/
+
+.middleContent {
+  background: white;
+  height: auto;
+  padding-top: 18px;
+}
+
+.floatCon {
+  padding: 0px 7px 0px 7px;
+  overflow: hidden;
+}
+
+.leftfunction {
+  float: left;
+}
+
+.rightfunction {
+  width: 19px;
+  height: 19px;
+  float: right;
+}
+
+.rightfunction image {
+  width: 100%;
+  height: 100%;
+}
+
+.linebor {
+  overflow: hidden;
+  margin: 10px auto;
+  width: 80%;
+  border-bottom: 1px solid #bababa;
+}
+
+/* 选择功能*/
+
+.functionSec {
+  overflow: hidden;
+}
+
+.secCon {
+  width: 20%;
+  float: left;
+}
+
+.secCon view {
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 12px;
+}
+
+.secCon view image {
+  height: 27px;
+  width: 27px;
+}
+
+.middleContentTow {
+  background: white;
+  height: auto;
+  padding-top: 18px;
+  margin-top: 9px;
+  overflow: hidden;
+}
+
+.secConTow {
+  width: 25%;
+  float: left;
+}
+
+.secConTow view {
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 12px;
+}
+
+.secConTow view image {
+  height: 27px;
+  width: 27px;
+}
+
+/*客户信息跟进  */
+
+.clientinfo {
+  width: 50%;
+  float: left;
+  text-align: center;
+}
+
+.clientshow {
+  margin: 7px 0% 7px 0%;
+  width: 80%;
+  text-align: center;
+  height: 35px;
+  display: inline-block;
+  line-height: 35px;
+  border-radius: 25px;
+  background: #f5f5f5;
+}
+
+.clientshow text {
+  font-size: 12px;
+}
+
+/*当前任务  */
+
+ 
+
+.curleftfunction {
+  float: left;
+  font-size: 18px;
+  color: #2196f3;
+}
+
+.currightfunction {
+  float: right;
+}
+
+.currightfunction view {
+  float: left;
+  margin-right: 5px;
+}
+
+.currightfunction view image {
+  width: 10px;
+  height: 17px;
+  margin-top: 2px;
+}
+
+/*选项卡  */
+.scrollContent{
+  position: relative;
+  margin-top: 5px;
+  border: 1px solid white;
+}
+.tab-h {
+  height: 80rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 80rpx;
+  background: #f7f7f7;
+  font-size: 16px;
+  white-space: nowrap;
+  position: absolute;
+  top:0px;
+  left: 0;
+  z-index: 99;
+}
+
+.tab-item {
+  margin: 0 53rpx;
+  display: inline-block;
+  color: #949494;
+}
+
+.tab-item.active {
+  color: #000000;
+  position: relative;
+}
+
+/*在字体的下面加入一个下滑线*/
+/* .tab-item.active:after {
+  content: "";
+  display: block;
+  height: 8rpx;
+  width: 122rpx;
+  background: #000000;
+  position: absolute;
+  bottom: 0;
+  left: 5rpx;
+  border-radius: 16rpx;
+} */
+
+.item-ans {
+  width: 100%;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  padding: 0rpx 30rpx 0rpx 30rpx;
+  box-sizing: border-box;
+  height: 280rpx;
+  align-items: center;
+  position: relative;
+  border-bottom: 1px solid #f2f2f2;
+}
+.address_info{
+  position: absolute;
+  bottom: 12rpx;
+  left: 15px;
+}
+.avatar {
+  width: 157rpx;
+  height: 130rpx;
+  position: relative;
+  padding-right: 30rpx;
+}
+
+.avatar .img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar .doyen {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  bottom: -2px;
+  right: 20rpx;
+}
+.address_info{
+  clear: both;
+
+}
+.expertInfo {
+  font-size: 12px;
+  flex-grow: 2;
+  color: #b0b0b0;
+  line-height: 1.5em;
+}
+
+.title_show{
+  margin-top:54rpx;
+  overflow: hidden;
+}
+.expertInfo .name {
+  font-size: 16px;
+  color: #000;
+  float: left;
+}
+.distance{
+  float: right;
+  margin-top: 15rpx;
+  margin-right: 3px;
+}
+.tknum{
+  float: right;
+  margin-right: 3px;
+}
+.proceed{
+  clear: both;
+  float: right;
+  margin-right: 3px;
+  margin-top: 19rpx;
+  border: 1px solid #349A1F;
+  background:#349A1F ;
+  color: white;
+  padding: 3px;
+}
+ 
+.tab-content {
+  margin-top: 80rpx;
+}
+
+.scoll-h {
+  height: 100%;
+}
+
+.addressColor{
+  font-size: 12px;
+  color: #b0b0b0;
+  margin-top:7rpx;
+
+}
+/*end选项卡  */
+.functionth{
+  overflow: hidden;
+  width: 99%;
+  margin: 0 auto;
+}
+.secConth {
+  width: 33%;
+  float: left;
+}
+
+.secConth view {
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 12px;
+}
+
+.secConth view image {
+  height: 67px;
+  width: 67px;
+}
+
+.contents{
+  border-top: 8px solid #E7E7E7;
+  background: white;
+  overflow: hidden;
+  padding: 21rpx 25rpx 21rpx 25rpx;
+}
+.lefts{
+  float: left;
+}
+.rights{
+  float: right;
+  width: 19px;
+  height: 19px;
+}
+.rights image {
+  width: 100%;
+  height: 100%;
+}
+/*model 显示*/
+
+ .modelCode{
+   text-align: center;
+ }
+ .modelCode view image{
+   width: 80%;
+   height: 412rpx;
+ }
+ .item-ansT {
+  padding-left: 30rpx;
+  padding-right:30rpx;
+  padding-top:12px; 
+  position: relative;
+  padding-bottom: 15rpx;
+  overflow: hidden;
+}
+.avatarT{
+  float: left;
+  width: 107rpx;
+  height: 100rpx;
+  position: relative;
+  padding-right: 30rpx;
+}
+.avatarT .img {
+  width: 100%;
+  height: 100%;
+}
+.expertInfoT {
+  font-size: 12px;
+   float: left;
+}
+ .nameI{
+   margin: 6px;
+   padding: 0;
+ }
+ 
+ .showManage{
+   display:block;
+ }
+ .hiddeManage{
+    display: none;
+ }
+ /*model end*/

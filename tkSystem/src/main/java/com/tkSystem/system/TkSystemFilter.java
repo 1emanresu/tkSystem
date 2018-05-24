@@ -24,14 +24,16 @@ import java.io.OutputStream;
 @WebFilter(filterName = "TokenFilter", urlPatterns = "/*")
 public class TkSystemFilter implements Filter {
 	Logger log = Logger.getLogger("com.tkSystem.system.TkSystemFilter");
+
 	public void destroy() {
 	}
+
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws ServletException, IOException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=utf-8");
+		//response.setContentType("text/html;charset=utf-8");
 		String Method = request.getMethod();
 		log.info("请求url" + request.getRequestURI().toString());
 		Enumeration<String> srcList = request.getParameterNames();
@@ -41,17 +43,12 @@ public class TkSystemFilter implements Filter {
 			value = request.getParameter(key).trim();
 			log.info("请求参数键值对" + key + "==" + value);
 		}
-		if (Method.equals("GET")) {
-
-		} else if (Method.equals("POST")) {
-
-		} else {
-
-		}
+		
 		if (loginUrl(request, response)) {
 		} else {
-			//tokenFilter(request, response );
+			  tokenFilter(request, response );
 		}
+		
 		chain.doFilter(request, response);
 		System.out.println(response.getStatus());
 	}
@@ -60,8 +57,26 @@ public class TkSystemFilter implements Filter {
 		log.info("com.tkSystem.tools.TkSystemFilter reload");
 
 	}
-	public void tokenFilter(HttpServletRequest request, HttpServletResponse response )
+
+	public void tokenFilter(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String Method=request.getMethod();
+		if (request.getQueryString()==null) {
+
+		}else {
+			String message = "请发送post请求,url不附带参数";
+			ResponseUtil.write(response, RetCode.getErrorCode(message));
+			return;
+		}
+		if (Method.equals("GET")) {
+			String message = "请发送post请求";
+			ResponseUtil.write(response, RetCode.getErrorCode(message));
+			return;
+		} else if (Method.equals("POST")) {
+
+		} else {
+
+		}
 		String message;
 		String tkUserToken = request.getParameter("tkUserToken");
 		String tkUserId = request.getParameter("tkUserId");
@@ -80,6 +95,7 @@ public class TkSystemFilter implements Filter {
 			ResponseUtil.write(response, RetCode.getErrorCode(message));
 			return;
 		}
+		
 	}
 
 	public boolean loginUrl(HttpServletRequest request, HttpServletResponse response)
@@ -94,17 +110,12 @@ public class TkSystemFilter implements Filter {
 		String wechatLogin = path + "/user/wechatLogin";
 		String getByCode = path + "/user/getByCode";
 		String staticimg = path + "/static/img";
+		response.setContentType("image/jpg");
 		String FileUploadServlet = path + "/FileUploadServlet";
 		String containsstr[] = { staticimg };
-		String equalsstr[] = { path+ "/", 
-				LoginURL,
-				postUserRegistrationURL,
-				putModifyPwdURL, 
-				wechatLogin,
-				getByCode,
-				FileUploadServlet,
-				staticimg };
-		if(contains(requestURL, containsstr)||equals(requestURL, equalsstr))
+		String equalsstr[] = { path + "/", LoginURL, postUserRegistrationURL, putModifyPwdURL, wechatLogin, getByCode,
+				FileUploadServlet, staticimg };
+		if (contains(requestURL, containsstr) || equals(requestURL, equalsstr))
 			return true;
 		return false;
 	}

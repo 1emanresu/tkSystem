@@ -1,0 +1,46 @@
+<!--pages/home/group/group.wxml-->
+
+<!--团队进度排行显示 -->
+<view wx:for="{{teamListThree}}" wx:key="id" class='secCon'>
+  <block>
+    <view class="item-ans">
+      <!--等于前三名的样式  -->
+      <view class="avatar">
+        <image class="img" src="{{item.tk_user_head}}"></image>
+      </view>
+      <view class="expertInfo">
+        <view class="name"> {{item.tk_user_name}} {{item.tk_user_phone}}</view>
+        <view class="tag">
+          <text>拓客数量：</text>{{item.tk_client_amount}}</view>
+      </view>
+      <view class='ranking'>
+         <block wx:if="{{item.no==1}}">
+              <image  src='/image/team/no1.png'></image>
+        </block>
+         <block wx:elif="{{item.no==2}}">
+              <image  src='/image/team/no2.png'></image>
+        </block>
+        <block wx:else="{{item.no==3}}">
+              <image  src='/image/team/no3.png'></image>
+        </block>
+      </view>
+    </view> 
+    
+  </block>
+</view>
+<view wx:for="{{Listdata}}" wx:key="id" class='secCon'>
+  <block>
+<!--大于前三名的样式  -->
+      <view class="item-ans">
+          <view class="avatart">
+            <image class="img" src="{{item.tk_user_head}}"></image>
+          </view>
+          <view class="expertInfot">
+            <view class="tag">{{item.tk_user_name}}
+              <text>拓客数量：</text> {{item.tk_client_amount}}人</view>
+          </view>
+          <view class='ranking'>NO.{{item.no}}</view>
+        </view>
+    <!--end  -->
+ </block>
+</view>

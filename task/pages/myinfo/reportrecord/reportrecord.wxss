@@ -1,0 +1,2 @@
+/* pages/myinfo/reportrecord/reportrecord.wxss */
+@import "../../home/audit/audit.wxss"

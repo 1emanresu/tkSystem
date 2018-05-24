@@ -1,0 +1,152 @@
+/* pages/task/task.wxss */
+
+.title_info {
+  padding: 9rpx 29rpx 0rpx 29rpx;
+}
+
+.floatCon {
+  padding: 0px 7px 0px 7px;
+  overflow: hidden;
+}
+
+.leftfunction {
+  float: left;
+}
+
+.rightfunction {
+  width: 7px;
+  height: 14px;
+  float: left;
+  padding-left: 25rpx;
+  padding-top: 2rpx;
+}
+
+.rightfunction image {
+  width: 100%;
+  height: 100%;
+}
+
+.linebor {
+  overflow: hidden;
+  margin: 10px auto;
+  width: 90%;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+.tab-h {
+  height: 80rpx;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  line-height: 80rpx;
+  background: #f7f7f7;
+  font-size: 16px;
+  white-space: nowrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.tab-item {
+  margin: 0 42rpx;
+  display: inline-block;
+  color: #949494;
+   font-size: 14px;
+}
+
+.tab-item.active {
+  color: #000;
+  position: relative;
+}
+
+/* .tab-item.active:after {
+  content: "";
+  display: block;
+  height: 8rpx;
+  width: 52rpx;
+  background: #4675f9;
+  position: absolute;
+  bottom: 0;
+  left: 5rpx;
+  border-radius: 16rpx;
+} */
+
+.item-ans {
+  width: 100%;
+  height: auto;
+  padding: 0rpx 35rpx 35rpx 35rpx;
+  display: flex;
+  flex-grow: row no-wrap;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.avatar {
+  width: 187rpx;
+  height: 134rpx;
+  position: relative;
+  padding-right: 30rpx;
+}
+
+.avatar .img {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar .doyen {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  bottom: -2px;
+  right: 20rpx;
+}
+
+.expertInfo {
+  font-size: 12px;
+  flex-grow: 2;
+  color: #b0b0b0;
+  line-height: 1.5em;
+}
+
+.expertInfo .name {
+  font-size: 16px;
+  color: #FF0101;
+  margin-bottom: 6px;
+}
+
+.askBtn {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 60rpx;
+  border: 1px solid #4675f9;
+  color: #4675f9;
+}
+
+.tab-content {
+  margin-top: 80rpx;
+}
+
+.scoll-h {
+  height: 100%;
+}
+
+.goodsContent {
+  background: white;
+  border-top: 8px solid #eaeaea;
+}
+.rightfunctiont {
+  width: 7px;
+  height: 14px;
+  padding-right: 25rpx;
+  padding-top: 2rpx;
+}
+
+.rightfunctiont image {
+  width: 100%;
+  height: 100%;
+}

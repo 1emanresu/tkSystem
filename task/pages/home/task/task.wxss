@@ -1,0 +1,43 @@
+/* pages/home/task/task.wxss */
+.taskItem{
+  font-size: 14px;
+}
+.dates{
+   padding: 19rpx;
+   color: #929292;
+}
+.taskDateil{
+  height:auto;
+  background: white;
+  padding:24rpx 21rpx 24rpx 29rpx;
+  border-bottom: 8px solid #F0F0F0;
+
+}
+.taskDateil view {
+  line-height: 1.8rem;
+}
+.taskDateil view text{
+  text-align: right;
+  margin-right:22rpx;
+  color: #929292;
+
+}
+
+/**按钮样式*/
+.band-con{
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+.band{
+  width: 80%;
+  background: #2196F3;
+  color: white;
+  border: none;
+  height:86rpx;
+ line-height:86rpx; 
+}
+button[class="band"]::after {
+  border: 0;
+} 

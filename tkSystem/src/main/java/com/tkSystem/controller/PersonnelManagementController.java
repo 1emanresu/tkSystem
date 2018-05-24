@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tkSystem.service.PersonnelManagementServier;
+import com.tkSystem.service.PersonnelManagementServierInterface;
 import com.tkSystem.tools.ResponseUtil;
 import com.tkSystem.tools.RetCode;
 import com.tkSystem.tools.WyMap;
@@ -22,7 +22,7 @@ public class PersonnelManagementController {
 	WyMap wyMap=new WyMap();
 	
 	@Autowired
-	PersonnelManagementServier personnelManagementServier;
+	PersonnelManagementServierInterface personnelManagementServier;
 	
 	/**
 	 * 获取所有拓客人员

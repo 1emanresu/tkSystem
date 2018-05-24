@@ -1,0 +1,20 @@
+<!--pages/home/applyreport/applyreport.wxml -->
+<view class='conposi'>
+  <view class='posi-title'> 选择任务</view>
+  <view class='posi-text'>
+         <picker mode="selector" range="{{array}}" value="{{arrvaule}}" bindchange="listenerPickerSelected">
+       <text>{{array[index]}}</text>
+</picker>
+  </view>
+</view>
+<form bindsubmit="formSubmit" bindreset="formReset">
+<view class='conposi'>
+  <view class='posi-title'> 备注理由</view>
+  <view class='posi-text'>
+    <textarea name="remark" placeholder='请填写报备原因'></textarea>
+  </view>
+</view>
+<view class='band-con'>
+  <button  formType="submit" class='band'>申请</button>
+</view>
+</form>

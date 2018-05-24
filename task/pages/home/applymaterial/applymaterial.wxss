@@ -1,0 +1,116 @@
+.conposi {
+  height: auto;
+}
+
+.posi-title {
+  color: #7c7c7c;
+  margin: 16rpx;
+  padding-left: 17rpx;
+}
+
+.positask {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  text-indent: 2em;
+}
+
+.posi-text {
+  background: white;
+  height: auto;
+}
+
+.posi-text textarea {
+  padding: 25rpx 0rpx 25rpx 25rpx;
+  text-indent: 2em;
+}
+
+.stepper {
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  text-indent: 2em;
+  display: flex;
+}
+
+.nickt {
+  padding-left: 15rpx;
+  width: 68%;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.nickt input {
+  width: 100%;
+  margin-top: 11rpx;
+}
+
+.scontent {
+  overflow: hidden;
+  height: 105rpx;
+  line-height: 100rpx;
+}
+
+.numcontent {
+  float: left;
+  padding-left: 46rpx;
+}
+
+.numchoise {
+  margin: 15rpx 39rpx 15rpx 15rpx;
+  float: right;
+}
+
+.vimgn {
+  float: left;
+}
+
+.vimgn image {
+  width: 45rpx;
+  height: 45rpx;
+}
+
+.vinput {
+  margin: 15rpx 20rpx 0rpx 20rpx;
+  float: left;
+}
+
+.vinput input {
+  width: 49rpx;
+  height: 45rpx;
+  background: #f2f2f2;
+  text-align: center;
+  margin: 0rpx;
+  border-radius: 90px;
+}
+
+.normal {
+  color: black;
+}
+
+.disabled {
+  color: #ccc;
+}
+
+/**按钮样式*/
+
+.band-con {
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+
+.band {
+  width: 80%;
+  background: #2196f3;
+  color: white;
+  border: none;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+
+button[class="band"]::after {
+  border: 0;
+}

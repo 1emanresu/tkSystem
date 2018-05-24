@@ -1,0 +1,70 @@
+/* pages/login/login.wxss */
+.phoneConten{
+  margin-top: 25rpx;
+  overflow: hidden;
+  padding: 12rpx;
+  background: white;
+  padding-bottom: 35rpx;
+}
+.phonenum{
+  width: 30%;
+  float: left;
+  color: #828282;
+  padding-top: 15rpx;
+}
+.phonenum view{
+  padding-left: 25rpx;
+  padding-top: 5rpx;
+}
+.phonenum input{
+  padding-left: 15rpx;
+}
+.verification{
+  margin-top: 15rpx;
+  margin-right: 15rpx;
+  text-align: center;
+  float: right;
+  background: #2196F3;
+  color: white;
+  border-radius:15rpx; 
+  font-size:13px; 
+  padding:9rpx 8rpx; 
+}
+.line{
+  width: 100%;
+  text-align: center;
+ 
+  clear: both;
+  display: inline-block;
+}
+.line view{
+  width:85%;
+  border-top:1px solid  #D8D8D8;
+  display: inline-block;
+}
+.title{
+  padding: 25rpx;
+  color: #828282;
+  font-size: 14px;
+}
+/**按钮样式*/
+
+.band-con {
+  position: fixed;
+  width: 100%;
+  bottom: 95rpx;
+  text-align: center;
+}
+
+.band {
+  width: 80%;
+  background: #2196f3;
+  color: white;
+  border: none;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+
+button[class="band"]::after {
+  border: 0;
+}

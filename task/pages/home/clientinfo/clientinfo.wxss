@@ -1,0 +1,214 @@
+/* pages/home/clientinfo/clientinfo.wxss */
+@import "../../common/lib/weui.wxss";
+
+.conposi {
+  height: auto;
+}
+
+.posi-title {
+  color: #7c7c7c;
+  margin: 16rpx;
+  padding-left: 17rpx;
+}
+
+.positask {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  overflow: hidden;
+  padding: 9rpx 25rpx 9rpx 59rpx;
+}
+
+.tasknum {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  padding-left: 59rpx;
+  overflow: hidden;
+}
+
+.positask input {
+  width: 85%;
+}
+
+.floatnum {
+  float: right;
+  margin-right: 24rpx;
+}
+
+.floatnum input {
+  width: 25px;
+  margin: 13rpx 0rpx 10rpx 10rpx;
+}
+
+.stepper {
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  text-indent: 2em;
+  display: flex;
+}
+
+.contacts {
+  background: white;
+  height: auto;
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  overflow: hidden;
+  padding-bottom: 21rpx;
+}
+
+.nickn {
+  padding-left: 6rpx;
+  width: 73px;
+  height: 37.25px;
+}
+
+.address {
+  padding-left: 6rpx;
+  width: 166rpx;
+  height: 37.25px;
+}
+
+.nickt {
+  padding-left: 15rpx;
+  width: 68%;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.nickt input {
+  width: 100%;
+  margin-top: 11rpx;
+}
+
+.phoneContent {
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  padding-left: 33rpx;
+  display: flex;
+}
+
+.phone {
+  width: 60px;
+  height: 37.25px;
+}
+
+.sexgroup {
+  line-height: 72rpx;
+  font-size: 14px;
+  margin-top: 13rpx;
+  overflow: hidden;
+}
+
+.viewgroup {
+  padding-left: 6rpx;
+  width: 73px;
+  height: 37.25px;
+  float: left;
+}
+
+.sexchiose {
+  float: left;
+  width: 68%;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+/*拓客数量*/
+
+.posi-text {
+  background: white;
+  height: auto;
+  padding: 25rpx 0rpx 25rpx 0rpx;
+}
+
+.scontent {
+  overflow: hidden;
+  height: 105rpx;
+  line-height: 100rpx;
+}
+
+.numcontent {
+  float: left;
+  padding-left: 51rpx;
+}
+
+.numchoise {
+  margin: 15rpx 39rpx 15rpx 15rpx;
+  float: right;
+}
+
+.vimgn {
+  float: left;
+}
+
+.vimgn image {
+  width: 45rpx;
+  height: 45rpx;
+}
+
+.vinput {
+  margin: 15rpx 20rpx 0rpx 20rpx;
+  float: left;
+}
+
+.vinput input {
+  width: 49rpx;
+  height: 45rpx;
+  background: #f2f2f2;
+  text-align: center;
+  margin: 0rpx;
+  border-radius: 90px;
+}
+
+.normal {
+  color: black;
+}
+
+.disabled {
+  color: #ccc;
+}
+
+/*end 拓客数量*/
+
+.posi-title2 {
+  color: #7c7c7c;
+  margin: -6rpx;
+  padding-top: 31rpx;
+  padding-left: 46rpx;
+}
+
+/*选择照片*/
+
+.conposit {
+  height: 698rpx;
+}
+
+/*end选择照片*/
+
+/**按钮样式*/
+
+.band-con {
+  position: fixed;
+  width: 100%;
+  bottom: 25rpx;
+  text-align: center;
+}
+
+.band {
+  width: 80%;
+  background: #2196f3;
+  color: white;
+  border: none;
+  height: 86rpx;
+  line-height: 86rpx;
+}
+
+button[class="band"]::after {
+  border: 0;
+}

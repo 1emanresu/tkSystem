@@ -1,5 +1,6 @@
 package com.tkSystem.system;
 
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,8 +15,9 @@ public class SecurityInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		System.out.println("preHandle");
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		Map map = request.getParameterMap();
+	/*	Map map = request.getParameterMap();
 		if (map != null && !map.isEmpty()) {
 			Set<String> keySet = map.keySet();
 			for (String key : keySet) {
@@ -24,6 +26,14 @@ public class SecurityInterceptor implements HandlerInterceptor {
 					System.out.println("> " + key + "=" + value);
 				}
 			}
+		}*/
+		System.out.println(request.getRequestURI());
+		Enumeration<String> srcList = request.getParameterNames();
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			System.out.println("" + key + ":" + value);
 		}
 		return true;
 	}

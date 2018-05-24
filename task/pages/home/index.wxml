@@ -1,0 +1,195 @@
+<!--index.wxml-->
+ <import src = "../common/sort_list.wxml"/>  
+<view class='homeContent'>
+  <view class="topContent">
+    <view class="img_vivw">
+      <image src="../../image/home/triangle.png"></image>
+    </view>
+    <view class="userInfo">
+      <view class="infotext" bindtap="setPhotoInfo">
+        <image wx:if="{{imgUrl!=null}}" class="userinfo-avatar" src="{{imgUrl}}"></image>
+      </view>
+      <view class='Username'>
+        <text>{{username}}</text>
+        <text>手机:{{userphone}}</text>
+      </view>
+      <view class='ewm' bindtap="modalTap">
+        <image src='../../image/home/ewm.png'></image>
+      </view>
+      <navigator wx:for="{{cardList}}" url='{{item.url}}'>
+        <view class='{{item.titleClass}}'>
+          <view>{{item.numIndex}}</view>
+          <text>{{item.title}}</text>
+        </view>
+      </navigator>
+    </view>
+  </view>
+  <!--经理功能 -->
+  <view class='middleContent {{idmanager}}'>
+    <view class='floatCon'>
+      <view class='leftfunction'>经理功能</view>
+      <view class='rightfunction'>
+        <image src='../../image/next.png'></image>
+      </view>
+    </view>
+    <view class='linebor'></view>
+    <!--功能选择列表  -->
+    <view class='functionSec'>
+
+      <view wx:for="{{menuList}}" wx:key="id" class='secCon'>
+        <navigator open-type="navigate" url="{{item.skipUrl}}">
+          <view>
+            <image src="{{item.pic_url}}"></image>
+          </view>
+          <view>{{item.technicalSupportTittle}}</view>
+        </navigator>
+      </view>
+
+    </view>
+  </view>
+  <!--我的任务  -->
+  <view class='middleContentTow'>
+    <view class='floatCon'>
+      <view class='leftfunction'>我的任务</view>
+      <view class='rightfunction'>
+        <image src='../../image/next.png'></image>
+      </view>
+    </view>
+    <view class='linebor'></view>
+    <!--功能选择列表  -->
+    <view class='functionSec'>
+      <view wx:for="{{MyList}}" wx:key="id" class='secConTow'>
+        <navigator open-type="navigate" url="{{item.skipUrl}}">
+          <view>
+            <image src="{{item.pic_url}}"></image>
+          </view>
+          <view>{{item.technicalSupportTittle}}</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+
+  <!--客户跟进  -->
+  <view class='middleContentTow'>
+    <navigator url='myclient/myclient'>
+      <view class='floatCon'>
+        <view class='leftfunction'>客户跟进</view>
+        <view class='rightfunction'>
+          <image src='../../image/next.png'></image>
+        </view>
+      </view>
+    </navigator>
+    <view class='linebor'></view>
+    <!--消息查看  -->
+    <block wx:for="{{getClientInfoList}}">
+      <view class='clientinfo'>
+        <view class='clientshow'>
+          <text>{{item.tk_client_name}}</text>
+          <text>{{item.tk_client_phone}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!--当前任务 -->
+  <view class='currenttask'>
+    <view class='floatCon'>
+      <view class='curleftfunction'>当前任务</view>
+      <view class='currightfunction'>
+        <view>
+          <image src='../../image/home/position.png'></image>
+        </view>
+        <view class='addressColor'>
+          鼎丰卡布斯
+        </view>
+      </view>
+    </view>
+    <!--begin  -->
+     <view class='scrollContent'>
+      <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}">
+        <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">全部分类</view>
+        <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">距离最近</view>
+        <view class="tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">剩余时间</view>
+      </scroll-view>
+
+      <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
+        <swiper-item wx:for="{{[0,1,2]}}">
+          <scroll-view scroll-y="true" class="scoll-h">
+            <block wx:for="{{currentTaskList}}" wx:key="*this">
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="{{item.tk_plan_detail_photo}}"></image>
+                </view>
+                <view class="expertInfo">
+                  <view class="title_show">
+                    <view class="name">{{item.tk_plan_detail_title}}</view>
+                    <!-- <view class='distance'>{{item.ccccc}}2.0km</view> -->
+                  </view>
+                  <view class="tag">{{item.tk_plan_detail_remark}}发传单拿佣金</view>
+                  <view class='tknum'>拓客数量：{{item.tk_plan_detail_good_amount}}</view>
+                  <view wx:if="{{item.tk_plan_state==2}}">
+                    <view class='proceed'>正在进行</view>
+                  </view>
+                  <view wx:if="{{item.tk_plan_state!=2}}">
+                    <view class='proceed2'>暂未开始</view>
+                  </view>
+                </view>
+                <view class='address_info'>
+                  <view class='currightfunction'>
+                    <view>
+                      <image src='../../image/home/position.png'></image>
+                    </view>
+                    <view class='addressColor'>{{item.tk_plan_detail_location}}</view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </scroll-view>
+        </swiper-item>
+        
+      </swiper>
+    </view> 
+     <!-- <view class='mar-heigin'></view>   
+  <template is="sort_list" data="{{selected,sortSelected}}" />
+   <block wx:for="{{[1,2,3]}}" wx:key="*this">
+              <view class="item-ans">
+                <view class="avatar">
+                  <image class="img" src="../../image/home/goods.png"></image>
+                </view>
+                <view class="expertInfo">
+                  <view class="title_show">
+                    <view class="name">地铁推广 (汇一城)</view>
+                    <view class='distance'>2.0km</view>
+                  </view>
+                  <view class="tag">发传单拿佣金</view>
+                  <view class='tknum'>拓客数量：100</view>
+                  <view class='proceed'>正在进行</view>
+                </view>
+                <view class='address_info'>
+                  <view class='currightfunction'>
+                    <view>
+                      <image src='../../image/home/position.png'></image>
+                    </view>
+                    <view class='addressColor'>鼎丰卡布斯</view>
+                  </view>
+                </view>
+              </view>
+            </block> -->
+    <!--end  -->
+  </view>
+</view>
+<modal class="modal" hidden="{{modalFlag}}" bindcancel="hidd" no-cancel bindconfirm="modalChange2">
+  <view class='modelCode'>
+    <view>
+      <image src='{{towCode}}'></image>
+    </view>
+    <view class="item-ansT">
+      <view class="avatarT">
+        <image class="img" src="{{imgUrl}}"></image>
+      </view>
+      <view class="expertInfoT">
+         <view class='nameI'>姓名：{{username}}</view>
+        <view class='phoneI'>手机号：{{userphone}}</view>
+      </view>
+    </view>
+  </view>
+</modal>

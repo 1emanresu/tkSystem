@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tkSystem.service.UserService;
+import com.tkSystem.service.UserServiceInterface;
 import com.tkSystem.tools.ImageUpload;
 import com.tkSystem.tools.ResponseUtil;
 import com.tkSystem.tools.RetCode;
@@ -28,7 +28,7 @@ import net.sf.json.util.JSONUtils;
 @RequestMapping("user")
 public class UserController {
 	@Autowired
-	UserService userService;
+	UserServiceInterface userService;
 
 	/**
 	 * 用户注册 tkUserName 账户 tkUserPassword 密码

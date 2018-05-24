@@ -1,0 +1,161 @@
+<!--pages/home/clientinfo/clientinfo.wxml -->
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class='conposi'>
+    <view class='posi-title'> 任务类型</view>
+    <view class='positask'>
+      <picker mode="selector" range="{{array}}" value="{{arrvaule}}" bindchange="listenerPickerSelected">
+       <text>{{array[index]}}</text>
+</picker>
+
+    </view>
+  </view>
+  <view class='conposi'>
+    <view class='posi-title'> 任务标题</view>
+    <view class='positask'>
+      <input name="tkPlanDetailTitle" placeholder='填写标题'></input>
+    </view>
+  </view>
+  <view class='conposi'>
+    <view class='posi-title'>备注</view>
+    <view class='positask'>
+      <input name="tkPlanDetailRemark" placeholder='填写备注/备标题'></input>
+    </view>
+  </view>
+  <view class='conposi'>
+    <view class='posi-title'>任务时间</view>
+    <view class='positask'>
+      <view>
+        <picker mode="multiSelector" value="{{dateTime}}"  bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+          <view class="picker">
+            开始日期: {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}:{{dateTimeArray[5][dateTime[5]]}}
+          </view>
+        </picker>
+
+        
+      </view>
+      <view>
+        <picker mode="multiSelector" value="{{dateTime2}}"  bindchange="changeDateTime2" bindcolumnchange="changeDateTimeColumn2" range="{{dateTimeArray2}}">
+          <view class="picker">
+            结束日期:  {{dateTimeArray2[0][dateTime2[0]]}}-{{dateTimeArray2[1][dateTime2[1]]}}-{{dateTimeArray2[2][dateTime2[2]]}} {{dateTimeArray2[3][dateTime2[3]]}}:{{dateTimeArray2[4][dateTime2[4]]}}:{{dateTimeArray2[5][dateTime2[5]]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <view class='conposi'>
+    <view class='posi-title'>拓客目标</view>
+    <view class='tasknum'>
+      <view class='floatnum'>个</view>
+      <view class='floatnum'>
+        <input name="tkPlanDetailTarget" placeholder='0'></input>
+      </view>
+    </view>
+  </view>
+
+  <view class='conposi'>
+    <view class='posi-title'>联系人</view>
+    <view class='contacts'>
+      <view class='phoneContent'>
+        <view class='phone'>姓名：</view>
+        <view class='nickt'>
+          <input name="tkPlanDetailContactsName" placeholder='填写客户姓名'></input>
+        </view>
+      </view>
+      <view class='sexgroup'>
+        <view class='viewgroup'></view>
+        <view class='sexchiose'>
+          <radio-group name="tkPlanDetailContactsSex">
+            <label class="radio">
+              <radio value="男"  checked="" />男
+            </label>
+            <label class="radio">
+              <radio value="女" />女
+            </label>
+          </radio-group>
+        </view>
+      </view>
+      <view class='phoneContent'>
+        <view class='phone'>手机号：</view>
+        <view class='nickt'>
+          <input name="tkPlanContactsPhone" placeholder='填写客户手机号'></input>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class='conposi'>
+    <view class='posi-title'>所在地</view>
+    <view class='contacts'>
+      <view class='phoneContent'>
+        <view class='address'>地址：</view>
+        <view class='nickt' bindtap="chooseLocation">
+        <input name="tk_client_location" placeholder='广东省东莞市东城鼎峰卡布斯' value='{{locationAddress}}'></input>
+      </view>
+      </view>
+
+      <view class='phoneContent'>
+        <view class='address'>详细地址：</view>
+        <view class='nickt'>
+          <input name="tkPlanDetailLocationDetail" placeholder='例：10号楼42室'></input>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='conposi'>
+    <view class='posi-title'> 拓客礼品</view>
+    <view class='posi-text'>
+
+      <view class='stepper'>
+        <view class='nickn'>物品：</view>
+        <view class='nickt'>
+          <input name="tkPlanDetailGoodName" placeholder='例：电动风扇'></input>
+        </view>
+      </view>
+      <view class='scontent'>
+        <view class='numcontent'>数量：</view>
+        <view class='numchoise'>
+          <view class='vimgn' bindtap="bindMinus">
+            <image src='../../../image/home/minus.png'></image>
+          </view>
+          <view class='vinput'>
+            <input type="number" bindchange="bindManual" value="{{num}}" />
+          </view>
+          <view class='vimgn' bindtap="bindPlus">
+            <image src='../../../image/home/add.png'></image>
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='conposit'>
+    <view class='posi-title2'>照片</view>
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files">
+                <block wx:for="{{imageList}}" wx:for-item="image">
+                  <view class="weui-uploader__file">
+                    <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                  </view>
+                </block>
+              </view>
+              <view class="weui-uploader__input-box">
+                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='band-con'>
+    <button  formType="submit" class='band'>新建任务</button>
+  </view>
+</form>

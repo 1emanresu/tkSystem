@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tkSystem.service.smallProgram.EmployService;
-import com.tkSystem.service.smallProgram.PlanService;
-import com.tkSystem.service.smallProgram.TkPlanExecuteClientService;
-import com.tkSystem.service.smallProgram.TkPlanExecuteService;
+import com.tkSystem.service.smallProgram.employServiceInterface;
+import com.tkSystem.service.smallProgram.impl.PlanService;
+import com.tkSystem.service.smallProgram.impl.TkPlanExecuteClientService;
+import com.tkSystem.service.smallProgram.impl.TkPlanExecuteService;
 import com.tkSystem.tools.ResponseUtil;
 import com.tkSystem.tools.RetCode;
 
@@ -21,7 +21,7 @@ public class LoginController {
 	 * 服务注册
 	 */
 	@Autowired(required=true)
-	EmployService employService;
+	employServiceInterface employService;
 	
 
 	/**
