@@ -32,18 +32,40 @@ public class EmployeesController {
 	 * @param response
 	 */
 	@RequestMapping("getAreadyPlan")
-	public void uploadHead(HttpServletRequest request, HttpServletResponse response) {
+	public void getAreadyPlan(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			WyMap wymap=WyMap.getParameter(request);
-			wymap.put("tk_plan_detail_tkuser_id", request.getParameter("tkUserId"));
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlan(wymap)));
+			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlan(request)));
 		} catch (Exception e) {
 			String msg = "=> tkUserHead不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
 		}
 	}
+	@RequestMapping("getAreadyPlanByTime")
+	public void getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response) {
 
+		try {
+			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByTime(request,response)));
+		} catch (Exception e) {
+			String msg = "=> tkUserHead不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
+	@RequestMapping("getAreadyPlanByDistance")
+	public void getAreadyPlanByDistance(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			if ( request.getParameter("longitude") == null||request.getParameter("longitude").trim().equals("")) {
+				throw new Exception("longitude格式有误");
+			}if (  request.getParameter("latitude") == null||request.getParameter("latitude").trim().equals("") ) {
+				throw new Exception("latitude格式有误");
+			}
+			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByDistance(request)));
+		} catch (Exception e) {
+			String msg = "=>  不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
 	/**
 	 * 申请物料
 	 */

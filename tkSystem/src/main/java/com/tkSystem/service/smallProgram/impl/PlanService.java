@@ -1,13 +1,20 @@
 package com.tkSystem.service.smallProgram.impl;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +31,10 @@ import com.tkSystem.tools.RetCode;
 import com.tkSystem.tools.ShortMessageService;
 import com.tkSystem.tools.ToolsUtil;
 import com.tkSystem.tools.WyMap;
+
+import net.oschina.j2cache.CacheChannel;
+import net.oschina.j2cache.J2Cache;
+
 import com.tkSystem.dao.mapper.TkUserMapper;
 import com.tkSystem.service.smallProgram.PlanServiceInterface;
 import com.tkSystem.dao.mapper.TkPlanPhotoMapper;
@@ -336,6 +347,28 @@ public class PlanService implements PlanServiceInterface {
 	 */
 	@Override
 	public RetCode getPlan(HttpServletRequest request, HttpServletResponse response) {
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
 		RetCode retCode = RetCode.getErrorCode();
 		WyMap wyMap = WyMap.getParameter(request);
 		try {
@@ -394,6 +427,11 @@ public class PlanService implements PlanServiceInterface {
 					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
 					+ "tk_plan_detail_end" + "   " + "结束时间", "");
 			retCode.put("msg", str);
+			request.setAttribute("names", "plan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			cache.set(names, hex2, retCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			retCode = RetCode.getErrorCode("失败");
@@ -402,6 +440,190 @@ public class PlanService implements PlanServiceInterface {
 		return retCode;
 	}
 
+	@Override
+	public RetCode getPlanByTime(HttpServletRequest request, HttpServletResponse response) {
+
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
+		RetCode retCode = RetCode.getErrorCode();
+		try {
+			request.setAttribute("names", "plan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			if (cache.get(names, hex2).getValue() == null) {
+				retCode = getPlan(request, response);
+				cache.set(names, hex2, retCode);
+			}
+			retCode = (RetCode) cache.get(names, hex2).getValue();
+			List<WyMap> list = (List) retCode.get("data");
+			// 返回的集合
+			List<WyMap> list2 = new ArrayList();
+			for (WyMap map : list) {
+				String tk_plan_detail_end = map.get("tk_plan_detail_end").toString();
+				String now = ToolsUtil.getDate();
+				System.out.println(map.get("tk_plan_detail_end"));
+				Long Amongtime = ToolsUtil.getAmongDateToLong(tk_plan_detail_end, now);
+				map.put("Amongtime", Amongtime);
+				list2.add(map);
+			}
+			// 算出时间 排序
+			Collections.sort(list2, new Comparator<WyMap>() {
+
+				@Override
+				public int compare(WyMap o1, WyMap o2) {
+					long i = (long) o2.get("Amongtime") - (long) o1.get("Amongtime");
+					/*
+					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
+					 */
+					return Integer.parseInt(i + "");
+				}
+			});
+			retCode = RetCode.getSuccessCode(list2);
+			String str = String.format("tk_plan_detail_title" + "   " + "当前任务名字" + "   "
+					+ "tk_plan_detail_target_achieve" + "   " + "当前任务拓客完成人数" + "   " + "tk_plan_state" + "   " + "任务状态"
+					+ "   " + "tk_plan_detail_location_detail" + "   " + "任务详细地址" + "   " + "tk_plan_detail_good_name"
+					+ "   " + "礼物名字" + "   " + "tk_plan_detail_user_id" + "   " + "用户编号" + "   "
+					+ "tk_plan_detail_remark" + "   " + "任务备注" + "   " + "tk_plan_detail_contacts_sex" + "   " + "联系人性别"
+					+ "   " + "tk_plan_detail_target" + "   " + "任务目标" + "   " + "tk_plan_detail_location" + "   "
+					+ "任务位置" + "   " + "tk_plan_detail_contacts_name" + "   " + "联系人名字" + "   " + "tk_plan_detail_start"
+					+ "   " + "任务开始时间" + "   " + "tk_plan_detail_photo" + "   " + "任务图片" + "   "
+					+ "tk_plan_contacts_phone" + "   " + "联系人手机号" + "   " + "tk_plan_detail_tkuser_id" + "   " + "拓客人编号"
+					+ "   " + "tk_channel_id" + "   " + "渠道编号" + "   " + "tk_plan_detail_id" + "   " + "任务详情编号" + "   "
+					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
+					+ "tk_plan_detail_end" + "   " + "结束时间", "");
+			retCode.put("msg", str);
+		} catch (Exception e) {
+			e.printStackTrace();
+			retCode = RetCode.getErrorCode("失败");
+			retCode.put("msg", e.getMessage());
+		}
+		return retCode;
+	}
+	@Override
+	public RetCode getPlanByDistance(HttpServletRequest request, HttpServletResponse response) {
+
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
+		RetCode retCode = RetCode.getErrorCode();
+		try {
+			request.setAttribute("names", "plan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			if (cache.get(names, hex2).getValue() == null) {
+				retCode = getPlan(request, response);
+				cache.set(names, hex2, retCode);
+			}
+			retCode = (RetCode) cache.get(names, hex2).getValue();
+			List<WyMap> list = (List) retCode.get("data");
+			// 返回的集合
+			List<WyMap> list2 = new ArrayList();
+			TkLocation t1=new TkLocation();
+			String latitude=request.getParameter("latitude");
+			String longitude=request.getParameter("longitude");
+			t1.setLatitude(latitude);
+			t1.setLongitude(longitude); 
+			if(cache.get("default","listTkLocation").getValue()==null) {
+				List<TkLocation> listTkLocation=TkLocationDao.selectAll();
+				cache.set("default","listTkLocation", listTkLocation);
+			}
+			for (WyMap map : list) {
+				String tk_location_id = map.get("tk_location_id").toString();
+				System.out.println(map.get("tk_location_id"));
+				//查经纬度坐标
+				TkLocation t2=new TkLocation();
+				List<TkLocation> TkLocationlist=(List<TkLocation>)cache.get("default","listTkLocation").getValue();
+				for (TkLocation tkLocation : TkLocationlist) {
+					if(tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2=tkLocation;
+					}else {
+						t2=TkLocationDao.selectByPrimaryKey(tk_location_id);
+					}
+				}
+				Double distanceToDouble=ToolsUtil.getDistanceToDouble(t1,t2);
+				map.put("distanceToDouble", distanceToDouble);
+				map.put("distance", new java.text.DecimalFormat("#.00").format(distanceToDouble) );
+				list2.add(map);
+			}
+			// 算出距离 排序
+			
+			Collections.sort(list2, new Comparator<WyMap>() {
+				
+				@Override
+				public int compare(WyMap o1, WyMap o2) {
+					double i = (double) o1.get("distanceToDouble") - (double) o2.get("distanceToDouble");
+					/*
+					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
+					 */
+					return (int) Math.ceil(i);
+					
+				}
+			});
+			retCode = RetCode.getSuccessCode(list2);
+			String str = String.format("tk_plan_detail_title" + "   " + "当前任务名字" + "   "
+					+ "tk_plan_detail_target_achieve" + "   " + "当前任务拓客完成人数" + "   " + "tk_plan_state" + "   " + "任务状态"
+					+ "   " + "tk_plan_detail_location_detail" + "   " + "任务详细地址" + "   " + "tk_plan_detail_good_name"
+					+ "   " + "礼物名字" + "   " + "tk_plan_detail_user_id" + "   " + "用户编号" + "   "
+					+ "tk_plan_detail_remark" + "   " + "任务备注" + "   " + "tk_plan_detail_contacts_sex" + "   " + "联系人性别"
+					+ "   " + "tk_plan_detail_target" + "   " + "任务目标" + "   " + "tk_plan_detail_location" + "   "
+					+ "任务位置" + "   " + "tk_plan_detail_contacts_name" + "   " + "联系人名字" + "   " + "tk_plan_detail_start"
+					+ "   " + "任务开始时间" + "   " + "tk_plan_detail_photo" + "   " + "任务图片" + "   "
+					+ "tk_plan_contacts_phone" + "   " + "联系人手机号" + "   " + "tk_plan_detail_tkuser_id" + "   " + "拓客人编号"
+					+ "   " + "tk_channel_id" + "   " + "渠道编号" + "   " + "tk_plan_detail_id" + "   " + "任务详情编号" + "   "
+					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
+					+ "tk_plan_detail_end" + "   " + "结束时间"+ "   "
+					+ "distance" + "   " + "距离千米数"+ "   "
+					+ "distanceToDouble" + "   " + "距离千米浮点数", "");
+			retCode.put("msg", str);
+		} catch (Exception e) {
+			e.printStackTrace();
+			retCode = RetCode.getErrorCode("失败");
+			retCode.put("msg", e.getMessage());
+		}
+		return retCode;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -528,7 +750,7 @@ public class PlanService implements PlanServiceInterface {
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	public RetCode getPlanDetailByPlanId(HttpServletRequest request, HttpServletResponse response) {
+	public Object getPlanDetailByPlanId(HttpServletRequest request, HttpServletResponse response) {
 		RetCode retCode = RetCode.getErrorCode();
 		WyMap wyMap = WyMap.getParameter(request);
 		try {
@@ -549,7 +771,6 @@ public class PlanService implements PlanServiceInterface {
 				tk_plan_detail_photo = TkPlanPhotoMapper.selectByPrimaryKey(str).getTkPlanPhotoUrl();
 			}
 			retCode = RetCode.getSuccessCode(wyMap);
-			retCode.put("msg", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 			retCode = RetCode.getErrorCode("失败");
@@ -565,9 +786,33 @@ public class PlanService implements PlanServiceInterface {
 	 * tkSystem.tools.WyMap)
 	 */
 	@Override
-	public Object getAreadyPlan(WyMap wyMap) {
+	public Object getAreadyPlan(HttpServletRequest request) {
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
 		RetCode retCode = RetCode.getErrorCode();
 		try {
+			WyMap wyMap=WyMap.getParameter(request);
+			wyMap.put("tk_plan_detail_user_id", request.getParameter("tkUserId"));
 			// 当前用户类型
 			String TkUserTypeId = TkUserMapper.selectByPrimaryKey(wyMap).getTkUserTypeId();
 			switch (TkUserTypeId) {
@@ -635,6 +880,11 @@ public class PlanService implements PlanServiceInterface {
 					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
 					+ "tk_plan_detail_end" + "   " + "结束时间", "");
 			retCode.put("msg", str);
+			request.setAttribute("names", "areadyPlan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			cache.set(names, hex2, retCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 			retCode = RetCode.getErrorCode("失败");
@@ -642,7 +892,188 @@ public class PlanService implements PlanServiceInterface {
 		}
 		return retCode;
 	}
+	@Override
+	public RetCode getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response) {
 
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
+		RetCode retCode = RetCode.getErrorCode();
+		try {
+			request.setAttribute("names", "areadyPlan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			if (cache.get(names, hex2).getValue() == null) {
+				retCode = (RetCode) getAreadyPlan(request);
+				cache.set(names, hex2, retCode);
+			}
+			retCode = (RetCode) cache.get(names, hex2).getValue();
+			List<WyMap> list = (List) retCode.get("data");
+			// 返回的集合
+			List<WyMap> list2 = new ArrayList();
+			for (WyMap map : list) {
+				String tk_plan_detail_end = map.get("tk_plan_detail_end").toString();
+				String now = ToolsUtil.getDate();
+				System.out.println(map.get("tk_plan_detail_end"));
+				Long Amongtime = ToolsUtil.getAmongDateToLong(tk_plan_detail_end, now);
+				map.put("Amongtime", Amongtime);
+				list2.add(map);
+			}
+			// 算出时间 排序
+			Collections.sort(list2, new Comparator<WyMap>() {
+
+				@Override
+				public int compare(WyMap o1, WyMap o2) {
+					long i = (long) o1.get("Amongtime") - (long) o2.get("Amongtime");
+					/*
+					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
+					 */
+					return Integer.parseInt(i + "");
+				}
+			});
+			retCode = RetCode.getSuccessCode(list2);
+			String str = String.format("tk_plan_detail_title" + "   " + "当前任务名字" + "   "
+					+ "tk_plan_detail_target_achieve" + "   " + "当前任务拓客完成人数" + "   " + "tk_plan_state" + "   " + "任务状态"
+					+ "   " + "tk_plan_detail_location_detail" + "   " + "任务详细地址" + "   " + "tk_plan_detail_good_name"
+					+ "   " + "礼物名字" + "   " + "tk_plan_detail_user_id" + "   " + "用户编号" + "   "
+					+ "tk_plan_detail_remark" + "   " + "任务备注" + "   " + "tk_plan_detail_contacts_sex" + "   " + "联系人性别"
+					+ "   " + "tk_plan_detail_target" + "   " + "任务目标" + "   " + "tk_plan_detail_location" + "   "
+					+ "任务位置" + "   " + "tk_plan_detail_contacts_name" + "   " + "联系人名字" + "   " + "tk_plan_detail_start"
+					+ "   " + "任务开始时间" + "   " + "tk_plan_detail_photo" + "   " + "任务图片" + "   "
+					+ "tk_plan_contacts_phone" + "   " + "联系人手机号" + "   " + "tk_plan_detail_tkuser_id" + "   " + "拓客人编号"
+					+ "   " + "tk_channel_id" + "   " + "渠道编号" + "   " + "tk_plan_detail_id" + "   " + "任务详情编号" + "   "
+					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
+					+ "tk_plan_detail_end" + "   " + "结束时间", "");
+			retCode.put("msg", str);
+		} catch (Exception e) {
+			e.printStackTrace();
+			retCode = RetCode.getErrorCode("失败");
+			retCode.put("msg", e.getMessage());
+		}
+		return retCode;
+	}
+	@Override
+	public Object getAreadyPlanByDistance(HttpServletRequest request) {
+
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
+		RetCode retCode = RetCode.getErrorCode();
+		try {
+			request.setAttribute("names", "areadyPlan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			if (cache.get(names, hex2).getValue() == null) {
+				retCode = (RetCode) getAreadyPlan(request );
+				cache.set(names, hex2, retCode);
+			}
+			retCode = (RetCode) cache.get(names, hex2).getValue();
+			List<WyMap> list = (List) retCode.get("data");
+			// 返回的集合
+			List<WyMap> list2 = new ArrayList();
+			TkLocation t1=new TkLocation();
+			String latitude=request.getParameter("latitude");
+			String longitude=request.getParameter("longitude");
+			t1.setLatitude(latitude);
+			t1.setLongitude(longitude); 
+			if(cache.get("default","listTkLocation").getValue()==null) {
+				List<TkLocation> listTkLocation=TkLocationDao.selectAll();
+				cache.set("default","listTkLocation", listTkLocation);
+			}
+			for (WyMap map : list) {
+				String tk_location_id = map.get("tk_location_id").toString();
+				System.out.println(map.get("tk_location_id"));
+				//查经纬度坐标
+				TkLocation t2=new TkLocation();
+				List<TkLocation> TkLocationlist=(List<TkLocation>)cache.get("default","listTkLocation").getValue();
+				for (TkLocation tkLocation : TkLocationlist) {
+					if(tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2=tkLocation;
+					}else {
+						t2=TkLocationDao.selectByPrimaryKey(tk_location_id);
+					}
+				}
+				Double distanceToDouble=ToolsUtil.getDistanceToDouble(t1,t2);
+				map.put("distanceToDouble", distanceToDouble);
+				map.put("distance", new java.text.DecimalFormat("#.00").format(distanceToDouble) );
+				list2.add(map);
+			}
+			// 算出距离 排序
+			
+			Collections.sort(list2, new Comparator<WyMap>() {
+				
+				@Override
+				public int compare(WyMap o1, WyMap o2) {
+					double i = (double) o1.get("distanceToDouble") - (double) o2.get("distanceToDouble");
+					/*
+					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
+					 */
+					return (int) Math.ceil(i);
+					
+				}
+			});
+			retCode = RetCode.getSuccessCode(list2);
+			String str = String.format("tk_plan_detail_title" + "   " + "当前任务名字" + "   "
+					+ "tk_plan_detail_target_achieve" + "   " + "当前任务拓客完成人数" + "   " + "tk_plan_state" + "   " + "任务状态"
+					+ "   " + "tk_plan_detail_location_detail" + "   " + "任务详细地址" + "   " + "tk_plan_detail_good_name"
+					+ "   " + "礼物名字" + "   " + "tk_plan_detail_user_id" + "   " + "用户编号" + "   "
+					+ "tk_plan_detail_remark" + "   " + "任务备注" + "   " + "tk_plan_detail_contacts_sex" + "   " + "联系人性别"
+					+ "   " + "tk_plan_detail_target" + "   " + "任务目标" + "   " + "tk_plan_detail_location" + "   "
+					+ "任务位置" + "   " + "tk_plan_detail_contacts_name" + "   " + "联系人名字" + "   " + "tk_plan_detail_start"
+					+ "   " + "任务开始时间" + "   " + "tk_plan_detail_photo" + "   " + "任务图片" + "   "
+					+ "tk_plan_contacts_phone" + "   " + "联系人手机号" + "   " + "tk_plan_detail_tkuser_id" + "   " + "拓客人编号"
+					+ "   " + "tk_channel_id" + "   " + "渠道编号" + "   " + "tk_plan_detail_id" + "   " + "任务详情编号" + "   "
+					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
+					+ "tk_plan_detail_end" + "   " + "结束时间"+ "   " + "distance" + "   " + "距离千米数"+ "   "
+					+ "distanceToDouble" + "   " + "距离千米浮点数", "");
+			retCode.put("msg", str);
+		} catch (Exception e) {
+			e.printStackTrace();
+			retCode = RetCode.getErrorCode("失败");
+			retCode.put("msg", e.getMessage());
+		}
+		return retCode;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 

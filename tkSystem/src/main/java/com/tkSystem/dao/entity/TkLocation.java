@@ -1,6 +1,8 @@
 package com.tkSystem.dao.entity;
 
-public class TkLocation {
+import java.io.Serializable;
+
+public class TkLocation implements Serializable{
     private String tkLocationId;
 
     private String latitude;

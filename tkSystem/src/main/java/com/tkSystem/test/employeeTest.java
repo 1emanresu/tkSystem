@@ -42,6 +42,18 @@ import com.tkSystem.dao.mapper.*;
 
 public class employeeTest {
 	@Test
+	public void test1() {
+		try {
+			
+			int i = (int) Math.ceil(0.00);
+			System.out.println(i);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Test
 	public void test() throws Exception {
 		try {
 			Connection conn;

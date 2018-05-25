@@ -94,14 +94,22 @@ public interface PlanServiceInterface {
 	 */
 	RetCode getTodayTask(WyMap paMap);
 
-	RetCode getPlanDetailByPlanId(HttpServletRequest request, HttpServletResponse response);
-
-	Object getAreadyPlan(WyMap wyMap);
+	Object getPlanDetailByPlanId(HttpServletRequest request, HttpServletResponse response);
 
 	RetCode getReportByManageDetail(WyMap paMap);
 
 	RetCode putReportByManage(WyMap paMap);
 
 	RetCode getReportByManage(WyMap paMap);
+
+	RetCode getPlanByTime(HttpServletRequest request, HttpServletResponse response);
+
+	Object getAreadyPlan(HttpServletRequest request);
+
+	RetCode getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response);
+
+	Object getAreadyPlanByDistance(HttpServletRequest request);
+
+	Object getPlanByDistance(HttpServletRequest request, HttpServletResponse response);
 
 }

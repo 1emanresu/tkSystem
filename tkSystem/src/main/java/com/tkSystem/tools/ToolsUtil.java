@@ -28,6 +28,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.tkSystem.dao.entity.TkLocation;
 import com.tkSystem.tools.WyMap;  
 public class ToolsUtil {
 	/**
@@ -356,5 +357,27 @@ public class ToolsUtil {
         return new java.text.DecimalFormat("#.00").format(s); 
 	}
 	
+	public static double getDistanceToDouble(double lat1, double lng1, double lat2, double lng2){
+    	double radLat1 = rad(lat1);  
+        double radLat2 = rad(lat2);  
+        double a = radLat1 - radLat2;      
+        double b = rad(lng1) - rad(lng2);  
+        double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +   
+         Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));  
+        s = s * EARTH_RADIUS;  
+        return s; 
+	}
+	public static double getDistanceToDouble(TkLocation TkLocation1, TkLocation TkLocation2){
+    	double radLat1 = rad(Double.parseDouble(TkLocation1.getLatitude()));  
+        double radLat2 = rad(Double.parseDouble(TkLocation2.getLatitude()));  
+        double a = radLat1 - radLat2;      
+        double radlng1 = rad(Double.parseDouble(TkLocation1.getLongitude()));  
+        double radlng2 = rad(Double.parseDouble(TkLocation2.getLongitude()));  
+         double b =radlng1 - radlng2;  
+        double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +   
+         Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));  
+        s = s * EARTH_RADIUS;  
+        return s; 
+	}
 	
 }

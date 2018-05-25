@@ -1,7 +1,7 @@
 package com.tkSystem.dao.entity;
 
 public class TkClientType {
-    private String tkTypeId;
+    private String tkTypeId ;
 
     private String tkTypeName;
 

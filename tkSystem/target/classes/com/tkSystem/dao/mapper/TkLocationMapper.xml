@@ -15,6 +15,12 @@
     <include refid="Base_Column_List" />
     from tk_location
     where tk_location_id = #{tkLocationId,jdbcType=VARCHAR}
+  </select> 
+   <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tk_location
+    where 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tk_location

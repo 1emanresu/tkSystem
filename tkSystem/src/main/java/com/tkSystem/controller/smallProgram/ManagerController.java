@@ -202,6 +202,26 @@ public class ManagerController {
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
 		}
 	}
+	@RequestMapping("getPlanByTime")
+	public void getPlanByTime(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ResponseUtil.write(response, planService.getPlanByTime(request, response ));
+		} catch (Exception e) {
+			String msg = "=> tkPlanId不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
+	//全部任务距离最近升序
+	@RequestMapping("getPlanByDistance")
+	public void getPlanByDistance(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ResponseUtil.write(response, planService.getPlanByDistance(request, response ));
+		} catch (Exception e) {
+			String msg = "=> tkPlanId不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
+	
 	/**
 	 * 团队进度 查询  
 	 * 
@@ -240,18 +260,40 @@ public class ManagerController {
 	 * @param response
 	 */
 	@RequestMapping("getAreadyPlan")
-	public void uploadHead(HttpServletRequest request, HttpServletResponse response) {
+	public void getAreadyPlan(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			WyMap wymap=WyMap.getParameter(request);
-			wymap.put("tk_plan_detail_user_id", request.getParameter("tkUserId"));
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlan(wymap)));
+			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlan(request)));
 		} catch (Exception e) {
 			String msg = "=> tkUserHead不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
 		}
 	}
+	@RequestMapping("getAreadyPlanByTime")
+	public void getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response) {
 
+		try {
+			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByTime(request,response)));
+		} catch (Exception e) {
+			String msg = "=> tkUserHead不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
+	@RequestMapping("getAreadyPlanByDistance")
+	public void getAreadyPlanByDistance(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			if ( request.getParameter("longitude") == null||request.getParameter("longitude").trim().equals("")) {
+				throw new Exception("longitude格式有误");
+			}if (  request.getParameter("latitude") == null||request.getParameter("latitude").trim().equals("") ) {
+				throw new Exception("latitude格式有误");
+			}
+			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByDistance(request)));
+		} catch (Exception e) {
+			String msg = "=>  不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
 	/**
 	 * 团队进度 查询 （排序前三名以后）
 	 * 
@@ -280,7 +322,10 @@ public class ManagerController {
 	public void getEmployeePlan(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String tkPlanId;
-			if (request.getParameter("tkPlanId").trim().equals("") || request.getParameter("tkPlanId") == null) {
+			if ( 
+					request.getParameter("tkPlanId") == null ||
+					request.getParameter("tkPlanId").trim().equals("")
+						) {
 				throw new Exception("tkPlanId格式有误");
 			}
 
