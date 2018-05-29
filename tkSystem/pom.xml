@@ -10,15 +10,14 @@
 	<!-- SpringMVC、Spring -->
 	<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 	<dependencies>
- 
+<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 <!-- https://mvnrepository.com/artifact/net.oschina.j2cache/j2cache-core -->
 <dependency>
     <groupId>net.oschina.j2cache</groupId>
     <artifactId>j2cache-core</artifactId>
     <version>2.3.20-release</version>
 </dependency>
- <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
- 
+
 <dependency>
     <groupId>commons-fileupload</groupId>
     <artifactId>commons-fileupload</artifactId>

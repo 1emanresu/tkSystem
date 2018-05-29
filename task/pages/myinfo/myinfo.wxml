@@ -13,7 +13,7 @@
       <view class='Username'>
         <view class='{{userinfo}}'>
           <view>{{username}}</view>
-          <view class='phones'>手机:{{userphone}}</view>
+          <view class='phones'>{{userphone}}</view>
         </view>
         <view class='{{userLog}}'>
           <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
@@ -51,7 +51,7 @@
       </view>
     </view>
   </view>
-  <!--客户跟进  -->
+  <!--客户信息  -->
   <view class='middleContentTow'>
     <navigator url='../../pages/home/myclient/myclient'>
       <view class='floatCon'>

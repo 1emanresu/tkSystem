@@ -61,10 +61,10 @@ public class ToolsUtil {
 				}
 		}
 	}
-	public static boolean MatrixToImageWriter( String filePath, String fileName,WyMap wymap) {
+	public static boolean MatrixToImageWriter( String filePath, String fileName,String str) {
 		boolean bool=false;
 		try {
-		    String content = wymap.toString();
+		    String content = str;
 		       int width = 200; // 图像宽度  
 		       int height = 200; // 图像高度  
 		       String format = "png";// 图像类型  

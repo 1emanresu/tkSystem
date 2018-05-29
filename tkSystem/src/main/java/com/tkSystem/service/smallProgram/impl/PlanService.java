@@ -2,6 +2,7 @@ package com.tkSystem.service.smallProgram.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,10 +21,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tkSystem.dao.entity.TkLocation;
+import com.tkSystem.dao.entity.TkPlanExecute;
 import com.tkSystem.dao.entity.TkPlanPhoto;
 import com.tkSystem.dao.entity.TkUser;
 import com.tkSystem.dao.mapper.TkLocationMapper;
 import com.tkSystem.dao.mapper.TkPlanDetailMapper;
+import com.tkSystem.dao.mapper.TkPlanExecuteMapper;
 import com.tkSystem.dao.mapper.TkPlanMapper;
 import com.tkSystem.dao.mapper.TkTargetReportMapper;
 import com.tkSystem.tools.CLID;
@@ -57,6 +60,8 @@ public class PlanService implements PlanServiceInterface {
 	private TkTargetReportMapper TkTargetReportDao;
 	@Resource
 	private TkLocationMapper TkLocationDao;
+	@Resource
+	private TkPlanExecuteMapper TkPlanExecuteDao;
 
 	/**
 	 * 任务管理 (发布任务 ,分配任务,查看拓客人员任务进度、任务总进度,)
@@ -112,6 +117,7 @@ public class PlanService implements PlanServiceInterface {
 		 */
 		MapTkPlan.put("tkPlanId", clid);
 		MapTkPlan.put("tkPlanTarget", request.getParameter("tkPlanDetailTarget"));
+		//该任务状态 1默认 2已经签到3已分配
 		MapTkPlan.put("tkPlanState", "1");
 		MapTkPlan.put("tkPlanName", request.getParameter("tkPlanDetailTitle"));
 		MapTkPlan.put("tkPlanTime", ToolsUtil.getDate());
@@ -167,8 +173,18 @@ public class PlanService implements PlanServiceInterface {
 		WyMap paMap = WyMap.getParameter(request);
 		RetCode retCode;
 		try {
+
 			String tkPlanExecuteId = CLID.getID();
+			String tk_plan_execute_start_time = "", tk_plan_execute_end_time = "";
 			paMap.put("tkPlanExecuteId", tkPlanExecuteId);
+			// 根据tkPlanId查询任务时间 保存进去时间
+			String tk_plan_detail_id = request.getParameter("tkPlanId");
+			paMap.put("tk_plan_detail_id", tk_plan_detail_id);
+			WyMap TkPlanDetailmap = TkPlanDetailDao.getPlanDetailByPlanId(paMap);
+			tk_plan_execute_start_time = TkPlanDetailmap.get("tk_plan_detail_start").toString();
+			tk_plan_execute_end_time = TkPlanDetailmap.get("tk_plan_detail_end").toString();
+			paMap.put("tkPlanExecuteStartTime", tk_plan_execute_start_time);
+			paMap.put("tkPlanExecuteEndTime", tk_plan_execute_end_time);
 			retCode = RetCode.getSuccessCode(TkPlanDao.postPlanExecute(paMap));
 			String name, tkUserPhone;
 			HashMap Map;
@@ -198,7 +214,7 @@ public class PlanService implements PlanServiceInterface {
 			TkPlanDetailDao.updateTkUserId(MapTkPlan1);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return RetCode.getErrorCode();
+			throw new RuntimeException();
 		}
 		return retCode;
 	}
@@ -245,8 +261,9 @@ public class PlanService implements PlanServiceInterface {
 	 */
 	@Override
 	public RetCode getPlanByUserIdZ(HttpServletRequest request, HttpServletResponse response) {
-		Date as = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-
+		// Date as = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+		Date as = new Date(new Date().getTime());
+		// 查询除了今日任务时间之外的所有任务
 		SimpleDateFormat matter1 = new SimpleDateFormat("yyyy-MM-dd");
 		String time = matter1.format(as);
 		WyMap paMap = WyMap.getParameter(request);
@@ -257,7 +274,12 @@ public class PlanService implements PlanServiceInterface {
 			for (WyMap object : list) {
 				String str = object.get("tkPlanTime").toString();
 				String str0 = object.get("tkPlanState").toString();
-				if (str.contains(time) && str0.equals("1")) {
+				// 任务包含今天
+				if (str.contains(time)) {
+					continue;
+				}
+				// 非今天 创建的任务 未分配 未签到
+				if (str0.equals("1")) {
 					list1.add(object);
 				}
 			}
@@ -282,20 +304,81 @@ public class PlanService implements PlanServiceInterface {
 		WyMap paMap = WyMap.getParameter(request);
 		RetCode retCode;
 		try {
-			java.util.List<WyMap> list = TkPlanDetailDao.getTaskToClock(paMap);
-			List<WyMap> list2 = new ArrayList();
-			for (WyMap wyMap : list) {
-				String tk_plan_detail_photo = wyMap.get("tk_plan_detail_photo").toString();
-				if (tk_plan_detail_photo.contains("://")) {
+			// 根据用户id获取 被分配到的任务信息
+			java.util.List<WyMap> list = new ArrayList();
+			List<WyMap> TkPlanDetailList = TkPlanDetailDao.getAll();
+			List<WyMap> TkPlanDetailMap = new ArrayList();
+			List<TkPlanExecute> listTkPlanExecute = TkPlanExecuteDao.selectByUserId(request.getParameter("tkUserId"));
+			List<WyMap> TkPlanList = TkPlanDao.selectAll();
+			// 筛选出已分配可签到的任务
+			for (WyMap wyMap : TkPlanDetailList) {
+				String tk_plan_detail_id = wyMap.get("tk_plan_detail_id").toString();
+				for (WyMap wyMap2 : TkPlanList) {
+					String tk_plan_id = wyMap2.get("tk_plan_id").toString();
+					if (tk_plan_id.equals(tk_plan_detail_id)) {
+						System.out.println("tk_plan_detail_id="+tk_plan_detail_id);
+						// 该任务状态 1默认 2已经签到3已分配
+						String tk_plan_state = wyMap2.get("tk_plan_state").toString();
+						switch (tk_plan_state) {
+						case "1":
 
-				} else {
-					// 根据tk_plan_photo_id查看
-					String str = tk_plan_detail_photo.split(",")[0];
-					tk_plan_detail_photo = TkPlanPhotoMapper.selectByPrimaryKey(str).getTkPlanPhotoUrl();
+							break;
+						case "2":
+
+							break;
+						case "3":
+							TkPlanDetailMap.add(wyMap);
+							break;
+						default:
+							break;
+						}
+					}
 				}
-				list2.add(wyMap);
 			}
-			retCode = RetCode.getSuccessCode(list2);
+			for (TkPlanExecute tkPlanExecute : listTkPlanExecute) {
+				// 根据任务id获取任务信息
+				String PlanId = tkPlanExecute.getTkPlanId();
+				for (WyMap PlanDetailMap : TkPlanDetailMap) {
+					String tk_plan_detail_id = PlanDetailMap.get("tk_plan_detail_id").toString();
+					if (tk_plan_detail_id.equals(PlanId)) {
+						String tk_plan_detail_photo = PlanDetailMap.get("tk_plan_detail_photo").toString();
+						if (tk_plan_detail_photo.contains("://")) {
+
+						} else {
+							// 根据tk_plan_photo_id查看
+							String str = tk_plan_detail_photo.split(",")[0];
+							tk_plan_detail_photo = TkPlanPhotoMapper.selectByPrimaryKey(str).getTkPlanPhotoUrl();
+						}
+						list.add(PlanDetailMap);
+					}
+				}
+			}
+			// 按任务开始时间升序
+			Collections.sort(list, new Comparator<WyMap>() {
+
+				@Override
+				public int compare(WyMap o1, WyMap o2) {
+					String o1_start = o1.get("tk_plan_detail_start").toString();
+					String o2_start = o2.get("tk_plan_detail_start").toString();
+
+					long i = 0;
+					try {
+						i = ToolsUtil.getAmongDateToLong(o1_start, o2_start);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					/*
+					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
+					 */
+					return (int) Math.ceil(i);
+
+				}
+			});
+			for (WyMap m : list) {
+				System.out.println(m.get("tk_plan_detail_start").toString());
+				System.out.println(m.get("tk_plan_detail_title").toString());
+			}
+			retCode = RetCode.getSuccessCode(list);
 			retCode.put("msg",
 					"tk_plan_detail_start as '任务开始时间',tk_plan_detail_title as '任务名称',tk_plan_detail_id as '任务编号' ");
 		} catch (Exception e) {
@@ -321,10 +404,12 @@ public class PlanService implements PlanServiceInterface {
 		RetCode retCode;
 		try {
 			java.util.List<WyMap> list = TkPlanDao.selectByUserId(paMap);
+			// 返回的任务list1
 			java.util.List<WyMap> list1 = new ArrayList<>();
 			for (WyMap object : list) {
 				String str = object.get("tkPlanTime").toString();
 				String str0 = object.get("tkPlanState").toString();
+				// 该任务状态 1默认 2已经签到3已分配
 				if (str.contains(time) && str0.equals("1")) {
 					list1.add(object);
 				}
@@ -520,6 +605,7 @@ public class PlanService implements PlanServiceInterface {
 		}
 		return retCode;
 	}
+
 	@Override
 	public RetCode getPlanByDistance(HttpServletRequest request, HttpServletResponse response) {
 
@@ -559,37 +645,37 @@ public class PlanService implements PlanServiceInterface {
 			List<WyMap> list = (List) retCode.get("data");
 			// 返回的集合
 			List<WyMap> list2 = new ArrayList();
-			TkLocation t1=new TkLocation();
-			String latitude=request.getParameter("latitude");
-			String longitude=request.getParameter("longitude");
+			TkLocation t1 = new TkLocation();
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
 			t1.setLatitude(latitude);
-			t1.setLongitude(longitude); 
-			if(cache.get("default","listTkLocation").getValue()==null) {
-				List<TkLocation> listTkLocation=TkLocationDao.selectAll();
-				cache.set("default","listTkLocation", listTkLocation);
+			t1.setLongitude(longitude);
+			if (cache.get("default", "listTkLocation").getValue() == null) {
+				List<TkLocation> listTkLocation = TkLocationDao.selectAll();
+				cache.set("default", "listTkLocation", listTkLocation);
 			}
 			for (WyMap map : list) {
 				String tk_location_id = map.get("tk_location_id").toString();
 				System.out.println(map.get("tk_location_id"));
-				//查经纬度坐标
-				TkLocation t2=new TkLocation();
-				List<TkLocation> TkLocationlist=(List<TkLocation>)cache.get("default","listTkLocation").getValue();
+				// 查经纬度坐标
+				TkLocation t2 = new TkLocation();
+				List<TkLocation> TkLocationlist = (List<TkLocation>) cache.get("default", "listTkLocation").getValue();
 				for (TkLocation tkLocation : TkLocationlist) {
-					if(tkLocation.getTkLocationId().equals(tk_location_id)) {
-						t2=tkLocation;
-					}else {
-						t2=TkLocationDao.selectByPrimaryKey(tk_location_id);
+					if (tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2 = tkLocation;
+					} else {
+						t2 = TkLocationDao.selectByPrimaryKey(tk_location_id);
 					}
 				}
-				Double distanceToDouble=ToolsUtil.getDistanceToDouble(t1,t2);
+				Double distanceToDouble = ToolsUtil.getDistanceToDouble(t1, t2);
 				map.put("distanceToDouble", distanceToDouble);
-				map.put("distance", new java.text.DecimalFormat("#.00").format(distanceToDouble) );
+				map.put("distance", new java.text.DecimalFormat("#0.0").format(distanceToDouble) + "km");
 				list2.add(map);
 			}
 			// 算出距离 排序
-			
+
 			Collections.sort(list2, new Comparator<WyMap>() {
-				
+
 				@Override
 				public int compare(WyMap o1, WyMap o2) {
 					double i = (double) o1.get("distanceToDouble") - (double) o2.get("distanceToDouble");
@@ -597,7 +683,7 @@ public class PlanService implements PlanServiceInterface {
 					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
 					 */
 					return (int) Math.ceil(i);
-					
+
 				}
 			});
 			retCode = RetCode.getSuccessCode(list2);
@@ -612,8 +698,7 @@ public class PlanService implements PlanServiceInterface {
 					+ "tk_plan_contacts_phone" + "   " + "联系人手机号" + "   " + "tk_plan_detail_tkuser_id" + "   " + "拓客人编号"
 					+ "   " + "tk_channel_id" + "   " + "渠道编号" + "   " + "tk_plan_detail_id" + "   " + "任务详情编号" + "   "
 					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
-					+ "tk_plan_detail_end" + "   " + "结束时间"+ "   "
-					+ "distance" + "   " + "距离千米数"+ "   "
+					+ "tk_plan_detail_end" + "   " + "结束时间" + "   " + "distance" + "   " + "距离千米数" + "   "
 					+ "distanceToDouble" + "   " + "距离千米浮点数", "");
 			retCode.put("msg", str);
 		} catch (Exception e) {
@@ -623,7 +708,7 @@ public class PlanService implements PlanServiceInterface {
 		}
 		return retCode;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -716,26 +801,82 @@ public class PlanService implements PlanServiceInterface {
 	 */
 	@Override
 	public RetCode getTodayTask(WyMap paMap) {
+		// 获取今日任务
 		RetCode retCode = RetCode.getErrorCode();
 		try {
-			List<WyMap> list = TkPlanDetailDao.getTodayTask(paMap);
+			TkUser user = TkUserMapper.selectByPrimaryKey(paMap);
+			String typeId = user.getTkUserTypeId();
+			String userId = paMap.get("tkUserId").toString();
+			switch (typeId) {
+			case "0":
+				// 0拓客人员或普通用户，1超级管理员2一级经理
+				paMap.put("tk_user_id", userId);
+				paMap.remove("tk_plan_user_id");
+				break;
+			case "1":
+				// 0拓客人员或普通用户，1超级管理员2一级经理
+				paMap.put("tk_plan_user_id", userId);
+				paMap.remove("tk_user_id");
+				break;
+			case "2":
+				paMap.put("tk_plan_user_id", userId);
+				paMap.remove("tk_user_id");
+				break;
+
+			default:
+				throw new Exception("用户不存在");
+
+			}
+			paMap.printStr();
+			List<WyMap> TkPlanExecutelist = TkPlanDetailDao.getTodayTask(paMap);
+			List<WyMap> TkPlanDetaillist = TkPlanDetailDao.getAll();
+			List<WyMap> list = new ArrayList();
+			for (WyMap wyMap : TkPlanExecutelist) {
+				String tk_plan_id=wyMap.get("tk_plan_id").toString();
+				for (WyMap wyMap2 : TkPlanDetaillist) {
+					String tk_plan_detail_id=wyMap2.get("tk_plan_detail_id").toString();
+					if(tk_plan_id.equals(tk_plan_detail_id)) {
+						list.add(wyMap2);
+					}
+				}
+			}
+			System.out.println(list.size());
+			if (list == null) {
+				throw new Exception("今日任务暂无！TkPlanDetailDao.getTodayTask");
+			}
 			List<WyMap> relist = new ArrayList();
 			for (WyMap wyMap : list) {
+				// 获取任务
+			/*	String tk_plan_id = wyMap.get("tk_plan_id").toString();
+				wyMap.put("tk_plan_detail_id", tk_plan_id);
+				wyMap = TkPlanDetailDao.getPlanDetailByPlanId(wyMap);*/
 				String tk_plan_detail_photo = wyMap.get("tk_plan_detail_photo").toString();
 				if (tk_plan_detail_photo.contains("://")) {
-
 				} else {
 					// 根据tk_plan_photo_id查看
+					String tk_plan_detail_id = wyMap.get("tk_plan_detail_id").toString();
+					System.out.println("tk_plan_detail_id="+tk_plan_detail_id);
 					String str = tk_plan_detail_photo.split(",")[0];
-					tk_plan_detail_photo = TkPlanPhotoMapper.selectByPrimaryKey(str).getTkPlanPhotoUrl();
+					TkPlanPhoto t=TkPlanPhotoMapper.selectByPrimaryKey(str);
+					if(t==null) {
+						//图片不存在
+					}
+					if(t.getTkPlanPhotoUrl()==null||t.getTkPlanPhotoUrl().isEmpty()) {
+						//图片url不存在
+					}else {
+						tk_plan_detail_photo = TkPlanPhotoMapper.selectByPrimaryKey(str).getTkPlanPhotoUrl();
+					}
 				}
 				String tk_plan_detail_end = wyMap.get("tk_plan_detail_end").toString();
 				String among = ToolsUtil.getAmongDate(tk_plan_detail_end, ToolsUtil.getDate());
 				wyMap.put("amongDate", among);
+				wyMap.put("tk_plan_detail_photo", tk_plan_detail_photo);
+
 				relist.add(wyMap);
 			}
 			retCode = RetCode.getSuccessCode(relist);
 		} catch (Exception e) {
+			e.printStackTrace();
 			retCode = RetCode.getErrorCode("今日任务获取失败!");
 		}
 		return retCode;
@@ -811,7 +952,7 @@ public class PlanService implements PlanServiceInterface {
 		request.setAttribute("hex", hex);
 		RetCode retCode = RetCode.getErrorCode();
 		try {
-			WyMap wyMap=WyMap.getParameter(request);
+			WyMap wyMap = WyMap.getParameter(request);
 			wyMap.put("tk_plan_detail_user_id", request.getParameter("tkUserId"));
 			// 当前用户类型
 			String TkUserTypeId = TkUserMapper.selectByPrimaryKey(wyMap).getTkUserTypeId();
@@ -866,7 +1007,41 @@ public class PlanService implements PlanServiceInterface {
 				}
 				list1.add(Map);
 			}
-			retCode = RetCode.getSuccessCode(list1);
+			List<WyMap> list2 = new ArrayList();
+			TkLocation t1 = new TkLocation();
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
+			t1.setLatitude(latitude);
+			t1.setLongitude(longitude);
+			CacheChannel cache = J2Cache.getChannel();
+			if (cache.get("default", "listTkLocation").getValue() == null) {
+				List<TkLocation> listTkLocation = TkLocationDao.selectAll();
+				cache.set("default", "listTkLocation", listTkLocation);
+			}
+			for (WyMap map : list) {
+				String tk_location_id = map.get("tk_location_id").toString();
+				System.out.println(map.get("tk_location_id"));
+				// 查经纬度坐标
+				TkLocation t2 = new TkLocation();
+				List<TkLocation> TkLocationlist = (List<TkLocation>) cache.get("default", "listTkLocation").getValue();
+				for (TkLocation tkLocation : TkLocationlist) {
+					if (tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2 = tkLocation;
+					} else {
+						t2 = TkLocationDao.selectByPrimaryKey(tk_location_id);
+					}
+				}
+				Double distanceToDouble = ToolsUtil.getDistanceToDouble(t1, t2);
+				map.put("distanceToDouble", distanceToDouble);
+				map.put("distance", new java.text.DecimalFormat("#0.0").format(distanceToDouble) + "km");
+				String tk_plan_detail_end = map.get("tk_plan_detail_end").toString();
+				String now = ToolsUtil.getDate();
+				System.out.println(map.get("tk_plan_detail_end"));
+				Long Amongtime = ToolsUtil.getAmongDateToLong(tk_plan_detail_end, now);
+				map.put("Amongtime", Amongtime);
+				list2.add(map);
+			}
+			retCode = RetCode.getSuccessCode(list2);
 			String str = String.format("tk_plan_detail_title" + "   " + "当前任务名字" + "   "
 					+ "tk_plan_detail_target_achieve" + "   " + "当前任务拓客完成人数" + "   " + "tk_plan_state" + "   " + "任务状态"
 					+ "   " + "tk_plan_detail_location_detail" + "   " + "任务详细地址" + "   " + "tk_plan_detail_good_name"
@@ -882,7 +1057,6 @@ public class PlanService implements PlanServiceInterface {
 			retCode.put("msg", str);
 			request.setAttribute("names", "areadyPlan");
 			String names = request.getAttribute("names").toString();
-			CacheChannel cache = J2Cache.getChannel();
 			String hex2 = request.getAttribute("hex").toString();
 			cache.set(names, hex2, retCode);
 		} catch (Exception e) {
@@ -892,6 +1066,7 @@ public class PlanService implements PlanServiceInterface {
 		}
 		return retCode;
 	}
+
 	@Override
 	public RetCode getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response) {
 
@@ -931,7 +1106,31 @@ public class PlanService implements PlanServiceInterface {
 			List<WyMap> list = (List) retCode.get("data");
 			// 返回的集合
 			List<WyMap> list2 = new ArrayList();
+			TkLocation t1 = new TkLocation();
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
+			t1.setLatitude(latitude);
+			t1.setLongitude(longitude);
+			if (cache.get("default", "listTkLocation").getValue() == null) {
+				List<TkLocation> listTkLocation = TkLocationDao.selectAll();
+				cache.set("default", "listTkLocation", listTkLocation);
+			}
 			for (WyMap map : list) {
+				String tk_location_id = map.get("tk_location_id").toString();
+				System.out.println(map.get("tk_location_id"));
+				// 查经纬度坐标
+				TkLocation t2 = new TkLocation();
+				List<TkLocation> TkLocationlist = (List<TkLocation>) cache.get("default", "listTkLocation").getValue();
+				for (TkLocation tkLocation : TkLocationlist) {
+					if (tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2 = tkLocation;
+					} else {
+						t2 = TkLocationDao.selectByPrimaryKey(tk_location_id);
+					}
+				}
+				Double distanceToDouble = ToolsUtil.getDistanceToDouble(t1, t2);
+				map.put("distanceToDouble", distanceToDouble);
+				map.put("distance", new java.text.DecimalFormat("#0.0").format(distanceToDouble) + "km");
 				String tk_plan_detail_end = map.get("tk_plan_detail_end").toString();
 				String now = ToolsUtil.getDate();
 				System.out.println(map.get("tk_plan_detail_end"));
@@ -972,6 +1171,7 @@ public class PlanService implements PlanServiceInterface {
 		}
 		return retCode;
 	}
+
 	@Override
 	public Object getAreadyPlanByDistance(HttpServletRequest request) {
 
@@ -1004,44 +1204,44 @@ public class PlanService implements PlanServiceInterface {
 			CacheChannel cache = J2Cache.getChannel();
 			String hex2 = request.getAttribute("hex").toString();
 			if (cache.get(names, hex2).getValue() == null) {
-				retCode = (RetCode) getAreadyPlan(request );
+				retCode = (RetCode) getAreadyPlan(request);
 				cache.set(names, hex2, retCode);
 			}
 			retCode = (RetCode) cache.get(names, hex2).getValue();
 			List<WyMap> list = (List) retCode.get("data");
 			// 返回的集合
 			List<WyMap> list2 = new ArrayList();
-			TkLocation t1=new TkLocation();
-			String latitude=request.getParameter("latitude");
-			String longitude=request.getParameter("longitude");
+			TkLocation t1 = new TkLocation();
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
 			t1.setLatitude(latitude);
-			t1.setLongitude(longitude); 
-			if(cache.get("default","listTkLocation").getValue()==null) {
-				List<TkLocation> listTkLocation=TkLocationDao.selectAll();
-				cache.set("default","listTkLocation", listTkLocation);
+			t1.setLongitude(longitude);
+			if (cache.get("default", "listTkLocation").getValue() == null) {
+				List<TkLocation> listTkLocation = TkLocationDao.selectAll();
+				cache.set("default", "listTkLocation", listTkLocation);
 			}
 			for (WyMap map : list) {
 				String tk_location_id = map.get("tk_location_id").toString();
 				System.out.println(map.get("tk_location_id"));
-				//查经纬度坐标
-				TkLocation t2=new TkLocation();
-				List<TkLocation> TkLocationlist=(List<TkLocation>)cache.get("default","listTkLocation").getValue();
+				// 查经纬度坐标
+				TkLocation t2 = new TkLocation();
+				List<TkLocation> TkLocationlist = (List<TkLocation>) cache.get("default", "listTkLocation").getValue();
 				for (TkLocation tkLocation : TkLocationlist) {
-					if(tkLocation.getTkLocationId().equals(tk_location_id)) {
-						t2=tkLocation;
-					}else {
-						t2=TkLocationDao.selectByPrimaryKey(tk_location_id);
+					if (tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2 = tkLocation;
+					} else {
+						t2 = TkLocationDao.selectByPrimaryKey(tk_location_id);
 					}
 				}
-				Double distanceToDouble=ToolsUtil.getDistanceToDouble(t1,t2);
+				Double distanceToDouble = ToolsUtil.getDistanceToDouble(t1, t2);
 				map.put("distanceToDouble", distanceToDouble);
-				map.put("distance", new java.text.DecimalFormat("#.00").format(distanceToDouble) );
+				map.put("distance", new java.text.DecimalFormat("#0.0").format(distanceToDouble) + "km");
 				list2.add(map);
 			}
 			// 算出距离 排序
-			
+
 			Collections.sort(list2, new Comparator<WyMap>() {
-				
+
 				@Override
 				public int compare(WyMap o1, WyMap o2) {
 					double i = (double) o1.get("distanceToDouble") - (double) o2.get("distanceToDouble");
@@ -1049,7 +1249,7 @@ public class PlanService implements PlanServiceInterface {
 					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
 					 */
 					return (int) Math.ceil(i);
-					
+
 				}
 			});
 			retCode = RetCode.getSuccessCode(list2);
@@ -1064,7 +1264,7 @@ public class PlanService implements PlanServiceInterface {
 					+ "tk_plan_contacts_phone" + "   " + "联系人手机号" + "   " + "tk_plan_detail_tkuser_id" + "   " + "拓客人编号"
 					+ "   " + "tk_channel_id" + "   " + "渠道编号" + "   " + "tk_plan_detail_id" + "   " + "任务详情编号" + "   "
 					+ "tk_plan_detail_good_amount" + "   " + "礼物数量" + "   " + "AmongDate" + "   " + "剩余时间" + "   "
-					+ "tk_plan_detail_end" + "   " + "结束时间"+ "   " + "distance" + "   " + "距离千米数"+ "   "
+					+ "tk_plan_detail_end" + "   " + "结束时间" + "   " + "distance" + "   " + "距离千米数" + "   "
 					+ "distanceToDouble" + "   " + "距离千米浮点数", "");
 			retCode.put("msg", str);
 		} catch (Exception e) {
@@ -1074,6 +1274,101 @@ public class PlanService implements PlanServiceInterface {
 		}
 		return retCode;
 	}
+
+	// 获取当前任务最近位置
+	@Override
+	public Object getAreadyPlanDistance(HttpServletRequest request) {
+		Enumeration<String> srcList = request.getParameterNames();
+		StringBuilder sb = new StringBuilder("");
+		while (srcList.hasMoreElements()) {
+			String key, value;
+			key = srcList.nextElement();
+			value = request.getParameter(key).trim();
+			sb.append(key + ":" + value + ",");
+		}
+		String src = sb.substring(0, sb.length() - 1).toString();
+		System.out.println(src);
+		MessageDigest messageDigest = null;
+		try {
+			messageDigest = MessageDigest.getInstance("SHA");
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		messageDigest.update(src.getBytes());
+		byte[] shaBytes = messageDigest.digest();
+		String hex = Hex.encodeHexString(shaBytes);
+		System.out.println("jdk SHA 1: " + hex);
+		request.setAttribute("hex", hex);
+		RetCode retCode = RetCode.getErrorCode();
+		try {
+			request.setAttribute("names", "areadyPlan");
+			String names = request.getAttribute("names").toString();
+			CacheChannel cache = J2Cache.getChannel();
+			String hex2 = request.getAttribute("hex").toString();
+			if (cache.get(names, hex2).getValue() == null) {
+				retCode = (RetCode) getAreadyPlan(request);
+				cache.set(names, hex2, retCode);
+			}
+			retCode = (RetCode) cache.get(names, hex2).getValue();
+			List<WyMap> list = (List) retCode.get("data");
+			// 返回的集合
+			List<WyMap> list2 = new ArrayList();
+			TkLocation t1 = new TkLocation();
+			String latitude = request.getParameter("latitude");
+			String longitude = request.getParameter("longitude");
+			t1.setLatitude(latitude);
+			t1.setLongitude(longitude);
+			if (cache.get("default", "listTkLocation").getValue() == null) {
+				List<TkLocation> listTkLocation = TkLocationDao.selectAll();
+				cache.set("default", "listTkLocation", listTkLocation);
+			}
+			for (WyMap map : list) {
+				String tk_location_id = map.get("tk_location_id").toString();
+				System.out.println(map.get("tk_location_id"));
+				// 查经纬度坐标
+				TkLocation t2 = new TkLocation();
+				List<TkLocation> TkLocationlist = (List<TkLocation>) cache.get("default", "listTkLocation").getValue();
+				for (TkLocation tkLocation : TkLocationlist) {
+					if (tkLocation.getTkLocationId().equals(tk_location_id)) {
+						t2 = tkLocation;
+					} else {
+						t2 = TkLocationDao.selectByPrimaryKey(tk_location_id);
+					}
+				}
+				Double distanceToDouble = ToolsUtil.getDistanceToDouble(t1, t2);
+				map.put("distanceToDouble", distanceToDouble);
+				map.put("distance", new java.text.DecimalFormat("#0.0").format(distanceToDouble) + "km");
+				list2.add(map);
+			}
+			// 算出距离 排序
+
+			Collections.sort(list2, new Comparator<WyMap>() {
+
+				@Override
+				public int compare(WyMap o1, WyMap o2) {
+					double i = (double) o1.get("distanceToDouble") - (double) o2.get("distanceToDouble");
+					/*
+					 * if(i == 0){ return o1.getAge() - o2.getAge(); }
+					 */
+					return (int) Math.ceil(i);
+
+				}
+			});
+			// 返回地址
+			String location = list2.get(0).get("tk_plan_detail_location").toString();
+			// 获取距离最近的地址
+			retCode = RetCode.getSuccessCode(new WyMap("tk_plan_detail_location", location));
+			String str = String.format("tk_plan_detail_location" + "   " + "位置信息", "");
+			retCode.put("msg", str);
+		} catch (Exception e) {
+			e.printStackTrace();
+			retCode = RetCode.getErrorCode("失败");
+			retCode.put("msg", e.getMessage());
+		}
+		return retCode;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

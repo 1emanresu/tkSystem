@@ -9,18 +9,30 @@ Page({
     winHeight: "",//窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
-    expertList: [{ //假数据
-      img: "avatar.png",
-      name: "欢顔",
-      tag: "知名情感博主",
-      answer: 134,
-      listen: 2234,
-    }],
+
     //全部任务
     alltaskList: [],
+    latitude: "",
+    longitude: ""
   },
   // 滚动切换标签样式
   switchTab: function (e) {
+    /**
+     * 刘勇
+     */
+    var that = this;
+    var longitude = that.data.longitude;
+    var latitude = that.data.latitude;
+    var pdkey = e.detail.current;//获取当面页面的唯一key值
+    if (pdkey==0){//切换页面:全部任务
+      that.allTask();
+    } else if (pdkey == 1) {//切换页面:距离最近
+      that.shortDistanceTask(longitude, latitude);
+    } else if (pdkey == 2) {//切换页面:剩余时间
+      that.timeRemainingTask();
+    } else if (pdkey == 3) {//切换页面:筛选
+      that.timeRemainingTask();
+    }
     this.setData({
       currentTab: e.detail.current
     });
@@ -60,14 +72,108 @@ Page({
           clientWidth = res.windowWidth,
           rpxR = 750 / clientWidth;
         var calc = clientHeight * rpxR - 85;;
-        console.log(calc)
+        //console.log(calc)
         that.setData({
           winHeight: calc
         });
       }
     });
     that.allTask();
+    that.getcurrentpostion();
   },
+  /**
+   * 获取当前位置信息
+   */
+  getcurrentpostion: function () {
+    var that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      altitude: true,
+      success: function (res) {
+        console.log("  res @ " + JSON.stringify(res));
+        var latitude = res.latitude
+        var longitude = res.longitude
+        that.setData({
+          latitude: latitude,
+          longitude: longitude
+        })
+      }
+    })
+  },
+  /**
+   * 刘勇
+   * 剩余时间 */
+  timeRemainingTask: function () {
+    var that = this;
+    //客户信息
+    wx.request({
+      //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
+      url: app.d.hostUrl + 'manager/getPlanByTime',
+      method: 'POST',
+      data: {
+        tkUserId: app.d.tkUserId,
+        tkUserToken: app.d.tkUserToken,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        var list = res.data.data;
+
+        if (list == null) {
+          list = [];
+        }
+        that.setData({
+          alltaskList: list
+        });
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器网络错误!',
+          icon: 'loading',
+          duration: 1500
+        })
+      }
+    })
+  },
+
+  /**距离最近 */
+  shortDistanceTask: function (longitude, latitude) {
+    var that = this;
+    //客户信息
+    wx.request({
+      //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
+      url: app.d.hostUrl + 'manager/getPlanByDistance',
+      method: 'POST',
+      data: {
+        tkUserId: app.d.tkUserId,
+        tkUserToken: app.d.tkUserToken,
+        longitude: longitude,
+        latitude: latitude
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        var list = res.data.data;
+
+        if (list == null) {
+          list = [];
+        }
+        that.setData({
+          alltaskList: list
+        });
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器网络错误!',
+          icon: 'loading',
+          duration: 1500
+        })
+      }
+    })
+  },
+/**end********************************************************************** */
   /**全部任务 */
   allTask:function(){
     var that = this;
@@ -85,6 +191,7 @@ Page({
       },
       success: function (res) {
         var list = res.data.data;
+        
         if (list == null) {
           list = [];
         }

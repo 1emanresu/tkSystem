@@ -83,7 +83,7 @@ Page({
         fail: function () {
           wx.showToast({
             title: '服务器网络错误!',
-            icon: 'loading',
+            icon: 'loading', 
             duration: 1500
           })
         },
@@ -93,7 +93,15 @@ Page({
             wx.showToast({
               title: '分配成功',
               icon: 'loading',
-              duration: 1500
+              duration: 1500,
+              success: function () {
+                setTimeout(function () {
+                  //要延时执行的代码
+                  wx.switchTab({
+                    url: '../../index',
+                  })
+                }, 1500) //延迟时间 
+              }
             })
           } else {
            

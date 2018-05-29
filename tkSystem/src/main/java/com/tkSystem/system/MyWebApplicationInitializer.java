@@ -17,13 +17,13 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext container) {
 		System.out.println("MyWebApplicationInitializer");
-		logger.info(String.format("Current time: %s", dateFormat.format(new Date())));
+	/*	logger.info(String.format("Current time: %s", dateFormat.format(new Date())));
 		XmlWebApplicationContext appContext = new XmlWebApplicationContext();
 		appContext.setConfigLocation("/WEB-INF/dispatcherServlet-servlet.xml");
 		ServletRegistration.Dynamic registration = container.addServlet("dispatcher",
 				new DispatcherServlet(appContext));
 		registration.setLoadOnStartup(1);
-		registration.addMapping("/");
+		registration.addMapping("/");*/
 		
 	}
 }

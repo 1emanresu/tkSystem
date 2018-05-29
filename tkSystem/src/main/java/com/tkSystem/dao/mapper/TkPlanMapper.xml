@@ -71,7 +71,7 @@
 		)as t)
 	</select>
 	<select id="selectAll" resultMap="BaseResultWyMap">
-		select tk_plan_id
+		select *
 		from tk_plan
 	</select>
 	<select id="getAreadyPlan"

@@ -17,19 +17,28 @@ import com.tkSystem.tools.ToolsUtil;
 import com.tkSystem.tools.WyMap;
 
 @Service("clientService")
-public class ClientService implements   ClientServiceInterface {
+public class ClientService implements ClientServiceInterface {
 	@Resource
 	private com.tkSystem.dao.mapper.TkSystemMapper TkSystemMapper;
 	@Resource
 	private com.tkSystem.dao.mapper.TkClientPhotoMapper TkClientPhotoMapper;
 	@Resource
 	private com.tkSystem.dao.mapper.TkPlanDetailMapper TkPlanDetailMapper;
+	@Resource
+	private com.tkSystem.dao.mapper.TkUserMapper TkUserMapper;
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getClientInfo(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#getClientInfo(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getClientInfo(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#getClientInfo(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	public RetCode getClientInfo(HttpServletRequest request) {
@@ -47,11 +56,18 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getWorkNumber(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#getWorkNumber(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getWorkNumber(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#getWorkNumber(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	public RetCode getWorkNumber(HttpServletRequest request) {
@@ -74,11 +90,18 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getTeamIndex(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.vcxv#getTeamIndex(javax.servlet.http.HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getTeamIndex(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#getTeamIndex(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	public RetCode getTeamIndex(HttpServletRequest request) {
@@ -106,11 +129,17 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getClientInfoByPlanId(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#getClientInfoByPlanId(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getClientInfoByPlanId(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.ClientServiceInterface#getClientInfoByPlanId(javax.
+	 * servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
 	public RetCode getClientInfoByPlanId(HttpServletRequest request, HttpServletResponse response) {
@@ -143,11 +172,18 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getCompanyIndex(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#getCompanyIndex(javax.servlet.http.
+	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getCompanyIndex(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#getCompanyIndex(javax.servlet.
+	 * http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
 	public RetCode getCompanyIndex(HttpServletRequest request, HttpServletResponse response) {
@@ -174,11 +210,18 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getTkChannel(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.vcxv#getTkChannel(javax.servlet.http.HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getTkChannel(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#getTkChannel(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	public RetCode getTkChannel(HttpServletRequest request) {
@@ -194,11 +237,18 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#postClientInfo(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#postClientInfo(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#postClientInfo(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#postClientInfo(javax.servlet.http
+	 * .HttpServletRequest)
 	 */
 	@Override
 	public RetCode postClientInfo(HttpServletRequest request) {
@@ -251,10 +301,23 @@ public class ClientService implements   ClientServiceInterface {
 					.get("tk_plan_detail_target_achieve").toString();
 			Integer target_achieve = Integer.parseInt(tk_plan_detail_target_achieve);
 			target_achieve += 1;
+			// 任务客户数+1
 			wyMap.put("tk_plan_detail_target_achieve", target_achieve);
 			TkPlanDetailMapper.updateTargetAchieve(wyMap);
 			if (ret > 0) {
 				retCode = RetCode.getSuccessCode(paMap);
+			}
+			// 拓客人数+1
+			List<WyMap> TkUserMapperList = TkUserMapper.selectAll();
+			for (WyMap wyMap2 : TkUserMapperList) {
+				String tk_user_id = wyMap2.get("tk_user_id").toString();
+				if (tk_user_id.equals(request.getParameter("tkUserId"))) {
+					Integer amount = Integer.parseInt( wyMap2.get("tk_client_amount").toString());
+					amount++;
+					wyMap2.put("tk_client_amount", amount);
+					TkUserMapper.updateClientAmount(wyMap2);
+					break;
+				}
 			}
 			retCode.put("msg", " ");
 		} catch (Exception e) {
@@ -264,11 +327,17 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#getClientNumByChannel(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#getClientNumByChannel(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#getClientNumByChannel(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.ClientServiceInterface#getClientNumByChannel(javax.
+	 * servlet.http.HttpServletRequest)
 	 */
 	@Override
 	public RetCode getClientNumByChannel(HttpServletRequest request) {
@@ -285,11 +354,18 @@ public class ClientService implements   ClientServiceInterface {
 		return retCode;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.vcxv#putClientInfo(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.tkSystem.service.vcxv#putClientInfo(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
-	/* (non-Javadoc)
-	 * @see com.tkSystem.service.ClientServiceInterface#putClientInfo(javax.servlet.http.HttpServletRequest)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.tkSystem.service.ClientServiceInterface#putClientInfo(javax.servlet.http.
+	 * HttpServletRequest)
 	 */
 	@Override
 	public Object putClientInfo(HttpServletRequest request) {
@@ -313,7 +389,8 @@ public class ClientService implements   ClientServiceInterface {
 			int list = TkSystemMapper.putClientInfo(paMap);
 			if (list > 0)
 				retCode = RetCode.getSuccessCode(paMap);
-			retCode.put("msg", " tk_client_type_id=>客户类型编号（3表示待跟进状态），tk_client_user_id=>跟进人id(用户id)" + ""+" tk_client_fresh_date=>发起跟进开始时间，tk_client_id=>客户编号" + "");
+			retCode.put("msg", " tk_client_type_id=>客户类型编号（3表示待跟进状态），tk_client_user_id=>跟进人id(用户id)" + ""
+					+ " tk_client_fresh_date=>发起跟进开始时间，tk_client_id=>客户编号" + "");
 		} catch (Exception e) {
 			throw new RuntimeException();
 		}

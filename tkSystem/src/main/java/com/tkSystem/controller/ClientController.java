@@ -43,7 +43,7 @@ public class ClientController {
 			if (cache.get(names, hex).getValue() == null) {
 				cache.set(names, hex, clientService.getClientInfo(request));
 			}*/
-			ResponseUtil.write(response, RetCode.getSuccessCode(clientService.getClientInfo(request))) ;
+			ResponseUtil.write(response, clientService.getClientInfo(request)) ;
 				
 		} catch (Exception e) {
 			String msg = " ";

@@ -22,7 +22,7 @@ Page({
       data: {
         tkUserId: app.d.tkUserId,
         tkUserToken: app.d.tkUserToken,
-        deletetkUserId: id,//人员id
+        userId: id,//人员id
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
@@ -51,6 +51,7 @@ Page({
     wx.scanCode({
       success: (res) => {
        var show= "结果:" + res.result + "二维码类型:" + res.scanType + "字符集:" + res.charSet + "路径:" + res.path;
+       console.log("  res.result " + res.result);
        wx.request({
          //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
          url: app.d.hostUrl + 'manager/postEmployee',
@@ -58,13 +59,19 @@ Page({
          data: {
            tkUserId: app.d.tkUserId,
            tkUserToken: app.d.tkUserToken,
-           postUserId:res.result,//人员id
+           userId:res.result,//人员id
          },
          header: {
            'content-type': 'application/x-www-form-urlencoded'
          },
          success: function (res) {
            var info = res.data.code;
+           
+           console.log(" hostUrl " + app.d.hostUrl);
+           console.log(" tkUserId " + app.d.tkUserId);
+           console.log(" tkUserToken " + app.d.tkUserToken);
+           console.log(" info " + JSON.stringify(res.data));
+          
            if (info == 1) {
              wx.showToast({
                title: '绑定成功',
@@ -182,7 +189,9 @@ Page({
        },
        success: function (res) {
          var list = res.data.data;
-         console.log(list);
+         console.log("   tkUserId    " + app.d.tkUserId);
+         console.log("   tkUserToken    " + app.d.tkUserToken);
+         console.log("   list    " + JSON.stringify(res.data));
          if (list == null) {
            list = [];
          }
@@ -190,7 +199,7 @@ Page({
            infoList: list,
            // phoneNum: list.tkUserPhone
          })
-         console.log(res);
+         
        },
        fail: function () {
          wx.showToast({

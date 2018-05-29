@@ -112,4 +112,6 @@ public interface PlanServiceInterface {
 
 	Object getPlanByDistance(HttpServletRequest request, HttpServletResponse response);
 
+	Object getAreadyPlanDistance(HttpServletRequest request);
+
 }

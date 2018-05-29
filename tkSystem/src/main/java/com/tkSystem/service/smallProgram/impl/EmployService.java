@@ -48,7 +48,10 @@ public class EmployService implements employServiceInterface {
 			tkUserGradeTime = ToolsUtil.getDate();
 			tkUserGradePid = paMap.get("tkUserId").toString();
 			TkUserGrade record = new TkUserGrade();
+			//设置用户id
 			record.setTkUserGradeId(tkUserGradeId);
+			//设置用户pid
+			record.setTkUserGradePid(tkUserGradePid);
 			int ret = TkUserGradeMapper.insertSelective(record);
 			retCode = RetCode.getSuccessCode(ret);
 		} catch (Exception e) {

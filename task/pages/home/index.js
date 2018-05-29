@@ -40,24 +40,10 @@ import config from '../../utils/config'
      getClientInfoList:[],
      mask1Hidden: true,
      currentTaskList:[],
-     sortSelected: "综合排序",
-     selected: 0,
-     sortList: [{
-       sort: "综合排序",
-       image: "",
-     }, {
-       sort: "速度最快",
-       image: "",
-     }, {
-       sort: "评分最高",
-       image: "",
-     }, {
-       sort: "起送价最低",
-       image: "",
-     }, {
-       sort: "配送费最低",
-       image: "",
-     }],
+     //当前位置距离最近
+     currentpostion:"",
+     latitude: "",
+     longitude: ""
    },
    onTapTag: function (e) {
      wx.showToast({
@@ -92,10 +78,21 @@ import config from '../../utils/config'
    },
    // 滚动切换标签样式
    switchTab: function (e) {
-     this.setData({
+     var that = this;
+     var longitude= that.data.longitude;
+     var latitude = that.data.latitude;
+     var pdkey = e.detail.current;//获取当面页面的唯一key值
+     if (pdkey == 0) {//切换页面:全部任务
+       that.currentTask(longitude, latitude); 
+     } else if (pdkey == 1) {//切换页面:距离最近
+       that.shortDistanceTask(longitude, latitude);
+     } else if (pdkey == 2) {//切换页面:剩余时间
+       that.timeRemainingTask(longitude, latitude);
+     } 
+     that.setData({
        currentTab: e.detail.current
      });
-     this.checkCor();
+     that.checkCor();
    },
    // 点击标题切换当前页时改变样式
    swichNav: function (e) {
@@ -125,50 +122,48 @@ import config from '../../utils/config'
     */
 
    onLoad: function () {
-
-
-
-     console.log("  onLoad  ");
-     var that = this;
-     if (app.d.tkUserId != null && app.d.tkUserId!=""){
-       that.setData({
-         username: app.d.tkUserName,
-         userphone: app.d.tkUserPhone,
-         imgUrl: app.d.tkUserHead
-       })
-       var tkUserTypeId = wx.getStorageSync("tkUserTypeId");
-       console.log("  -----  ", tkUserTypeId);
-       if (tkUserTypeId == 2) {
-         that.data.idmanager = "showManage";
-       } else {
-         that.data.idmanager = "hiddeManage";
-       }
-       that.setData({
-         idmanager: that.data.idmanager
-       });
-       wx.getSystemInfo({
-         success: function (res) {
-           var clientHeight = res.windowHeight,
-             clientWidth = res.windowWidth,
-             rpxR = 390 / clientWidth;
-           var calc = clientHeight * rpxR - 25;
-           // console.log(calc)
-           that.setData({
-             winHeight: calc
-           });
-         }
-       });
-       that.selectCentli();
-       that.thismonthbus();
-       that.towCode();
-       that.treamranking();
-       that.companyranking();
-       that.getClientInfoList();
-       that.currentTask();
-     }else{
+    //  console.log("  onLoad  ");
+    //  var that = this;
+    //  if (app.d.tkUserId != null && app.d.tkUserId!=""){
+    //    that.setData({
+    //      username: app.d.tkUserName,
+    //      userphone: "手机:" +app.d.tkUserPhone,
+    //      imgUrl: app.d.tkUserHead
+    //    })
+    //    var tkUserTypeId = wx.getStorageSync("tkUserTypeId");
+    //    console.log("  -----  ", tkUserTypeId);
+    //    if (tkUserTypeId == 2) {
+    //      that.data.idmanager = "showManage";
+    //    } else {
+    //      that.data.idmanager = "hiddeManage";
+    //    }
+    //    that.setData({
+    //      idmanager: that.data.idmanager
+    //    });
+    //    wx.getSystemInfo({
+    //      success: function (res) {
+    //        var clientHeight = res.windowHeight,
+    //          clientWidth = res.windowWidth,
+    //          rpxR = 390 / clientWidth;
+    //        var calc = clientHeight * rpxR - 25;
+    //        // console.log(calc)
+    //        that.setData({
+    //          winHeight: calc
+    //        });
+    //      }
+    //    });
+    //    that.selectCentli();
+    //    that.thismonthbus();
+    //    that.towCode();
+    //    that.treamranking();
+    //    that.companyranking();
+    //    that.getClientInfoList();
+    //    that.currentTask();
+    //    that.getcurrentpostion();
+    //  }else{
       
-       console.log("   gggggg  ");
-     }
+    //    console.log("   gggggg  ");
+    //  }
    },
    /**
     * 二维码
@@ -188,6 +183,7 @@ import config from '../../utils/config'
         },
         success: function (res) {
           var list = res.data;
+          console.log(" erweima  " + JSON.stringify(list));
            that.setData({
              towCode: list.url
            })
@@ -361,10 +357,36 @@ import config from '../../utils/config'
     })
   },
   /**
+   * 获取当前位置信息
+   */
+  getcurrentpostion: function () {
+    var that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      altitude: true,
+      success: function (res) {
+        console.log("  res @%%% " + JSON.stringify(res));
+        var latitude = res.latitude
+        var longitude = res.longitude
+        that.setData({
+          latitude: latitude,
+          longitude: longitude
+        })
+        that.currentTask(longitude, latitude);
+        that.currentposition(longitude, latitude);
+      }
+    })
+  },
+
+  /**
    * 当前任务
    */
-  currentTask:function(){
+  currentTask: function (longitude, latitude){
     var that = this;
+    console.log("  res longitude " + longitude);
+    console.log("  res latitude " + latitude);
+    var long = longitude;
+    var latit = latitude;
     wx.request({
       //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
       url: app.d.hostUrl + 'employees/getAreadyPlan',
@@ -372,17 +394,130 @@ import config from '../../utils/config'
       data: {
         tkUserId: app.d.tkUserId,
         tkUserToken: app.d.tkUserToken,
-        tkUserPhone: app.d.tkUserPhone,
+        tk_plan_contacts_phone: app.d.tkUserPhone,
+        longitude: long,
+        latitude: latit
       },
       header: {
         'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
-        var list = res.data.data.data;
+        var list = res.data.data;
         that.setData({
           currentTaskList: list
         });
-       // console.log("  ^^^^2222RRR  " + JSON.stringify(list));
+     //   console.log("  ^^^^2222RRR  " + JSON.stringify(list));
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器网络错误!',
+          icon: 'loading',
+          duration: 1500
+        })
+      }
+    })
+  },
+  
+  /**距离最近 */
+  shortDistanceTask: function (longitude, latitude)  {
+    var that = this;
+    //客户信息
+    wx.request({
+      //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
+      url: app.d.hostUrl + 'manager/getAreadyPlanByDistance',
+      method: 'POST',
+      data: {
+        tkUserId: app.d.tkUserId,
+        tkUserToken: app.d.tkUserToken,
+        longitude: longitude,
+        latitude: latitude
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        var list = res.data.data;
+
+        if (list == null) {
+          list = [];
+        }
+        that.setData({
+          currentTaskList: list
+        });
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器网络错误!',
+          icon: 'loading',
+          duration: 1500
+        })
+      }
+    })
+  },
+  /**
+    * 剩余时间
+    */
+  timeRemainingTask: function (longitude, latitude) {
+    var that = this;
+    //客户信息
+    wx.request({
+      //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
+      url: app.d.hostUrl + 'employees/getAreadyPlanByTime',
+      method: 'POST',
+      data: {
+        tkUserId: app.d.tkUserId,
+        tkUserToken: app.d.tkUserToken,
+        longitude: longitude,
+        latitude: latitude
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        var list = res.data.data;
+
+        if (list == null) {
+          list = [];
+        }
+        that.setData({
+          currentTaskList: list
+        });
+      },
+      fail: function () {
+        wx.showToast({
+          title: '服务器网络错误!',
+          icon: 'loading',
+          duration: 1500
+        })
+      }
+    })
+  },
+  /**当前位置 */
+  currentposition: function (longitude, latitude) {
+    var that = this;
+    //客户信息
+    wx.request({
+      //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2
+      url: app.d.hostUrl + 'employees/getAreadyPlanDistance',
+      method: 'POST',
+      data: {
+        tkUserId: app.d.tkUserId,
+        tkUserToken: app.d.tkUserToken,
+        longitude: longitude,
+        latitude: latitude
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        var list = res.data.data;
+        if(list!=null&&list!=""){
+          var tk_plan_detail_location = list.tk_plan_detail_location;
+            that.setData({
+              currentpostion: tk_plan_detail_location
+            });
+        }
+        
       },
       fail: function () {
         wx.showToast({
@@ -410,7 +545,7 @@ import config from '../../utils/config'
      if (app.d.tkUserId != null && app.d.tkUserId != "") {
        that.setData({
          username: app.d.tkUserName,
-         userphone: app.d.tkUserPhone,
+         userphone: "手机:" +app.d.tkUserPhone,
          imgUrl: app.d.tkUserHead
        })
        var tkUserTypeId = wx.getStorageSync("tkUserTypeId");
@@ -441,6 +576,7 @@ import config from '../../utils/config'
        that.treamranking();
        that.companyranking();
        that.getClientInfoList();
+       that.getcurrentpostion();
      } else {
 
        console.log("   gggggg  ");

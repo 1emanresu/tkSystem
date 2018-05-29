@@ -91,7 +91,7 @@
   width: 100rpx;
   height: 100rpx;
   position: relative;
-  padding-right: 30rpx;
+  margin-right: 30rpx;
   border-radius:90px;
   overflow: hidden; 
 }

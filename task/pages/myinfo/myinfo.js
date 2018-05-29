@@ -101,7 +101,6 @@ Page({
   },
   getUserSessionKey: function (code, userInfo) {
     var that = this;
-    console.log(" code " + code);
     wx.request({
       url: app.d.hostUrl + 'user/getByCode',
       method: 'POST',
@@ -115,13 +114,13 @@ Page({
         //--init data        
         var data = res.data;
         if (data.status == 0) {
-
           return false;
         }
         var dataValues = data;
         console.log(" 2 " + JSON.stringify(dataValues));
         // that.globalData.userInfo['sessionId'] = data.session_key;
         // that.globalData.userInfo['openid'] = data.openid;
+        console.log("  XXX " + JSON.stringify(data.openid));
         that.onLoginUser(data.openid,userInfo);
       },
       fail: function (e) {
@@ -160,10 +159,10 @@ Page({
           that.data.userinfo ="yeaLog";
           that.data.userLog ="noeLog";
           that.setData({
-            userinfo: that.data.userinfo,
+            userinfo:that.data.userinfo,
             userLog: that.data.userLog,
             username: app.d.tkUserName,
-            userphone: app.d.tkUserPhone,
+            userphone: "手机:" + app.d.tkUserPhone,
             imgUrl: app.d.tkUserHead
           })
           that.selectCentli();
@@ -190,33 +189,33 @@ Page({
   onLoad: function () {
     var that=this;
     // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        console.log("  ######## " + JSON.stringify(res));
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console.log("  res " + JSON.stringify(res.userInfo));
-              that.getUserInfo(res.userInfo);
-            },
-            fail:function(e){
+    // wx.getSetting({
+    //   success: function (res) {
+    //     console.log("  ######## " + JSON.stringify(res));
+    //     if (res.authSetting['scope.userInfo']) {
+    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+    //       wx.getUserInfo({
+    //         success: function (res) {
+    //           console.log("  res " + JSON.stringify(res.userInfo));
+    //           that.getUserInfo(res.userInfo);
+    //         },
+    //         fail:function(e){
              
-            }
-          })
-          console.log("  @@@@@ " + 1);
-        }else{
-          console.log("  $$$$$$ " + 2);
-        }
-      }
-    })
-    // that.selectCentli();
-    // that.thismonthbus();
-    // that.towCode();
-    // that.treamranking();
-    // that.companyranking();
-    // that.getClientInfoList();
-    // that.showRandking();
+    //         }
+    //       })
+    //       console.log("  @@@@@ " + 1);
+    //     }else{
+    //       console.log("  $$$$$$ " + 2);
+    //     }
+    //   }
+    // })
+    that.selectCentli();
+    that.thismonthbus();
+    that.towCode();
+    that.treamranking();
+    that.companyranking();
+    that.getClientInfoList();
+    that.showRandking();
     console.log("  -===== " + app.d.tkUserPhone);
     if (app.d.tkUserPhone != null && app.d.tkUserPhone!=""){
       console.log("   aaaaaaaaaaaaaaaaa   ");
@@ -258,6 +257,7 @@ Page({
         that.setData({
           ranList: list,
         })
+        console.log(JSON.stringify(list));
       },
       fail: function () {
         wx.showToast({

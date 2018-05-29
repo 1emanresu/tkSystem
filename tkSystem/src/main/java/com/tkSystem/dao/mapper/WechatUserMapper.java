@@ -1,5 +1,7 @@
 package com.tkSystem.dao.mapper;
 
+import java.util.List;
+
 import com.tkSystem.dao.entity.WechatUser;
 
 public interface WechatUserMapper {
@@ -10,7 +12,8 @@ public interface WechatUserMapper {
     int insertSelective(WechatUser record);
 
     WechatUser selectByPrimaryKey(String openid);
-
+    List<WechatUser> selectWechatUser();
+    
     int updateByPrimaryKeySelective(WechatUser record);
 
     int updateByPrimaryKey(WechatUser record);

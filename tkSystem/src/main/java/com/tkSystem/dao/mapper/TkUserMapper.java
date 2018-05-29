@@ -22,6 +22,7 @@ public interface TkUserMapper {
 	int updateByPrimaryKey(WyMap record);
 
 	int updateByPasswordSelective(WyMap record);
+	int updateClientAmount(WyMap record);
 	
 	TkUser userlogin(WyMap record);
 

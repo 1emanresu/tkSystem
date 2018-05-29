@@ -107,7 +107,7 @@ public class UserController {
 			if (request.getParameter("avatarUrl") == null || request.getParameter("avatarUrl").trim() == "") {
 				throw new Exception("avatarUrl格式有误");
 			}
-			if (request.getParameter("openid") == null || request.getParameter("openid").trim() == "") {
+			if (request.getParameter("openid") == null || request.getParameter("openid").trim() == ""|| request.getParameter("openid").trim() == "undefined") {
 				throw new Exception("openid格式有误");
 			}
 			ResponseUtil.write(response, userService.wechatLogin(request, response));
@@ -131,8 +131,9 @@ public class UserController {
 			url = "https://api.weixin.qq.com/sns/jscode2session";
 			Map map = new HashMap();
 			String appid, secret, js_code, grant_type;
+			//小程序密钥
 			appid = "wx87bdf521f0573ad0";
-			secret = "7633aa4a28bc49b77f1a289de916b95e";
+			secret = "f606cf8f9dba67f08b20b3c0cd001464";
 			grant_type = "authorization_code";
 			js_code = request.getParameter("code");
 			map.put("appid", appid);
@@ -249,7 +250,7 @@ public class UserController {
 	@RequestMapping("getQCode")
 	public void getQCode(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String filePath = request.getRealPath("/static/img\\photo/");
+			String filePath = request.getRealPath("/static/img/photo/");
 			String tkUserId = request.getParameter("tkUserId");
 			String path = request.getContextPath();
 			String staticUrl = "static/img/photo/";
@@ -265,8 +266,12 @@ public class UserController {
 				return;
 			}
 			new File(filePath).mkdirs();
-			WyMap json = new WyMap();
-			json.put("tkUserId", tkUserId);
+		/*	WyMap json = new WyMap();
+			json.put("tkUserId", tkUserId);*/
+			
+			String json=tkUserId;
+			System.out.println("用户编号");
+			System.out.println(json);
 			System.out.println(ToolsUtil.MatrixToImageWriter(filePath, fileName, json));
 
 			RetCode retCode = RetCode.getSuccessCode();

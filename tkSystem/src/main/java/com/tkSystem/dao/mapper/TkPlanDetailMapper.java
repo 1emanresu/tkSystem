@@ -23,6 +23,7 @@ public interface TkPlanDetailMapper {
 	List<WyMap> getTaskToClock(WyMap paMap);
 
 	List<WyMap> getIdByUserId(WyMap paMap);
+	List<WyMap> getAll( );
 
 	WyMap getPlanDetailByPlanId(WyMap wyMap);
 

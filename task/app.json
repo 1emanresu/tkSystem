@@ -1,10 +1,8 @@
 {
   "pages": [
-   "pages/home/index",
-    "pages/myinfo/myinfo",
-    
-    "pages/login/login",
    
+    "pages/home/index", "pages/myinfo/myinfo",
+    "pages/login/login",
     "pages/task/task",
     "pages/home/audit/audit",
     "pages/home/team/team",
@@ -21,12 +19,9 @@
     "pages/home/upclientinfo/upclientinfo",
     "pages/home/thismonthbus/thismonthbus",
     "pages/myinfo/taskschedule/taskschedule",
-    
     "pages/home/audit/auditInfo/auditInfo",
-
     "pages/home/audit/materialInfo/materialInfo",
     "pages/home/audit/apply/succeedApply",
-    
     "pages/home/audit/apply/apply",
     "pages/myinfo/reportrecord/reportrecord",
     "pages/myinfo/signrecord/signrecord",

@@ -181,10 +181,15 @@
 	</insert>
 	<select id="getTodayTask" resultType="com.tkSystem.tools.WyMap"
 		parameterType="com.tkSystem.tools.WyMap">
-		select * from tk_plan_detail where
-		tk_plan_detail_tkuser_id=#{tkUserId} and
-		to_days(now())-to_days(tk_plan_detail_end)&lt;=0 and
-		to_days(now())-to_days(tk_plan_detail_start)&gt;=0
+		select * from tk_plan_execute where 1
+		<if test="tk_plan_user_id!=null">
+			and tk_plan_user_id=#{tk_plan_user_id}
+		</if>
+		<if test="tk_user_id!=null">
+			and tk_user_id=#{tk_user_id}
+		</if>
+		and to_days(now())-to_days(tk_plan_execute_end_time)&lt;=0 and
+		to_days(now())-to_days(tk_plan_execute_start_time)&gt;=0
 	</select>
 	<select id="getTaskToClock"
 		resultType="com.tkSystem.tools.WyMap"
@@ -250,6 +255,14 @@
 		</if>
 		;
 	</select>
+		<select id="getAll"
+		parameterType="com.tkSystem.tools.WyMap"
+		resultType="com.tkSystem.tools.WyMap">
+		SELECT * FROM `tk_plan_detail`
+		WHERE 1
+		;
+	</select>
+	
 	<update id="updateStartDate"
 		parameterType="com.tkSystem.tools.WyMap">
 		update tk_plan_detail set tk_plan_detail_start

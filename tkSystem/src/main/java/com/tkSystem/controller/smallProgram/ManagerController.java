@@ -128,6 +128,8 @@ public class ManagerController {
 		try {
 			String str[] = { "tkPlanId", "tkPlanUserId" };
 			ToolsUtil.requestIsNull(request, str);
+			
+			
 			ResponseUtil.write(response, planService.postPlanExecute(request));
 		} catch (Exception e) {
 			String msg = "=> tkPlanId, tkPlanUserId 不能为空";
@@ -263,7 +265,7 @@ public class ManagerController {
 	public void getAreadyPlan(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlan(request)));
+			ResponseUtil.write(response, planService.getAreadyPlan(request));
 		} catch (Exception e) {
 			String msg = "=> tkUserHead不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
@@ -273,7 +275,7 @@ public class ManagerController {
 	public void getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByTime(request,response)));
+			ResponseUtil.write(response, planService.getAreadyPlanByTime(request,response));
 		} catch (Exception e) {
 			String msg = "=> tkUserHead不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
@@ -288,7 +290,7 @@ public class ManagerController {
 			}if (  request.getParameter("latitude") == null||request.getParameter("latitude").trim().equals("") ) {
 				throw new Exception("latitude格式有误");
 			}
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByDistance(request)));
+			ResponseUtil.write(response,planService.getAreadyPlanByDistance(request));
 		} catch (Exception e) {
 			String msg = "=>  不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));

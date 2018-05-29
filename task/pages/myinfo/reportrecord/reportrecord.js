@@ -18,14 +18,13 @@ Page({
     wx.request({
       //缺少用户唯一标识，现在的在服务器的控制器里有一个假id = 2 
       url: app.d.hostUrl + 'employees/getTaskFeedback',
-      method: 'GET',
+      method: 'POST',
       data: {
         tkUserId: app.d.tkUserId,
         tkUserToken: app.d.tkUserToken,
       },
       header: {
-        'content-type': 'application/json' // 默认值
-        // 'content-type': 'application/x-www-form-urlencoded'
+        'content-type': 'application/x-www-form-urlencoded'
       },
       success: function (res) {
         var list = res.data.data;
@@ -35,7 +34,7 @@ Page({
         that.setData({
           reportList: list,
         })
-        console.log(JSON.stringify(list));
+        //console.log(JSON.stringify(list));
       },
       fail: function () {
         wx.showToast({

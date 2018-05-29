@@ -11,7 +11,7 @@
       </view>
       <view class='Username'>
         <text>{{username}}</text>
-        <text>手机:{{userphone}}</text>
+        <text>{{userphone}}</text>
       </view>
       <view class='ewm' bindtap="modalTap">
         <image src='../../image/home/ewm.png'></image>
@@ -99,7 +99,7 @@
           <image src='../../image/home/position.png'></image>
         </view>
         <view class='addressColor'>
-          鼎丰卡布斯
+          {{currentpostion}}
         </view>
       </view>
     </view>
@@ -122,9 +122,9 @@
                 <view class="expertInfo">
                   <view class="title_show">
                     <view class="name">{{item.tk_plan_detail_title}}</view>
-                    <!-- <view class='distance'>{{item.ccccc}}2.0km</view> -->
+                     <view class='distance'>{{item.distance}}</view> 
                   </view>
-                  <view class="tag">{{item.tk_plan_detail_remark}}发传单拿佣金</view>
+                  <view class="tag">{{item.tk_plan_detail_remark}}</view>
                   <view class='tknum'>拓客数量：{{item.tk_plan_detail_good_amount}}</view>
                   <view wx:if="{{item.tk_plan_state==2}}">
                     <view class='proceed'>正在进行</view>

@@ -32,7 +32,8 @@
 	<parameterMap type="com.tkSystem.tools.WyMap"
 		id="parameterWyMap"></parameterMap>
 	<sql id="Base_Column_List">
-		tk_user_id, tk_user_name, tk_user_type, tk_user_password, tk_user_time,
+		tk_user_id, tk_user_name, tk_user_type, tk_user_password,
+		tk_user_time,
 		tk_user_token,
 		tk_user_login_ip,tk_user_head,tk_user_phone,tk_client_amount,openid,tk_user_type_id
 	</sql>
@@ -44,7 +45,8 @@
 		where tk_user_id = #{tkUserId,jdbcType=VARCHAR}
 	</select>
 	<select id="getEmployee" resultMap="BaseResultWyMap">
-		select tk_user_id,tk_user_name,tk_user_phone,tk_user_head from tk_user where
+		select
+		tk_user_id,tk_user_name,tk_user_phone,tk_user_head from tk_user where
 		tk_User_id in(SELECT tk_user_grade_id FROM `tk_user_grade` where
 		`tk_user_grade_pid` = #{tkUserId,jdbcType=VARCHAR})
 	</select>
@@ -55,7 +57,8 @@
 		where openid = #{openid,jdbcType=VARCHAR}
 	</select>
 	<select id="getClientAmount" resultMap="BaseResultWyMap">
-		select tk_user_id,tk_user_name,tk_user_phone,tk_user_head,tk_client_amount
+		select
+		tk_user_id,tk_user_name,tk_user_phone,tk_user_head,tk_client_amount
 		from tk_user where tk_User_id in(SELECT tk_user_grade_id FROM
 		`tk_user_grade` where `tk_user_grade_pid` =
 		#{tkUserId,jdbcType=VARCHAR})
@@ -63,16 +66,18 @@
 	<select id="getEmployeeByName" resultMap="BaseResultWyMap">
 		select
 		*
-		from tk_user where tk_user_name like #{tkUserName,jdbcType=VARCHAR}
+		from tk_user
+		where tk_user_name like #{tkUserName,jdbcType=VARCHAR}
 	</select>
 	<select id="selectAll" resultMap="BaseResultWyMap">
 		select
-		tk_user_id
+		*
 		from tk_user
 	</select>
 	<select id="getTeamIndex"
 		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
-		select tk_user_id,tk_user_name,tk_user_phone,tk_user_head,tk_client_amount
+		select
+		tk_user_id,tk_user_name,tk_user_phone,tk_user_head,tk_client_amount
 		from tk_user where tk_User_id in(SELECT tk_user_grade_id FROM
 		`tk_user_grade` where `tk_user_grade_pid` =
 		#{tkUserId,jdbcType=VARCHAR}) order by tk_client_amount desc
@@ -93,15 +98,20 @@
 	<delete id="deleteByPrimaryKey"
 		parameterType="com.tkSystem.tools.WyMap">
 		delete from tk_user
-		where tk_user_id = #{tkUserId,jdbcType=VARCHAR}
+		where tk_user_id =
+		#{tkUserId,jdbcType=VARCHAR}
 	</delete>
 	<insert id="insert" parameterType="com.tkSystem.tools.WyMap">
-		insert into tk_user (tk_user_id, tk_user_name, tk_user_type,
-		tk_user_password, tk_user_time, tk_user_token,
+		insert into tk_user
+		(tk_user_id, tk_user_name, tk_user_type,
+		tk_user_password,
+		tk_user_time, tk_user_token,
 		tk_user_login_ip)
-		values (#{tkUserId,jdbcType=VARCHAR}, #{tkUserName,jdbcType=VARCHAR},
+		values
+		(#{tkUserId,jdbcType=VARCHAR}, #{tkUserName,jdbcType=VARCHAR},
 		#{tkUserType,jdbcType=VARCHAR},
-		#{tkUserPassword,jdbcType=VARCHAR}, #{tkUserTime,jdbcType=VARCHAR}, #{tkUserToken,jdbcType=VARCHAR},
+		#{tkUserPassword,jdbcType=VARCHAR},
+		#{tkUserTime,jdbcType=VARCHAR}, #{tkUserToken,jdbcType=VARCHAR},
 		#{tkUserLoginIp,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective"
@@ -203,20 +213,28 @@
 	<update id="updateByPrimaryKey"
 		parameterType="com.tkSystem.tools.WyMap">
 		update tk_user
-		set tk_user_name = #{tkUserName,jdbcType=VARCHAR},
-		tk_user_type = #{tkUserType,jdbcType=VARCHAR},
-		tk_user_password = #{tkUserPassword,jdbcType=VARCHAR},
-		tk_user_time = #{tkUserTime,jdbcType=VARCHAR},
-		tk_user_token = #{tkUserToken,jdbcType=VARCHAR},
-		tk_user_login_ip = #{tkUserLoginIp,jdbcType=VARCHAR}
-		where tk_user_id = #{tkUserId,jdbcType=VARCHAR}
+		set tk_user_name =
+		#{tkUserName,jdbcType=VARCHAR},
+		tk_user_type =
+		#{tkUserType,jdbcType=VARCHAR},
+		tk_user_password =
+		#{tkUserPassword,jdbcType=VARCHAR},
+		tk_user_time =
+		#{tkUserTime,jdbcType=VARCHAR},
+		tk_user_token =
+		#{tkUserToken,jdbcType=VARCHAR},
+		tk_user_login_ip =
+		#{tkUserLoginIp,jdbcType=VARCHAR}
+		where tk_user_id =
+		#{tkUserId,jdbcType=VARCHAR}
 	</update>
 	<select id="userlogin" parameterType="com.tkSystem.tools.WyMap"
 		resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from tk_user
-		where tk_user_name = #{tkUserName,jdbcType=VARCHAR} and tk_user_password =
+		where tk_user_name = #{tkUserName,jdbcType=VARCHAR} and
+		tk_user_password =
 		#{tkUserPassword,jdbcType=VARCHAR}
 	</select>
 	<!--用户注销登陆 销毁token -->
@@ -224,7 +242,8 @@
 		parameterType="com.tkSystem.tools.WyMap">
 		update tk_user
 		set tk_user_token = null
-		where tk_user_token = #{tkUserToken,jdbcType=VARCHAR}
+		where
+		tk_user_token = #{tkUserToken,jdbcType=VARCHAR}
 	</update>
 	<!--验证token是否存在 -->
 	<update id="updateByPasswordSelective"
@@ -253,6 +272,15 @@
 		where tk_user_name = #{tkUserName,jdbcType=VARCHAR} and
 		tk_user_password = #{tkUserPassword,jdbcType=VARCHAR}
 	</update>
-
+	<update id="updateClientAmount"
+		parameterType="com.tkSystem.tools.WyMap">
+		update tk_user
+		<set>
+			<if test="tk_client_amount != null">
+				tk_client_amount = #{tk_client_amount,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where tk_user_id = #{tk_user_id,jdbcType=VARCHAR}  
+	</update>
 
 </mapper>

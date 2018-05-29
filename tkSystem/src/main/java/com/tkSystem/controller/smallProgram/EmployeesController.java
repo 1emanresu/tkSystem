@@ -35,9 +35,14 @@ public class EmployeesController {
 	public void getAreadyPlan(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlan(request)));
+			if ( request.getParameter("longitude") == null||request.getParameter("longitude").trim().equals("")) {
+				throw new Exception("longitude格式有误");
+			}if (  request.getParameter("latitude") == null||request.getParameter("latitude").trim().equals("") ) {
+				throw new Exception("latitude格式有误");
+			}
+			ResponseUtil.write(response, planService.getAreadyPlan(request) );
 		} catch (Exception e) {
-			String msg = "=> tkUserHead不能为空";
+			String msg = "=>  不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
 		}
 	}
@@ -45,9 +50,13 @@ public class EmployeesController {
 	public void getAreadyPlanByTime(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByTime(request,response)));
+			if ( request.getParameter("longitude") == null||request.getParameter("longitude").trim().equals("")) {
+				throw new Exception("longitude格式有误");
+			}if (  request.getParameter("latitude") == null||request.getParameter("latitude").trim().equals("") ) {
+				throw new Exception("latitude格式有误");
+			}ResponseUtil.write(response,  planService.getAreadyPlanByTime(request,response ));
 		} catch (Exception e) {
-			String msg = "=> tkUserHead不能为空";
+			String msg = "=>  不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
 		}
 	}
@@ -60,7 +69,18 @@ public class EmployeesController {
 			}if (  request.getParameter("latitude") == null||request.getParameter("latitude").trim().equals("") ) {
 				throw new Exception("latitude格式有误");
 			}
-			ResponseUtil.write(response, RetCode.getSuccessCode(planService.getAreadyPlanByDistance(request)));
+			ResponseUtil.write(response,  planService.getAreadyPlanByDistance(request ));
+		} catch (Exception e) {
+			String msg = "=>  不能为空";
+			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));
+		}
+	}
+	//获取当前任务最近位置信息
+	@RequestMapping("getAreadyPlanDistance")
+	public void getAreadyPlanDistance(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			ResponseUtil.write(response,  planService.getAreadyPlanDistance(request ));
 		} catch (Exception e) {
 			String msg = "=>  不能为空";
 			ResponseUtil.write(response, RetCode.getErrorCode(e.getMessage() + msg));

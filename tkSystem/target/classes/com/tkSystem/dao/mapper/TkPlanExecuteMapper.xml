@@ -36,6 +36,14 @@
 		where tk_plan_execute_id =
 		#{tkPlanExecuteId,jdbcType=VARCHAR}
 	</select>
+		<select id="selectByUserId" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tk_plan_execute
+		where tk_user_id =
+		#{tkUserId,jdbcType=VARCHAR}
+	</select>
 	<delete id="deleteByPrimaryKey" parameterType="com.tkSystem.tools.WyMap">
 		delete from
 		tk_plan_execute
