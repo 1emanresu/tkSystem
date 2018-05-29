@@ -110,7 +110,27 @@ public class ClientService implements ClientServiceInterface {
 		try {
 			int TeamIndex = 0;
 			String tkUserId = paMap.get("tkUserId").toString().trim();
-			java.util.List<WyMap> list = TkSystemMapper.getTeamIndex(paMap);
+			// 获取用户 属性经理还是拓客
+			String userType = TkUserMapper.selectByPrimaryKey(paMap).getTkUserTypeId();
+			// 用户类型编号默认0拓客人员或普通用户，1超级管理员2一级经理
+			java.util.List<WyMap> list = null;
+			switch (userType) {
+			case "0":
+				list= TkSystemMapper.getTeamIndex(paMap);
+				break;
+			case "1":
+				list= TkSystemMapper.getTeamIndexByManager(paMap);
+				break;
+			case "2":
+				list= TkSystemMapper.getTeamIndexByManager(paMap);
+				break;
+
+			default:
+				break;
+			}
+			if(list==null) {
+				throw new Exception("数据暂无");
+			}
 			java.util.List<WyMap> list1 = new ArrayList<>();
 			int i = 0;
 			for (WyMap object : list) {
@@ -312,7 +332,7 @@ public class ClientService implements ClientServiceInterface {
 			for (WyMap wyMap2 : TkUserMapperList) {
 				String tk_user_id = wyMap2.get("tk_user_id").toString();
 				if (tk_user_id.equals(request.getParameter("tkUserId"))) {
-					Integer amount = Integer.parseInt( wyMap2.get("tk_client_amount").toString());
+					Integer amount = Integer.parseInt(wyMap2.get("tk_client_amount").toString());
 					amount++;
 					wyMap2.put("tk_client_amount", amount);
 					TkUserMapper.updateClientAmount(wyMap2);

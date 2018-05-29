@@ -148,6 +148,9 @@
 			<if test="tkUserTypeId != null">
 				tk_user_type_id,
 			</if>
+			<if test="tk_client_amount != null">
+				tk_client_amount,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="tkUserId != null">
@@ -180,6 +183,10 @@
 			<if test="tkUserTypeId != null">
 				#{tk_user_type_id,jdbcType=VARCHAR},
 			</if>
+			<if test="tk_client_amount != null">
+				#{tk_client_amount,jdbcType=VARCHAR},
+			</if>
+			
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective"

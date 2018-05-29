@@ -319,7 +319,7 @@ public class PlanService implements PlanServiceInterface {
 						System.out.println("tk_plan_detail_id="+tk_plan_detail_id);
 						// 该任务状态 1默认 2已经签到3已分配
 						String tk_plan_state = wyMap2.get("tk_plan_state").toString();
-						switch (tk_plan_state) {
+					/*	switch (tk_plan_state) {
 						case "1":
 
 							break;
@@ -331,7 +331,8 @@ public class PlanService implements PlanServiceInterface {
 							break;
 						default:
 							break;
-						}
+						}*/
+						TkPlanDetailMap.add(wyMap);
 					}
 				}
 			}
@@ -1356,6 +1357,9 @@ public class PlanService implements PlanServiceInterface {
 				}
 			});
 			// 返回地址
+			if(list2.size()<1) {
+				throw new Exception("暂无数据");
+			}
 			String location = list2.get(0).get("tk_plan_detail_location").toString();
 			// 获取距离最近的地址
 			retCode = RetCode.getSuccessCode(new WyMap("tk_plan_detail_location", location));
@@ -1363,7 +1367,6 @@ public class PlanService implements PlanServiceInterface {
 			retCode.put("msg", str);
 		} catch (Exception e) {
 			e.printStackTrace();
-			retCode = RetCode.getErrorCode("失败");
 			retCode.put("msg", e.getMessage());
 		}
 		return retCode;

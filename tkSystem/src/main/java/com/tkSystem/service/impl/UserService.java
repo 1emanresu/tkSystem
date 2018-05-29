@@ -164,6 +164,7 @@ public class UserService implements UserServiceInterface {
 			if (ret1 == null) {
 				Map.put("tkUserId", CLID.getID());
 				Map.put("tkUserTypeId", "0");
+				Map.put("tk_client_amount", "0");
 				retc = tkUserMapper.insertSelective(Map);
 				Map.put("tkUserName", null);
 				Map.put("tkUserPhone", null);

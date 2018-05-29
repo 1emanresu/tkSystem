@@ -98,6 +98,14 @@
 
 
 	</select>
+		<select id="getTeamIndexByManager"
+		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
+		SELECT
+		tk_user_id,tk_client_amount,tk_user_name,tk_user_head from tk_user
+		WHERE tk_user_id in(SELECT tk_user_grade_id FROM `tk_user_grade` where
+		tk_user_grade_pid = #{tkUserId,jdbcType=VARCHAR}) ORDER BY
+		tk_client_amount desc
+	</select>
 	<select id="getClientInfoByPlanId"
 		parameterType="com.tkSystem.tools.WyMap" resultMap="BaseResultWyMap">
 		SELECT * FROM

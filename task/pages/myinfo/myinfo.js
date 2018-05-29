@@ -189,26 +189,26 @@ Page({
   onLoad: function () {
     var that=this;
     // 查看是否授权
-    // wx.getSetting({
-    //   success: function (res) {
-    //     console.log("  ######## " + JSON.stringify(res));
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-    //       wx.getUserInfo({
-    //         success: function (res) {
-    //           console.log("  res " + JSON.stringify(res.userInfo));
-    //           that.getUserInfo(res.userInfo);
-    //         },
-    //         fail:function(e){
+    wx.getSetting({
+      success: function (res) {
+        console.log("  ######## " + JSON.stringify(res));
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console.log("  res " + JSON.stringify(res.userInfo));
+              that.getUserInfo(res.userInfo);
+            },
+            fail:function(e){
              
-    //         }
-    //       })
-    //       console.log("  @@@@@ " + 1);
-    //     }else{
-    //       console.log("  $$$$$$ " + 2);
-    //     }
-    //   }
-    // })
+            }
+          })
+          console.log("  @@@@@ " + 1);
+        }else{
+          console.log("  $$$$$$ " + 2);
+        }
+      }
+    })
     that.selectCentli();
     that.thismonthbus();
     that.towCode();

@@ -17,6 +17,7 @@ public interface TkSystemMapper {
 	List<WyMap> getWorkNumber(WyMap paMap);
 
 	List<WyMap> getTeamIndex(WyMap paMap);
+	List<WyMap> getTeamIndexByManager(WyMap paMap);
 	List<WyMap> getClientInfoByPlanId(WyMap paMap);
 	List<WyMap> getTkUserByPlanId(WyMap paMap);
 	List<WyMap> getTkChannel(WyMap paMap);
