@@ -1,15 +1,9 @@
 # 基于javaEE后台的微信小程序
-[![build status](https://travis-ci.org/trekhleb/javascript-algorithms.svg?branch=master)](https://travis-ci.org/trekhleb/javascript-algorithms)
-[![codecov](https://codecov.io/gh/trekhleb/javascript-algorithms/branch/master/graph/badge.svg)](https://codecov.io/gh/trekhleb/javascript-algorithms)
 
-本项目包含了多种基于 JavaScript 的算法与数据结构。
+本项目包含了多种基于 JavaScript JAVA SQL的程序设计。
 
+## 文件说明
  
-
-## 数据结构
-
-数据结构是在计算机中 组织和存储数 据的一种特殊方式, 它可以高效地 访问和修改 数据。更确切地说, 数据结构是数据值的集合, 它们之间的关系、函数或操作可以应用于数据。
-
 `B` - 初学者, `A` - 进阶
 
 * `B` [链表](src/data-structures/linked-list/README.zh-CN.md)
@@ -30,9 +24,9 @@
 * `A` [并查集](src/data-structures/disjoint-set)
 * `A` [布隆过滤器](src/data-structures/bloom-filter)
 
-## 算法
+## 项目环境
 
-算法是如何解决一类问题的明确规范。 算法是一组精确定义操作序列的规则。
+openJDK1.8.0_162 ，mysql5.6， 微信公众平台小程序开发 ， eclipse/Oxygen
 
 ### 算法主题
 
